@@ -1,223 +1,97 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Konya → Rotterdam Seyahat Planlayıcı | Vito ile Avrupa Rotası</title>
-    <meta name="description" content="Konya'dan Rotterdam'a Mercedes Vito ile 6 kişilik aile seyahat planı, Prag ve İtalya rotası">
-    
+    <title>Konya → Rotterdam Seyahat Planlayıcı | Vito ile Avrupa Turu</title>
+    <meta name="description" content="Konya'dan Rotterdam'a Mercedes Vito ile 6 kişilik aile seyahat planı. 3 farklı gidiş, 3 farklı dönüş rotası, helal yemek önerileri ve detaylı maliyet hesabı.">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Lora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="travel-planner.css">
 </head>
 <body>
-    <div class="bg-animation">
-        <div class="bg-gradient-1"></div>
-        <div class="bg-gradient-2"></div>
-        <div class="bg-gradient-3"></div>
-    </div>
-
     <header class="header" id="header">
-        <div class="header-content">
+        <div class="header-inner">
             <div class="logo">
-                <div class="logo-icon"><i class="fas fa-route"></i></div>
-                <div class="logo-text">
+                <div class="logo-mark"><i class="fas fa-route"></i></div>
+                <div>
                     <h1>Konya → Rotterdam</h1>
-                    <span class="logo-subtitle">Vito · 4 Yetişkin 2 Çocuk · Prag & İtalya · 30 Gün Schengen</span>
+                    <small>Vito · 4 Yetişkin 2 Çocuk · 30 Gün Schengen</small>
                 </div>
             </div>
-            <div class="header-stats">
-                <div class="stat-chip"><i class="fas fa-calendar-days"></i><span>15 Haz – 11 Tem 2026</span></div>
-                <div class="stat-chip" id="totalDistanceStat"><i class="fas fa-road"></i><span>~7,800 km</span></div>
-                <div class="stat-chip" id="totalDaysStat"><i class="fas fa-users"></i><span>4+2 kişi</span></div>
-                <div class="stat-chip cost-chip" id="totalCostStat"><i class="fas fa-euro-sign"></i><span>Hesaplanıyor...</span></div>
+            <div class="header-actions">
+                <div class="chip"><i class="fas fa-calendar"></i> 15 Haz – 11 Tem 2026</div>
+                <div class="chip" id="chipKm"><i class="fas fa-road"></i> <span>~7.800 km</span></div>
+                <div class="chip green" id="chipCost"><i class="fas fa-euro-sign"></i> <span>...</span></div>
+                <button class="theme-btn" id="themeToggle" title="Tema değiştir"><i class="fas fa-moon"></i></button>
             </div>
         </div>
     </header>
 
-    <main class="main-content">
-        <!-- Family Info Banner -->
-        <div class="family-banner" id="familyBanner">
-            <div class="family-banner-icon"><i class="fas fa-van-shuttle"></i></div>
-            <div class="family-banner-content">
-                <h3>Mercedes Vito · Aile Rotası</h3>
-                <p>Konya → Plovdiv → Belgrad → Budapeşte → <strong>Prag</strong> → Frankfurt → <strong>Rotterdam</strong> → Münih → Verona → <strong>Venedik</strong> → <em>Feribot</em> → Yunanistan → Konya</p>
-            </div>
-            <div class="family-banner-tags">
-                <span class="tag tag-blue">🇨🇿 Prag Durağı</span>
-                <span class="tag tag-green">🇮🇹 İtalya Dönüş</span>
-                <span class="tag tag-orange">⛴️ Feribot</span>
-            </div>
-        </div>
-
-        <!-- Map Section -->
-        <section class="map-section" id="mapSection">
-            <div class="section-header">
-                <h2><i class="fas fa-map-marked-alt"></i> İnteraktif Rota Haritası</h2>
-                <div class="map-controls">
-                    <button class="btn btn-glass" id="btnFitBounds" title="Tüm rotayı göster"><i class="fas fa-expand"></i></button>
-                    <button class="btn btn-glass" id="btnToggleStops" title="Durakları göster/gizle"><i class="fas fa-map-pin"></i></button>
+    <div class="container">
+        <!-- Route Selector -->
+        <section id="routeSection">
+            <h2 class="sec-title">Rotanızı Belirleyin</h2>
+            <p class="sec-sub">Avrupa turunda gezmek için 3 farklı gidiş, 3 farklı dönüş rotası. Beğendiğinizi seçin, harita ve maliyetler otomatik güncellenir.</p>
+            <div class="route-selector">
+                <div>
+                    <div class="route-label"><i class="fas fa-arrow-right"></i> Gidiş Rotası</div>
+                    <div class="route-cards" id="outboundCards"></div>
+                </div>
+                <div>
+                    <div class="route-label"><i class="fas fa-arrow-left"></i> Dönüş Rotası (İtalya Feribotu)</div>
+                    <div class="route-cards" id="returnCards"></div>
                 </div>
             </div>
-            <div class="map-container">
+        </section>
+
+        <!-- Map -->
+        <section id="mapSection">
+            <h2 class="sec-title">Rota Haritası</h2>
+            <div class="map-wrap">
                 <div id="map"></div>
                 <div class="map-legend">
-                    <div class="legend-item"><span class="legend-dot start"></span> Başlangıç/Bitiş</div>
-                    <div class="legend-item"><span class="legend-dot stop"></span> Konaklama</div>
-                    <div class="legend-item"><span class="legend-dot border"></span> Sınır/Feribot</div>
-                    <div class="legend-item"><span class="legend-dot destination"></span> Rotterdam</div>
-                    <div class="legend-item"><span class="legend-dot sightseeing"></span> Gezi Durağı</div>
-                    <div class="legend-item"><span class="legend-line outbound"></span> Gidiş</div>
-                    <div class="legend-item"><span class="legend-line return"></span> Dönüş</div>
+                    <div class="legend-i"><span class="leg-dot start"></span> Başlangıç/Bitiş</div>
+                    <div class="legend-i"><span class="leg-dot overnight"></span> Konaklama</div>
+                    <div class="legend-i"><span class="leg-dot sightseeing"></span> Gezi</div>
+                    <div class="legend-i"><span class="leg-dot border"></span> Sınır</div>
+                    <div class="legend-i"><span class="leg-dot destination"></span> Rotterdam</div>
+                    <div class="legend-i"><span class="leg-dot ferry"></span> Feribot</div>
+                    <div class="legend-i"><span class="leg-line out"></span> Gidiş</div>
+                    <div class="legend-i"><span class="leg-line ret"></span> Dönüş</div>
                 </div>
             </div>
         </section>
 
-        <!-- Route Timeline -->
-        <section class="timeline-section" id="timelineSection">
-            <div class="section-header">
-                <h2><i class="fas fa-timeline"></i> Gün Gün Rota Planı</h2>
-                <div class="timeline-toggle">
-                    <button class="btn btn-glass active" data-view="outbound" id="btnOutbound"><i class="fas fa-arrow-right"></i> Gidiş (Prag)</button>
-                    <button class="btn btn-glass" data-view="rotterdam" id="btnRotterdam"><i class="fas fa-city"></i> Rotterdam</button>
-                    <button class="btn btn-glass" data-view="return" id="btnReturn"><i class="fas fa-arrow-left"></i> Dönüş (İtalya)</button>
-                </div>
+        <!-- Timeline -->
+        <section id="timelineSection">
+            <h2 class="sec-title">Gün Gün Plan</h2>
+            <p class="sec-sub">Her durakta konaklama, helal yemek önerileri ve pratik ipuçları. Türkiye içi duraklar sadece transit.</p>
+            <div class="tabs" id="tabs">
+                <button class="tab-btn active" data-tab="out"><i class="fas fa-arrow-right"></i> Gidiş</button>
+                <button class="tab-btn" data-tab="rdam"><i class="fas fa-city"></i> Rotterdam</button>
+                <button class="tab-btn" data-tab="ret"><i class="fas fa-arrow-left"></i> Dönüş</button>
             </div>
-            <div class="timeline-container" id="timelineContainer"></div>
+            <div class="timeline" id="timeline"></div>
         </section>
 
-        <!-- Cost Breakdown -->
-        <section class="cost-section" id="costSection">
-            <div class="section-header">
-                <h2><i class="fas fa-calculator"></i> Detaylı Maliyet Tablosu (6 Kişi)</h2>
-            </div>
-            <div class="cost-grid">
-                <div class="cost-card" id="fuelCostCard">
-                    <div class="cost-card-header"><div class="cost-icon fuel"><i class="fas fa-gas-pump"></i></div><h3>Yakıt Maliyeti</h3></div>
-                    <div class="cost-card-body" id="fuelCostBody"></div>
-                    <div class="cost-card-total" id="fuelCostTotal"><span>Toplam Yakıt</span><strong>...</strong></div>
-                </div>
-                <div class="cost-card" id="tollCostCard">
-                    <div class="cost-card-header"><div class="cost-icon toll"><i class="fas fa-road"></i></div><h3>Otoyol & Vinyetler</h3></div>
-                    <div class="cost-card-body" id="tollCostBody"></div>
-                    <div class="cost-card-total" id="tollCostTotal"><span>Toplam Geçiş</span><strong>...</strong></div>
-                </div>
-                <div class="cost-card" id="accCostCard">
-                    <div class="cost-card-header"><div class="cost-icon acc"><i class="fas fa-bed"></i></div><h3>Konaklama (6 kişi)</h3></div>
-                    <div class="cost-card-body" id="accCostBody"></div>
-                    <div class="cost-card-total" id="accCostTotal"><span>Toplam Konaklama</span><strong>...</strong></div>
-                </div>
-                <div class="cost-card" id="foodCostCard">
-                    <div class="cost-card-header"><div class="cost-icon food"><i class="fas fa-utensils"></i></div><h3>Yemek (6 kişi)</h3></div>
-                    <div class="cost-card-body" id="foodCostBody"></div>
-                    <div class="cost-card-total" id="foodCostTotal"><span>Toplam Yemek</span><strong>...</strong></div>
-                </div>
-                <div class="cost-card" id="visaCostCard">
-                    <div class="cost-card-header"><div class="cost-icon visa"><i class="fas fa-passport"></i></div><h3>Vize & Sigorta & Feribot</h3></div>
-                    <div class="cost-card-body" id="visaCostBody"></div>
-                    <div class="cost-card-total" id="visaCostTotal"><span>Toplam</span><strong>...</strong></div>
-                </div>
-                <div class="cost-card" id="extraCostCard">
-                    <div class="cost-card-header"><div class="cost-icon extra"><i class="fas fa-ellipsis"></i></div><h3>Diğer Giderler</h3></div>
-                    <div class="cost-card-body" id="extraCostBody"></div>
-                    <div class="cost-card-total" id="extraCostTotal"><span>Toplam Diğer</span><strong>...</strong></div>
-                </div>
-            </div>
-            <div class="grand-total-card" id="grandTotalCard">
-                <div class="grand-total-content">
-                    <div class="grand-total-left">
-                        <h3>TOPLAM TAHMİNİ MALİYET</h3>
-                        <p>Konya ↔ Rotterdam · 6 Kişi · Prag + İtalya Feribotu dahil</p>
-                    </div>
-                    <div class="grand-total-right">
-                        <div class="grand-total-eur" id="grandTotalEur">€ ---</div>
-                        <div class="grand-total-try" id="grandTotalTry">₺ ---</div>
-                    </div>
-                </div>
-                <div class="grand-total-breakdown" id="grandTotalBreakdown"></div>
-            </div>
+        <!-- Costs -->
+        <section id="costSection">
+            <h2 class="sec-title">Maliyet Hesabı · 6 Kişi</h2>
+            <p class="sec-sub">Seçtiğiniz rotaya göre otomatik hesaplanır. Yakıt, vinyetler, konaklama, yemek, vize ve feribot dahil.</p>
+            <div class="cost-grid" id="costGrid"></div>
+            <div class="grand-total" id="grandTotal"></div>
         </section>
 
-        <!-- Stops Editor -->
-        <section class="editor-section" id="editorSection">
-            <div class="section-header">
-                <h2><i class="fas fa-pen-to-square"></i> Durakları Düzenle</h2>
-                <button class="btn btn-primary" id="btnAddStop"><i class="fas fa-plus"></i> Durak Ekle</button>
-            </div>
-            <div class="editor-info">
-                <i class="fas fa-info-circle"></i>
-                <p>Durakları düzenleyebilir, silebilir veya yeni durak ekleyebilirsiniz. Değişiklikler anında haritaya ve maliyet tablosuna yansır.</p>
-            </div>
-            <div class="stops-list" id="stopsList"></div>
-        </section>
-
-        <!-- Tips Section -->
-        <section class="tips-section" id="tipsSection">
-            <div class="section-header">
-                <h2><i class="fas fa-lightbulb"></i> Seyahat Önerileri</h2>
-            </div>
+        <!-- Tips -->
+        <section id="tipsSection">
+            <h2 class="sec-title">Önemli Hatırlatmalar & İpuçları</h2>
+            <p class="sec-sub">SIM kart, vinyetler, sınır geçişleri, helal yemek bulma, çocuklarla seyahat ve daha fazlası.</p>
             <div class="tips-grid" id="tipsGrid"></div>
         </section>
-    </main>
-
-    <!-- Edit Stop Modal -->
-    <div class="modal-overlay" id="editModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 id="modalTitle">Durak Düzenle</h3>
-                <button class="btn btn-glass modal-close" id="btnModalClose"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="inputCity">Şehir</label>
-                    <input type="text" id="inputCity" placeholder="Şehir adı girin...">
-                </div>
-                <div class="form-group">
-                    <label for="inputCountry">Ülke</label>
-                    <select id="inputCountry">
-                        <option value="TR">🇹🇷 Türkiye</option>
-                        <option value="BG">🇧🇬 Bulgaristan</option>
-                        <option value="RS">🇷🇸 Sırbistan</option>
-                        <option value="HU">🇭🇺 Macaristan</option>
-                        <option value="SK">🇸🇰 Slovakya</option>
-                        <option value="CZ">🇨🇿 Çekya</option>
-                        <option value="AT">🇦🇹 Avusturya</option>
-                        <option value="DE">🇩🇪 Almanya</option>
-                        <option value="NL">🇳🇱 Hollanda</option>
-                        <option value="IT">🇮🇹 İtalya</option>
-                        <option value="GR">🇬🇷 Yunanistan</option>
-                        <option value="FR">🇫🇷 Fransa</option>
-                        <option value="CH">🇨🇭 İsviçre</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="inputDays">Kalış Süresi (gece)</label>
-                    <input type="number" id="inputDays" min="0" max="30" value="1">
-                </div>
-                <div class="form-group">
-                    <label for="inputType">Durak Türü</label>
-                    <select id="inputType">
-                        <option value="start">🟢 Başlangıç</option>
-                        <option value="transit">🔵 Transit / Mola</option>
-                        <option value="border">🟠 Sınır / Feribot</option>
-                        <option value="overnight">🟣 Konaklama</option>
-                        <option value="destination">🔴 Ana Varış</option>
-                        <option value="sightseeing">🟡 Gezilecek Yer</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="inputNotes">Notlar / İpuçları</label>
-                    <textarea id="inputNotes" rows="3" placeholder="Bu durak hakkında notlar..."></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-glass" id="btnModalCancel">İptal</button>
-                <button class="btn btn-primary" id="btnModalSave">Kaydet</button>
-            </div>
-        </div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

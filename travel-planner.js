@@ -1,669 +1,695 @@
-const EUR_TO_TRY = 38.5;
-const VITO_CONSUMPTION = 8.0;
+/* ═══════════════════════════════════════════════════════════════
+   Konya → Rotterdam · 3 Gidiş + 3 Dönüş Rotası
+   Helal yemek, konaklama, maliyet, pratik ipuçları
+   ═══════════════════════════════════════════════════════════════ */
 
-const COUNTRY_DATA = {
-    TR: { name: 'Türkiye', flag: '🇹🇷', diesel: 1.25, foodPP: 5, hotelFamily: 50 },
-    BG: { name: 'Bulgaristan', flag: '🇧🇬', diesel: 1.71, foodPP: 7, hotelFamily: 45 },
-    RS: { name: 'Sırbistan', flag: '🇷🇸', diesel: 1.90, foodPP: 7, hotelFamily: 55 },
-    HU: { name: 'Macaristan', flag: '🇭🇺', diesel: 1.73, foodPP: 9, hotelFamily: 70 },
-    SK: { name: 'Slovakya', flag: '🇸🇰', diesel: 1.65, foodPP: 10, hotelFamily: 65 },
-    CZ: { name: 'Çekya', flag: '🇨🇿', diesel: 1.55, foodPP: 10, hotelFamily: 70 },
-    AT: { name: 'Avusturya', flag: '🇦🇹', diesel: 1.88, foodPP: 15, hotelFamily: 120 },
-    DE: { name: 'Almanya', flag: '🇩🇪', diesel: 1.93, foodPP: 14, hotelFamily: 110 },
-    NL: { name: 'Hollanda', flag: '🇳🇱', diesel: 2.30, foodPP: 16, hotelFamily: 130 },
-    IT: { name: 'İtalya', flag: '🇮🇹', diesel: 1.75, foodPP: 13, hotelFamily: 100 },
-    GR: { name: 'Yunanistan', flag: '🇬🇷', diesel: 1.70, foodPP: 10, hotelFamily: 70 },
-    SEA: { name: 'Denizde', flag: '⛴️', diesel: 0, foodPP: 0, hotelFamily: 0 }
+const EUR_TRY = 38.5;
+const VITO_LPK = 8.0; // L/100km
+
+const C = {
+  TR:{n:'Türkiye',f:'🇹🇷',d:1.25,fp:5,hp:50},
+  BG:{n:'Bulgaristan',f:'🇧🇬',d:1.71,fp:7,hp:45},
+  RS:{n:'Sırbistan',f:'🇷🇸',d:1.90,fp:7,hp:55},
+  RO:{n:'Romanya',f:'🇷🇴',d:1.68,fp:7,hp:45},
+  HU:{n:'Macaristan',f:'🇭🇺',d:1.73,fp:9,hp:70},
+  HR:{n:'Hırvatistan',f:'🇭🇷',d:1.72,fp:10,hp:65},
+  SI:{n:'Slovenya',f:'🇸🇮',d:1.70,fp:11,hp:70},
+  SK:{n:'Slovakya',f:'🇸🇰',d:1.65,fp:10,hp:65},
+  CZ:{n:'Çekya',f:'🇨🇿',d:1.55,fp:10,hp:70},
+  AT:{n:'Avusturya',f:'🇦🇹',d:1.88,fp:15,hp:120},
+  DE:{n:'Almanya',f:'🇩🇪',d:1.93,fp:14,hp:110},
+  NL:{n:'Hollanda',f:'🇳🇱',d:2.30,fp:16,hp:130},
+  IT:{n:'İtalya',f:'🇮🇹',d:1.75,fp:13,hp:100},
+  GR:{n:'Yunanistan',f:'🇬🇷',d:1.70,fp:10,hp:70},
+  LU:{n:'Lüksemburg',f:'🇱🇺',d:1.55,fp:14,hp:110},
+  CH:{n:'İsviçre',f:'🇨🇭',d:2.10,fp:20,hp:150},
+  FR:{n:'Fransa',f:'🇫🇷',d:1.82,fp:14,hp:100},
+  SEA:{n:'Deniz',f:'⛴️',d:0,fp:0,hp:0}
 };
 
-const TOLL_COSTS = [
-    { country: 'TR', name: 'Türkiye HGS (Niğde-Ankara-KMO-Kapıkule)', cost: 32, note: 'Gidiş-dönüş otoyol + köprü geçişleri' },
-    { country: 'BG', name: 'Bulgaristan e-Vinyeti', cost: 16, note: '2x haftalık vinyetler (gidiş+dönüş)' },
-    { country: 'RS', name: 'Sırbistan Otoyol Gişe', cost: 15, note: 'Sadece gidiş (dönüşte Sırbistan yok)' },
-    { country: 'HU', name: 'Macaristan e-Matrica', cost: 18, note: '10 günlük (gidişte)' },
-    { country: 'SK', name: 'Slovakya e-Známka', cost: 16, note: '10 günlük (Budapeşte→Prag arası)' },
-    { country: 'CZ', name: 'Çekya e-Známka', cost: 16, note: '10 günlük' },
-    { country: 'DE', name: 'Almanya Otoyol', cost: 0, note: 'Binek araç ücretsiz ✓' },
-    { country: 'NL', name: 'Hollanda', cost: 0, note: 'Ücretsiz ✓' },
-    { country: 'AT', name: 'Avusturya Vinyeti + Brenner', cost: 24, note: '10 günlük vinyetler + Brenner geçişi' },
-    { country: 'IT', name: 'İtalya Autostrada', cost: 50, note: 'Brenner→Verona→Venedik→Ancona gişeleri' },
-    { country: 'GR', name: 'Yunanistan Egnatia Odos', cost: 15, note: 'İgoumenitsa→İpsala arası' }
-];
+const DW = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
+const MO = ['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'];
+function dateStr(off){ const d=new Date(2026,5,15); d.setDate(d.getDate()+off); return `${d.getDate()} ${MO[d.getMonth()]} ${DW[d.getDay()]}`; }
 
-const DAYS_OF_WEEK = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
-const MONTHS = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'];
-
-function getDateStr(dayOffset) {
-    const start = new Date(2026, 5, 15);
-    start.setDate(start.getDate() + dayOffset);
-    return `${start.getDate()} ${MONTHS[start.getMonth()]} ${DAYS_OF_WEEK[start.getDay()]}`;
+/* ═══════ GİDİŞ ROTALARI ═══════ */
+const OUTBOUND = [
+{
+  id:'balkan', name:'Balkan Klasik + Prag', icon:'🏰',
+  tag:'Plovdiv · Belgrad · Budapeşte · Prag · Frankfurt',
+  km:4145,
+  tolls:[
+    {n:'TR HGS (Niğde-KMO-Kapıkule)',v:16},{n:'BG e-Vinyeti (haftalık)',v:8},
+    {n:'RS Otoyol Gişeleri',v:15},{n:'HU e-Matrica (10 gün)',v:18},
+    {n:'SK e-Známka (10 gün)',v:16},{n:'CZ e-Známka (10 gün)',v:16}
+  ],
+  stops:[
+    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'start',day:0,n:0,dk:840,dt:'~9 saat',
+     desc:'06:00 hareket. Ankara-Niğde Otoyolu → Ankara Çevre → Bolu → KMO → Edirne → Kapıkule. İstanbul\'a GİRMEYİN, KMO ile bypass.',
+     tips:[{t:'HGS bakiyesini kontrol edin',c:'warn'},{t:'Bolu\'da mola + kahvaltı',c:'good'},{t:'TR\'de full depo — en ucuz yakıt',c:'good'},{t:'KMO çıkışı Kınalı→Edirne',c:'info'}]},
+    {c:'Kapıkule Sınır',co:'TR',la:41.68,lo:26.56,t:'border',day:0,n:0,dk:230,dt:'~2.5 saat',
+     desc:'~15:00 varış. Pasaport, ehliyet, ruhsat, green card, vize, çocuk belgeleri hazır tutun.',
+     tips:[{t:'Yaz aylarında 1-3 saat bekleme',c:'warn'},{t:'AB EES biyometrik kontrol',c:'warn'},{t:'BG vinyetini bgtoll.bg\'den alın',c:'info'}]},
+    {c:'Plovdiv',co:'BG',la:42.15,lo:24.75,t:'overnight',day:0,n:1,dk:390,dt:'~4 saat',
+     desc:'İLK GECE. Sınırdan ~2.5 saat. Avrupa Kültür Başkenti — Eski Şehir, Roma Tiyatrosu, Kapana bölgesi harika.',
+     halal:'Eski şehir civarında Türk lokantaları mevcut. Kebap ve pide kolayca bulunur. Müslüman Türk nüfusu sayesinde helal et bulmak kolay. Marketlerde \'Халал\' etiketli ürünler var.',
+     accom:'Booking.com\'dan "aile odası" arayın. Şehir merkezinde €40-55/gece. Çocuklu aileler için apart otel ideal.',
+     tips:[{t:'Şehir merkezi yürüme mesafesinde otel',c:'good'},{t:'Akşam yemeği ~€25-35/aile',c:'good'},{t:'BGN para birimi, €1≈2 BGN',c:'info'}]},
+    {c:'Belgrad',co:'RS',la:44.79,lo:20.45,t:'overnight',day:1,n:1,dk:375,dt:'~4 saat',
+     desc:'2. GECE. Sofya üzerinden Niş → Belgrad. Kalemegdan Kalesi, Knez Mihailova, Ada Ciganlija gölü (çocuklar için plaj).',
+     halal:'Boşnak restoranlarında ızgara et genelde helal (sığır/kuzu). Ćevapi ve pljeskavica güvenli. Dorćol ve Stari Grad\'da Boşnak lokantaları. "Svinjsko" domuz demek — kaçının!',
+     accom:'Stari Grad veya Vračar bölgesinde apart otel. €50-65/gece. Airbnb çok uygun.',
+     tips:[{t:'Sırbistan Schengen DEĞİL, ayrı vize yok',c:'info'},{t:'RSD veya EUR nakit bulundurun',c:'warn'},{t:'Ada Ciganlija çocuklar için süper',c:'good'}]},
+    {c:'Budapeşte',co:'HU',la:47.50,lo:19.04,t:'sightseeing',day:2,n:2,dk:530,dt:'~5.5 saat',
+     desc:'3-4. GECE. Tuna kenarı, Parlamento, Széchenyi Termal (çocuklar girebilir), Buda Kalesi, Büyük Pazar.',
+     halal:'Kerepesi út civarında Türk restoranları ve dönerci. Istanbul Restaurant, Turkish Bistro. Langos helal. Büyük Pazar\'da taze meyve/sebze. HUF para birimi.',
+     accom:'Pest tarafı daha uygun. Airbnb ile 2 odalı daire €65-80/gece. Termal yakınında otel çocuklara uygun.',
+     tips:[{t:'e-Matrica\'yı ÖNCEDEN alın!',c:'warn'},{t:'Széchenyi termal çocuklarla harika',c:'good'},{t:'Tram 2 Tuna kıyısı manzara turu',c:'good'},{t:'€1 ≈ 400 HUF',c:'info'}]},
+    {c:'Prag',co:'CZ',la:50.08,lo:14.44,t:'sightseeing',day:4,n:2,dk:500,dt:'~5 saat',
+     desc:'5-6. GECE. ⭐ PRAG! Bratislava üzerinden (SK vinyeti gerekli). Karlov Köprüsü, Prag Kalesi, Astronomik Saat, Petřín teleferik.',
+     halal:'Kebapçılar Wenceslas Meydanı ve Můstek civarında yaygın. Trdelník (baca böreği) helal. "Vepřové" domuz demek — dikkat! Balık ve sebze güvenli. CZK para birimi.',
+     accom:'Staré Město veya Vinohrady bölgesi. Apart otel €65-80/gece. Batı Avrupa\'nın yarı fiyatına lüks kalabilirsiniz.',
+     tips:[{t:'SK e-Známka zorunlu (Budapeşte→Bratislava)',c:'warn'},{t:'CZ e-Známka zorunlu',c:'warn'},{t:'Petřín teleferik + ayna labirenti çocuklara',c:'good'},{t:'€1 ≈ 25 CZK',c:'info'}]},
+    {c:'Frankfurt',co:'DE',la:50.11,lo:8.68,t:'overnight',day:6,n:1,dk:440,dt:'~4.5 saat',
+     desc:'7. GECE. Prag → Nürnberg → Frankfurt. Römerberg meydanı, Main nehri yürüyüşü.',
+     halal:'Münchener Straße tamamen Türk lokanta ve marketlerle dolu! Helal döner, lahmacun, iskender her yerde. Almanya\'da helal bulmak en kolay ülke.',
+     accom:'Hauptbahnhof civarı ulaşım açısından pratik. €100-120/gece. Motel One zinciri uygun fiyatlı.',
+     tips:[{t:'Almanya otoyol ücretsiz ✓',c:'good'},{t:'Çekya\'da yakıt ikmali yapın (ucuz)',c:'good'},{t:'Autobahn hız sınırsız bölüm var, dikkat',c:'warn'}]},
+    {c:'Rotterdam',co:'NL',la:51.92,lo:4.48,t:'destination',day:7,n:10,dk:0,dt:'~4.5 saat',
+     desc:'🎯 VARIŞ! 10 GECE. Köln\'de Dom Katedrali molası. Erasmus Köprüsü, Markthal, Küp Evler, Kinderdijk yel değirmenleri.',
+     halal:'West-Kruiskade Türk/Fas/Surinam restoranlarıyla dolu. Tanger Markt, Istanbul Market — helal süpermarket. Endonezya mutfağı büyük bölümü helal. Kip (tavuk) restoranlar güvenli.',
+     accom:'Airbnb/apart otel otelden %40 ucuz! 2 yatak odalı daire €90-130/gece. Zuid veya Delfshaven bölgeleri uygun.',
+     tips:[{t:'Airbnb çok daha uygun (6 kişi)',c:'good'},{t:'NL\'de yakıt en pahalı, DE\'de doldurun',c:'warn'},{t:'OV-chipkaart toplu taşıma kartı alın',c:'info'},{t:'Albert Heijn market ucuz alışveriş',c:'good'}]}
+  ]
+},
+{
+  id:'adriyatik', name:'Hırvatistan + Alpler', icon:'🏔️',
+  tag:'Sofya · Belgrad · Zagreb · Ljubljana · Münih',
+  km:4050,
+  tolls:[
+    {n:'TR HGS',v:16},{n:'BG e-Vinyeti',v:8},{n:'RS Otoyol',v:15},
+    {n:'HR Vinyeti (10 gün)',v:8},{n:'SI e-Vinyeti (haftalık)',v:16},
+    {n:'AT Vinyeti (10 gün)',v:11}
+  ],
+  stops:[
+    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'start',day:0,n:0,dk:840,dt:'~9 saat',
+     desc:'06:00 hareket. Ankara-Niğde Otoyolu → KMO → Kapıkule.',
+     tips:[{t:'HGS bakiyesi kontrol',c:'warn'},{t:'TR\'de full depo yapın',c:'good'}]},
+    {c:'Kapıkule',co:'TR',la:41.68,lo:26.56,t:'border',day:0,n:0,dk:250,dt:'~3 saat',
+     desc:'~15:00 varış. Belgeler hazır olsun.',
+     tips:[{t:'Yaz aylarında 1-3 saat bekleme',c:'warn'}]},
+    {c:'Sofya',co:'BG',la:42.70,lo:23.32,t:'overnight',day:0,n:1,dk:390,dt:'~4 saat',
+     desc:'İLK GECE. Bulgaristan başkenti. Aleksander Nevski Katedrali, Vitosha Bulvarı yürüyüşü.',
+     halal:'Banya Başı Camii civarında Türk restoranları yoğun. Zhenski Pazar çevresinde dönerci ve kebapçılar. Al Safa helal süpermarket.',
+     accom:'Şehir merkezinde apart otel €40-55/gece. Vitosha Bulvarı yürüme mesafesinde tercih edin.',
+     tips:[{t:'Merkez Cami civarı helal restoran bölgesi',c:'good'},{t:'BGN para birimi',c:'info'}]},
+    {c:'Belgrad',co:'RS',la:44.79,lo:20.45,t:'overnight',day:1,n:1,dk:390,dt:'~4 saat',
+     desc:'2. GECE. Niş üzerinden Belgrad. Kalemegdan, Ada Ciganlija.',
+     halal:'Boşnak ızgara eti helal. Ćevapi güvenli. "Svinjsko" = domuz, kaçının!',
+     accom:'Apart otel €50-65/gece.',
+     tips:[{t:'RS Schengen dışı',c:'info'},{t:'EUR veya RSD nakit',c:'warn'}]},
+    {c:'Zagreb',co:'HR',la:45.81,lo:15.98,t:'overnight',day:2,n:1,dk:140,dt:'~2 saat',
+     desc:'3. GECE. Hırvatistan başkenti. Yukarı Şehir, Dolac Pazarı, Jelačić Meydanı.',
+     halal:'Tkalčićeva caddesinde birkaç Türk/Boşnak restoranı. Dolac pazarında taze ürünler. Döner dükkanları merkez civarında. Hırvatistan\'da EUR kullanılır.',
+     accom:'Donji Grad (aşağı şehir) bölgesi. €60-75/gece.',
+     tips:[{t:'HR 2023\'ten beri EUR kullanıyor',c:'info'},{t:'Dolac pazarı taze meyve/sebze',c:'good'}]},
+    {c:'Ljubljana',co:'SI',la:46.06,lo:14.51,t:'overnight',day:3,n:1,dk:370,dt:'~4 saat',
+     desc:'4. GECE. Masal gibi küçük başkent. Üçlü Köprü, Ljubljana Kalesi (teleferik), Preseren Meydanı.',
+     halal:'Kebap dükkanları Prešeren Meydanı civarında. Balkan mutfağı restoranları helal seçenekler sunar. Helal et sınırlı, balık ve sebze tercih edin.',
+     accom:'Merkez çok küçük, her yer yürüme mesafesinde. €65-80/gece.',
+     tips:[{t:'SI e-Vinyeti zorunlu',c:'warn'},{t:'Kale teleferik çocuklara harika',c:'good'},{t:'EUR kullanılır',c:'info'}]},
+    {c:'Münih',co:'DE',la:48.14,lo:11.58,t:'sightseeing',day:4,n:2,dk:830,dt:'~8.5 saat',
+     desc:'5-6. GECE. Salzburg üzerinden. Marienplatz, Englischer Garten (sörf dalgası!), BMW Welt (ücretsiz).',
+     halal:'Hauptbahnhof civarında döner ve kebap. Schillerstraße Türk lokantaları. Adan Market helal kasap. Viktualienmarkt\'ta meyve/sebze.',
+     accom:'Hauptbahnhof civarı pratik. €100-120/gece. Motel One uygun.',
+     tips:[{t:'AT vinyeti Salzburg geçişi için gerekli',c:'warn'},{t:'Englischer Garten çocuklarla muhteşem',c:'good'},{t:'BMW Welt ücretsiz giriş',c:'good'}]},
+    {c:'Rotterdam',co:'NL',la:51.92,lo:4.48,t:'destination',day:6,n:10,dk:0,dt:'~8 saat',
+     desc:'🎯 VARIŞ! Stuttgart → Frankfurt → Köln üzerinden Rotterdam. 10 gece.',
+     halal:'West-Kruiskade helal cennet. Tanger Markt, Istanbul Market. Endonezya mutfağı helal.',
+     accom:'Airbnb 2 oda €90-130/gece.',
+     tips:[{t:'Almanya\'da yakıt ikmali',c:'good'},{t:'OV-chipkaart alın',c:'info'}]}
+  ]
+},
+{
+  id:'romanya', name:'Romanya + Viyana', icon:'🎭',
+  tag:'Bükreş · Sibiu · Budapeşte · Viyana · Prag',
+  km:4300,
+  tolls:[
+    {n:'TR HGS',v:16},{n:'BG e-Vinyeti',v:8},{n:'RO e-Rovinieta (30 gün)',v:7},
+    {n:'HU e-Matrica',v:18},{n:'AT Vinyeti (10 gün)',v:11},
+    {n:'CZ e-Známka',v:16}
+  ],
+  stops:[
+    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'start',day:0,n:0,dk:840,dt:'~9 saat',
+     desc:'06:00 hareket. KMO üzerinden Kapıkule.',
+     tips:[{t:'TR\'de full depo',c:'good'}]},
+    {c:'Kapıkule',co:'TR',la:41.68,lo:26.56,t:'border',day:0,n:0,dk:350,dt:'~4 saat',
+     desc:'Sınır geçişi. Ruse Köprüsü üzerinden Romanya\'ya.',
+     tips:[{t:'RO vinyetini online alın',c:'warn'}]},
+    {c:'Bükreş',co:'RO',la:44.43,lo:26.10,t:'overnight',day:0,n:1,dk:280,dt:'~3.5 saat',
+     desc:'İLK GECE. Romanya başkenti. Parlamento Sarayı (dünyanın en büyük 2. binası), Eski Şehir (Lipscani).',
+     halal:'Lipscani civarında döner ve kebap dükkanları. Carrefour/Mega Image\'da helal etiketli tavuk. Romanya\'da helal et bulmak biraz zor, market tavuğu güvenli.',
+     accom:'Eski şehir civarı €40-55/gece. Apart otel tercih edin.',
+     tips:[{t:'RON para birimi, €1≈5 RON',c:'info'},{t:'Parlamento turu çocukları etkiler',c:'good'}]},
+    {c:'Sibiu',co:'RO',la:45.80,lo:24.15,t:'overnight',day:1,n:1,dk:450,dt:'~5 saat',
+     desc:'2. GECE. Transilvanya\'nın incisi! Büyük Meydan, Yalancılar Köprüsü, ASTRA açık hava müzesi.',
+     halal:'Küçük şehir, helal restoran sınırlı. Market alışverişi (peynir, ekmek, meyve) en güvenli. Pizzacılarda Margherita güvenli. Balık varsa tercih edin.',
+     accom:'Büyük Meydan civarı €40-55/gece. Çok şirin pension\'lar var.',
+     tips:[{t:'ASTRA müzesi çocuklara süper',c:'good'},{t:'Transilvanya manzarası muhteşem',c:'good'}]},
+    {c:'Budapeşte',co:'HU',la:47.50,lo:19.04,t:'overnight',day:2,n:1,dk:240,dt:'~2.5 saat',
+     desc:'3. GECE. Kısa geçiş — Tuna, Parlamento, Széchenyi hamam.',
+     halal:'Kerepesi út Türk restoranları. Langos helal. Büyük Pazar taze ürünler.',
+     accom:'Pest tarafı €65-80/gece.',
+     tips:[{t:'e-Matrica zorunlu',c:'warn'},{t:'Langos deneyin (çocuklar bayılır)',c:'good'}]},
+    {c:'Viyana',co:'AT',la:48.21,lo:16.37,t:'sightseeing',day:3,n:2,dk:330,dt:'~3.5 saat',
+     desc:'4-5. GECE. İmparatorluk başkenti. Schönbrunn Sarayı, Stephansdom, Prater lunapark (dev dönme dolap), Naschmarkt.',
+     halal:'Naschmarkt\'ta Türk ve Arap yemek tezgahları. Favoriten (10. Bölge) helal kasap ve lokanta yoğun. Etsan, Orient helal marketler. Döner/kebap her köşede.',
+     accom:'Favoriten veya Ottakring bölgeleri uygun. €100-130/gece.',
+     tips:[{t:'AT vinyeti zorunlu',c:'warn'},{t:'Prater lunapark çocuklar için harika',c:'good'},{t:'Schönbrunn bahçesi ücretsiz',c:'good'},{t:'EUR kullanılır',c:'info'}]},
+    {c:'Prag',co:'CZ',la:50.08,lo:14.44,t:'overnight',day:5,n:1,dk:570,dt:'~5.5 saat',
+     desc:'6. GECE. Kısa ama yoğun Prag molası. Karlov Köprüsü, Eski Şehir Meydanı.',
+     halal:'Wenceslas civarında kebapçılar. Trdelník helal. "Vepřové" = domuz, dikkat!',
+     accom:'Staré Město €65-80/gece.',
+     tips:[{t:'CZ e-Známka zorunlu',c:'warn'},{t:'CZK para birimi',c:'info'}]},
+    {c:'Köln',co:'DE',la:50.94,lo:6.96,t:'overnight',day:6,n:1,dk:280,dt:'~3 saat',
+     desc:'7. GECE. Dom Katedrali (UNESCO), Ren nehri yürüyüşü.',
+     halal:'Keupstraße (Mülheim) = Küçük İstanbul! Helal döner, pide, lahmacun, baklava. Ehrenfeld\'de de Türk/Arap restoranları bol.',
+     accom:'Hauptbahnhof civarı €100-120/gece.',
+     tips:[{t:'DE otoyol ücretsiz',c:'good'},{t:'Keupstraße helal cennet',c:'good'}]},
+    {c:'Rotterdam',co:'NL',la:51.92,lo:4.48,t:'destination',day:7,n:10,dk:0,dt:'~2.5 saat',
+     desc:'🎯 VARIŞ! 10 gece Rotterdam.',
+     halal:'West-Kruiskade, Tanger Markt, Istanbul Market.',
+     accom:'Airbnb €90-130/gece.',
+     tips:[{t:'NL yakıt pahalı, DE\'de doldurun',c:'warn'}]}
+  ]
 }
-
-let routeStops = [
-    {
-        id: 1, city: 'Konya', country: 'TR', lat: 37.87, lng: 32.49,
-        type: 'start', dayIndex: 0, stayNights: 0, distToNext: 840,
-        driveTime: '~9 saat',
-        notes: '06:00 hareket. Ankara-Niğde Otoyolu → Ankara Çevre Yolu → Bolu-Düzce → Kuzey Marmara Otoyolu → Edirne → Kapıkule. İstanbul trafiğine GİRMEYİN, KMO ile bypass edin.',
-        tips: [
-            { text: 'HGS bakiyesini kontrol edin', type: 'warn' },
-            { text: 'Bolu\'da mola + kahvaltı', type: 'good' },
-            { text: 'Türkiye\'de full depo yapın (en ucuz yakıt)', type: 'good' },
-            { text: 'KMO çıkışı Kınalı-Edirne istikameti', type: '' }
-        ],
-        direction: 'outbound'
-    },
-    {
-        id: 2, city: 'Kapıkule Sınır', country: 'TR', lat: 41.68, lng: 26.56,
-        type: 'border', dayIndex: 0, stayNights: 0, distToNext: 230,
-        driveTime: '~2.5 saat',
-        notes: 'Kapıkule\'ye ~15:00 varış tahmini. Pazartesi günü hafta sonuna göre daha az yoğun. Pasaport, ehliyet, ruhsat, green card, vize, çocuk nüfus cüzdanlarını hazır tutun.',
-        tips: [
-            { text: '⚠️ Yaz aylarında 1-3 saat bekleme', type: 'warn' },
-            { text: 'AB EES biyometrik kontrol olabilir', type: 'warn' },
-            { text: 'Bulgaristan vinyetini sınırda veya bgtoll.bg\'den alın', type: '' }
-        ],
-        direction: 'outbound'
-    },
-    {
-        id: 3, city: 'Plovdiv', country: 'BG', lat: 42.15, lng: 24.75,
-        type: 'overnight', dayIndex: 0, stayNights: 1, distToNext: 390,
-        driveTime: '~4 saat',
-        notes: '🛏️ İLK GECE. Sınırı geçtikten sonra ~2.5 saatte Plovdiv\'e ulaşırsınız (~19:00-20:00). Avrupa Kültür Başkenti. Eski şehir, Antik Roma tiyatrosu, Kapana bölgesi çok güzel. Çocuklar için Plovdiv Zoo yakında.',
-        tips: [
-            { text: 'Booking.com\'dan aile odası önceden ayırtın', type: '' },
-            { text: 'Şehir merkezi yürüme mesafesinde otel seçin', type: 'good' },
-            { text: 'Akşam yemeği çok uygun (~€30 aile)', type: 'good' }
-        ],
-        direction: 'outbound'
-    },
-    {
-        id: 4, city: 'Belgrad', country: 'RS', lat: 44.79, lng: 20.45,
-        type: 'overnight', dayIndex: 1, stayNights: 1, distToNext: 375,
-        driveTime: '~4 saat',
-        notes: '🛏️ 2. GECE. Sofya üzerinden Niş → Belgrad. Sırbistan gişelerinde EUR nakit kabul edilir. Kalemegdan Kalesi, Knez Mihailova caddesi, Ada Ciganlija gölü (çocuklar için mükemmel plaj). Ćevapčići mutlaka deneyin!',
-        tips: [
-            { text: 'Sırbistan Schengen DEĞİL, vize gerekmez', type: '' },
-            { text: 'RSD veya EUR nakit bulundurun', type: 'warn' },
-            { text: 'Ada Ciganlija çocuklar için süper', type: 'good' },
-            { text: 'Yemek çok uygun (~€35 aile)', type: 'good' }
-        ],
-        direction: 'outbound'
-    },
-    {
-        id: 5, city: 'Budapeşte', country: 'HU', lat: 47.50, lng: 19.04,
-        type: 'sightseeing', dayIndex: 2, stayNights: 2, distToNext: 330,
-        driveTime: '~3.5 saat',
-        notes: '🛏️ 3-4. GECE (2 gece). Macaristan sınırında e-Matrica kontrolü var! Tuna kenarı akşam yürüyüşü, Zincir Köprü, Parlamento (gece ışıklandırması muhteşem), Széchenyi Termal Hamamı (çocuklar da girebilir), Buda Kalesi. Büyük Market Hali\'nde alışveriş.',
-        tips: [
-            { text: 'e-Matrica\'yı ematrica.nemzetiutdij.hu\'dan ÖNCEDEN alın', type: 'warn' },
-            { text: 'Széchenyi termal çocuklarla harika', type: 'good' },
-            { text: 'Tram 2 hattı Tuna kıyısı muhteşem tur', type: 'good' },
-            { text: 'Langos deneyin (çocuklar bayılır)', type: 'good' }
-        ],
-        direction: 'outbound'
-    },
-    {
-        id: 6, city: 'Prag', country: 'CZ', lat: 50.08, lng: 14.44,
-        type: 'sightseeing', dayIndex: 4, stayNights: 2, distToNext: 500,
-        driveTime: '~5 saat',
-        notes: '🛏️ 5-6. GECE (2 gece). ⭐ PRAG DURAĞI! Bratislava üzerinden geçiş (Slovakya vinyeti gerekli). Karlov Köprüsü, Prag Kalesi, Eski Şehir Meydanı (Astronomik Saat), Petřín Tepesi (teleferik - çocuklar sever). Trdelník (baca böreği) deneyin!',
-        tips: [
-            { text: 'Slovakya e-Známka zorunlu (Budapeşte→Bratislava)', type: 'warn' },
-            { text: 'Çekya e-Známka zorunlu', type: 'warn' },
-            { text: 'Petřín teleferik + ayna labirenti çocuklara', type: 'good' },
-            { text: 'Prag çok uygun fiyatlı (Batı Avrupa\'nın yarısı)', type: 'good' }
-        ],
-        direction: 'outbound'
-    },
-    {
-        id: 7, city: 'Frankfurt', country: 'DE', lat: 50.11, lng: 8.68,
-        type: 'overnight', dayIndex: 6, stayNights: 1, distToNext: 440,
-        driveTime: '~4.5 saat',
-        notes: '🛏️ 7. GECE. Prag → Nürnberg (A6) → Frankfurt. Almanya\'da otoyol ücretsiz! Römerberg meydanı, Main nehri kıyısı yürüyüşü. Sachsenhausen bölgesinde Apfelwein (elma şarabı). Nürnberg\'de mola verip kaleyi görebilirsiniz.',
-        tips: [
-            { text: 'Almanya otoyol ücretsiz ✓', type: 'good' },
-            { text: 'Autobahn\'da hız sınırsız bölümler var, dikkat!', type: 'warn' },
-            { text: 'Almanya\'da yakıt pahalı, Çekya\'da doldurun', type: 'good' }
-        ],
-        direction: 'outbound'
-    },
-    {
-        id: 8, city: 'Rotterdam', country: 'NL', lat: 51.92, lng: 4.48,
-        type: 'destination', dayIndex: 7, stayNights: 10, distToNext: 0,
-        driveTime: '~4.5 saat',
-        notes: '🎯 VARIŞ! 🛏️ 8-17. GECE (10 gece). Frankfurt → Köln (Dom Katedrali mola) → Rotterdam. Erasmus Köprüsü, Markthal, Küp Evler, Kinderdijk yel değirmenleri (UNESCO), Europoort. Amsterdam\'a tren 1.5 saat, Den Haag 30 dk. Airbnb ile konaklama otel\'den çok daha uygun!',
-        tips: [
-            { text: 'Airbnb/apart otel çok daha uygun (6 kişi)', type: 'good' },
-            { text: 'Hollanda\'da yakıt en pahalı, Almanya\'da doldurun', type: 'warn' },
-            { text: 'OV-chipkaart alın (toplu taşıma)', type: '' },
-            { text: 'Kinderdijk çocuklarla günübirlik süper', type: 'good' },
-            { text: 'Albert Heijn market ucuz alışveriş', type: 'good' }
-        ],
-        direction: 'outbound'
-    },
-    // === ROTTERDAM STAY ===
-    {
-        id: 9, city: 'Rotterdam Günleri', country: 'NL', lat: 51.92, lng: 4.48,
-        type: 'destination', dayIndex: 8, stayNights: 0, distToNext: 0,
-        driveTime: '',
-        notes: '📅 ROTTERDAM\'DA 10 GÜN. Önerilen günübirlik geziler: 🚂 Amsterdam (tren 1.5 saat) — Anne Frank Evi, kanal turu, Rijksmuseum. 🚂 Den Haag (30 dk) — Madurodam minyatür parkı (çocuklar!), Scheveningen plajı. 🚗 Kinderdijk yel değirmenleri. 🚗 Delft — porselen fabrikası. 🚗 Gouda — peynir pazarı (Perşembe).',
-        tips: [
-            { text: 'Amsterdam NS treni ile gidin (park çok zor)', type: 'good' },
-            { text: 'Madurodam çocuklar için 1 numara', type: 'good' },
-            { text: 'Gouda peynir pazarı sadece Perşembe', type: '' },
-            { text: 'Scheveningen plajı sıcak günler için', type: 'good' }
-        ],
-        direction: 'rotterdam'
-    },
-    // === DÖNÜŞ: İtalya üzerinden ===
-    {
-        id: 10, city: 'Rotterdam', country: 'NL', lat: 51.92, lng: 4.48,
-        type: 'start', dayIndex: 18, stayNights: 0, distToNext: 600,
-        driveTime: '~6 saat',
-        notes: 'DÖNÜŞ BAŞLIYOR. Rotterdam → Köln → Frankfurt → Stuttgart. Almanya\'da son yakıt ikmali (Hollanda\'dan ucuz). Otobanda mola noktaları çocuklar için oyun alanı olan Raststätte\'ler.',
-        tips: [
-            { text: 'Almanya\'da yakıt ikmali yapın', type: 'good' },
-            { text: 'Raststätte molalarında çocuk parkı var', type: 'good' }
-        ],
-        direction: 'return'
-    },
-    {
-        id: 11, city: 'Münih', country: 'DE', lat: 48.14, lng: 11.58,
-        type: 'overnight', dayIndex: 18, stayNights: 1, distToNext: 380,
-        driveTime: '',
-        notes: '🛏️ 18. GECE. Stuttgart → Münih (~220 km). Marienplatz, Englischer Garten (çocuklar için büyük park + sörf dalgası), BMW Welt (ücretsiz müze). Weisswurst + Breze (Bavyera kahvaltısı) deneyin.',
-        tips: [
-            { text: 'Englischer Garten çocuklarla muhteşem', type: 'good' },
-            { text: 'BMW Welt ücretsiz giriş', type: 'good' },
-            { text: 'Avusturya vinyetini Münih\'te online alın', type: 'warn' }
-        ],
-        direction: 'return'
-    },
-    {
-        id: 12, city: 'Verona', country: 'IT', lat: 45.44, lng: 10.99,
-        type: 'overnight', dayIndex: 19, stayNights: 1, distToNext: 120,
-        driveTime: '~4 saat',
-        notes: '🛏️ 19. GECE. Münih → Innsbruck → Brenner Geçidi (Alpler muhteşem manzara!) → Verona. İtalya\'ya hoş geldiniz! Romeo & Juliet balkonu, Arena di Verona (antik amfi tiyatro), Piazza delle Erbe. İtalyan gelato başlıyor!',
-        tips: [
-            { text: 'Brenner geçidi manzarası için mola verin', type: 'good' },
-            { text: 'Avusturya vinyeti + Brenner özel ücreti', type: 'warn' },
-            { text: 'İtalya otoyol gişelerde nakit veya kart', type: '' },
-            { text: 'Gelato + pizza çocukların favorisi', type: 'good' }
-        ],
-        direction: 'return'
-    },
-    {
-        id: 13, city: 'Venedik', country: 'IT', lat: 45.44, lng: 12.34,
-        type: 'sightseeing', dayIndex: 20, stayNights: 1, distToNext: 300,
-        driveTime: '~1.5 saat',
-        notes: '🛏️ 20. GECE. Verona → Venedik (~1.5 saat). ⭐ VENEDİK! Aracı Mestre veya Tronchetto\'ya park edin, vaporetto ile adaya geçin. San Marco Meydanı, Rialto Köprüsü, gondol turu (pahalı ama bir kerelik), Murano cam adası. Çocuklar vaporetto (su otobüsü) ile çılgına döner!',
-        tips: [
-            { text: 'Arabayı Mestre\'de park edin (ada yasak)', type: 'warn' },
-            { text: 'Vaporetto 24 saatlik aile bileti alın', type: 'good' },
-            { text: 'Murano cam yapımı çocukları büyüler', type: 'good' },
-            { text: 'Gondol ~€80-100/tekne (30 dk)', type: '' }
-        ],
-        direction: 'return'
-    },
-    {
-        id: 14, city: 'Ancona (Feribot)', country: 'IT', lat: 43.62, lng: 13.52,
-        type: 'border', dayIndex: 21, stayNights: 0, distToNext: 0,
-        driveTime: '~3.5 saat',
-        notes: '⛴️ FERİBOT! Venedik/Mestre → Ancona (~3.5 saat). Akşam feribotuna binin. Ancona → İgoumenitsa (Yunanistan). Sefer: ~16-20 saat gece feribotu. Operatörler: Minoan Lines, Anek Lines, Superfast. KABİN ALIN (6 kişi 2 kabin). Araç güvertede kalır.',
-        tips: [
-            { text: 'Feribot biletini ÖNCEDEN directferries.com\'dan alın', type: 'warn' },
-            { text: '2 kabin alın (4+2 kişilik)', type: '' },
-            { text: 'Feribotta restoran + güverte + çocuk alanı var', type: 'good' },
-            { text: 'Araç yüksekliği Vito için sorun değil', type: 'good' }
-        ],
-        direction: 'return'
-    },
-    {
-        id: 15, city: 'Denizde (Feribot)', country: 'SEA', lat: 40.50, lng: 18.00,
-        type: 'border', dayIndex: 22, stayNights: 0, distToNext: 580,
-        driveTime: 'Feribot ~16-20 saat',
-        notes: '⛴️ DENİZDE. Adriyatik Denizi geçişi. Kabinde uyku, güvertede güneşlenme, çocuklar için oyun alanı. Sabah/öğlen İgoumenitsa\'ya varış. Yunanistan Schengen bölgesi.',
-        tips: [
-            { text: 'Kabinde priz var, cihazları şarj edin', type: '' },
-            { text: 'Güvertede yunus görebilirsiniz!', type: 'good' },
-            { text: 'Feribotta duty-free alışveriş', type: '' }
-        ],
-        direction: 'return'
-    },
-    {
-        id: 16, city: 'Selanik', country: 'GR', lat: 40.63, lng: 22.94,
-        type: 'overnight', dayIndex: 23, stayNights: 1, distToNext: 280,
-        driveTime: '~4 saat',
-        notes: '🛏️ 21. GECE. İgoumenitsa → Egnatia Odos otoyolu → Selanik (~4 saat). Beyaz Kule, sahil yürüyüşü, Ladadika bölgesi akşam yemeği. Çocuklar için Selanik Bilim Merkezi. Yunan mutfağı: Gyros, Souvlaki, Moussaka. Ucuz ve lezzetli!',
-        tips: [
-            { text: 'Egnatia Odos gişeli otoyol', type: '' },
-            { text: 'Yunan yemekleri çok lezzetli ve uygun', type: 'good' },
-            { text: 'Sahilde akşam yürüyüşü çocuklarla güzel', type: 'good' }
-        ],
-        direction: 'return'
-    },
-    {
-        id: 17, city: 'İpsala Sınır', country: 'GR', lat: 40.92, lng: 26.38,
-        type: 'border', dayIndex: 24, stayNights: 0, distToNext: 900,
-        driveTime: '~3 saat',
-        notes: 'Selanik → Kavala → Kipi/İpsala sınır kapısı (~3 saat). Schengen\'den çıkış. Türkiye\'ye giriş! Kapıkule\'den daha az yoğun. Edirne\'de Selimiye Camii + tava ciğer molası.',
-        tips: [
-            { text: 'İpsala Kapıkule\'den daha az beklemeli', type: 'good' },
-            { text: 'Edirne\'de tava ciğer yemeyi unutmayın!', type: 'good' },
-            { text: 'Türkiye\'ye girişte gümrük kontrolü', type: '' }
-        ],
-        direction: 'return'
-    },
-    {
-        id: 18, city: 'Konya', country: 'TR', lat: 37.87, lng: 32.49,
-        type: 'destination', dayIndex: 25, stayNights: 0, distToNext: 0,
-        driveTime: '~9 saat',
-        notes: '🏠 EVE DÖNÜŞ! İpsala → Keşan → Kuzey Marmara Otoyolu → Bolu → Ankara → Konya. Uzun son gün (~900 km). Sabah erken çıkın. Bolu\'da öğle molası. Toplam tur: ~7,800 km, 27 gün, 7 ülke!',
-        tips: [
-            { text: 'Son gün çok uzun, sabah erken hareket', type: 'warn' },
-            { text: 'Bolu Dağı Tüneli\'nden geçin', type: '' },
-            { text: '🎉 Toplam ~7,800 km tamamlandı!', type: 'good' }
-        ],
-        direction: 'return'
-    }
 ];
 
+/* ═══════ DÖNÜŞ ROTALARI ═══════ */
+const RETURN = [
+{
+  id:'italy', name:'Klasik İtalya', icon:'🇮🇹',
+  tag:'Münih · Verona · Venedik · Ancona Feribotu',
+  km:3200,
+  ferryFrom:'Ancona', ferryTo:'İgoumenitsa', ferryCost:600,
+  tolls:[
+    {n:'AT Vinyeti + Brenner',v:24},{n:'IT Autostrada gişeleri',v:50},
+    {n:'GR Egnatia Odos',v:15},{n:'TR HGS (İpsala-Konya)',v:16}
+  ],
+  stops:[
+    {c:'Rotterdam',co:'NL',la:51.92,lo:4.48,t:'start',day:0,n:0,dk:830,dt:'~8 saat',
+     desc:'DÖNÜŞ BAŞLIYOR. Frankfurt üzerinden güneye.',
+     tips:[{t:'DE\'de yakıt ikmali',c:'good'}]},
+    {c:'Münih',co:'DE',la:48.14,lo:11.58,t:'overnight',day:0,n:1,dk:380,dt:'~4 saat',
+     desc:'1. GECE. Son Almanya molası. Englischer Garten, Marienplatz.',
+     halal:'Schillerstraße Türk lokantaları. Adan Market helal kasap.',
+     accom:'€100-120/gece.',
+     tips:[{t:'AT vinyetini online alın',c:'warn'},{t:'Englischer Garten çocuklarla güzel',c:'good'}]},
+    {c:'Verona',co:'IT',la:45.44,lo:10.99,t:'overnight',day:1,n:1,dk:120,dt:'~4 saat',
+     desc:'2. GECE. Brenner Geçidi — Alpler muhteşem! Romeo & Juliet, Arena, Piazza delle Erbe.',
+     halal:'Pizza Margherita genelde güvenli. Deniz ürünleri helal. Via Mazzini civarında birkaç kebapçı. Coop/Esselunga\'da helal etiketli tavuk.',
+     accom:'Merkez civarı €90-110/gece.',
+     tips:[{t:'Brenner manzarası için mola',c:'good'},{t:'AT vinyeti + Brenner özel ücreti',c:'warn'},{t:'Gelato + pizza çocuk favorisi',c:'good'}]},
+    {c:'Venedik',co:'IT',la:45.44,lo:12.34,t:'sightseeing',day:2,n:1,dk:300,dt:'~1.5 saat',
+     desc:'3. GECE. ⭐ VENEDİK! Arabayı Mestre\'ye park edin. San Marco, Rialto, Murano cam adası.',
+     halal:'Ada\'da helal restoran neredeyse yok. Mestre\'de döner dükkanları. Pizza ve deniz ürünleri güvenli. Rialto balık pazarında taze deniz ürünü. Gelato helal.',
+     accom:'Mestre\'de otel €80-100/gece. Ada\'da çok pahalı, Mestre tercih edin.',
+     tips:[{t:'Arabayı Mestre\'de park (ada yasak)',c:'warn'},{t:'Vaporetto 24h aile bileti alın',c:'good'},{t:'Murano cam yapımı çocukları büyüler',c:'good'}]},
+    {c:'Ancona',co:'IT',la:43.62,lo:13.52,t:'ferry',day:3,n:0,dk:0,dt:'~3.5 saat',
+     desc:'⛴️ FERİBOT! Akşam feribotu. Ancona → İgoumenitsa (~16-20 saat). Operatörler: Minoan, Anek, Superfast. 2 KABİN ALIN.',
+     halal:'Feribotta restoran var ama helal seçenek sınırlı. Binmeden önce Ancona\'da yemek yiyin veya yanınıza erzak alın.',
+     tips:[{t:'Bilet ÖNCEDEN directferries.com',c:'warn'},{t:'2 kabin alın (4+2)',c:'info'},{t:'Feribotta çocuk oyun alanı var',c:'good'}]},
+    {c:'Denizde',co:'SEA',la:40.50,lo:18.00,t:'ferry',day:4,n:0,dk:330,dt:'Feribot ~18 saat',
+     desc:'⛴️ Adriyatik geçişi. Kabinde uyku, güvertede güneşlenme. Sabah İgoumenitsa varış.',
+     tips:[{t:'Kabinde priz var, şarj edin',c:'info'},{t:'Güvertede yunus görebilirsiniz!',c:'good'}]},
+    {c:'Selanik',co:'GR',la:40.63,lo:22.94,t:'overnight',day:5,n:1,dk:280,dt:'~4 saat',
+     desc:'4. GECE. İgoumenitsa → Egnatia Odos → Selanik. Beyaz Kule, sahil yürüyüşü.',
+     halal:'DİKKAT: Yunan gyros genelde domuz! "Kotopoulo" (tavuk) isteyin. Ladadika\'da balık restoranları güvenli. Sahilde meyve suyu ve tatlıcılar.',
+     accom:'Sahil civarı €60-80/gece.',
+     tips:[{t:'Gyros\'ta "kotopoulo" (tavuk) isteyin!',c:'warn'},{t:'Yunan yemekleri lezzetli ve uygun',c:'good'},{t:'EUR kullanılır',c:'info'}]},
+    {c:'İpsala Sınır',co:'GR',la:40.92,lo:26.38,t:'border',day:6,n:0,dk:900,dt:'~3 saat',
+     desc:'Schengen çıkış. Edirne\'de Selimiye + tava ciğer molası.',
+     tips:[{t:'İpsala Kapıkule\'den az beklemeli',c:'good'},{t:'Edirne tava ciğer!',c:'good'}]},
+    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'end',day:6,n:0,dk:0,dt:'~9 saat',
+     desc:'🏠 EVE DÖNÜŞ! KMO → Bolu → Ankara → Konya. Uzun son gün, sabah erken çıkın.',
+     tips:[{t:'Son gün çok uzun, erken hareket',c:'warn'},{t:'Bolu\'da öğle molası',c:'good'}]}
+  ]
+},
+{
+  id:'swiss', name:'İsviçre + Milano', icon:'🇨🇭',
+  tag:'Lüksemburg · Luzern · Milano · Ancona Feribotu',
+  km:3400,
+  ferryFrom:'Ancona', ferryTo:'İgoumenitsa', ferryCost:600,
+  tolls:[
+    {n:'CH Vinyeti (yıllık)',v:43},{n:'IT Autostrada',v:40},
+    {n:'GR Egnatia Odos',v:15},{n:'TR HGS',v:16}
+  ],
+  stops:[
+    {c:'Rotterdam',co:'NL',la:51.92,lo:4.48,t:'start',day:0,n:0,dk:320,dt:'~3.5 saat',
+     desc:'DÖNÜŞ. Belçika üzerinden güneye.',
+     tips:[{t:'Erken çıkış',c:'info'}]},
+    {c:'Lüksemburg',co:'LU',la:49.61,lo:6.13,t:'overnight',day:0,n:1,dk:420,dt:'~4.5 saat',
+     desc:'1. GECE. Minik ama zengin başkent. Casemates du Bock, Corniche yürüyüşü. Ücretsiz toplu taşıma!',
+     halal:'Gare bölgesinde birkaç Türk/Arap kebapçısı. Auchan/Cactus marketlerinde helal ürünler. Küçük şehir ama kebap bulunur.',
+     accom:'Gare civarı €100-120/gece.',
+     tips:[{t:'Toplu taşıma tamamen ücretsiz!',c:'good'},{t:'EUR kullanılır',c:'info'}]},
+    {c:'Luzern',co:'CH',la:47.05,lo:8.31,t:'overnight',day:1,n:1,dk:280,dt:'~3 saat',
+     desc:'2. GECE. Strasbourg üzerinden. Kapellbrücke (ahşap köprü), göl manzarası, Alpler panoraması.',
+     halal:'İsviçre pahalı ama merkez civarında kebap dükkanları var. Manor Food süpermarket çeşitli seçenekler. Kendi yemeğinizi hazırlamak bütçe dostu.',
+     accom:'PAHALII! €130-160/gece. Airbnb tercih edin.',
+     tips:[{t:'CH vinyeti 40 CHF zorunlu',c:'warn'},{t:'İsviçre çok pahalı, bütçeye dikkat',c:'warn'},{t:'CHF para birimi, €1≈0.95 CHF',c:'info'},{t:'Göl kıyısı çocuklarla güzel',c:'good'}]},
+    {c:'Milano',co:'IT',la:45.46,lo:9.19,t:'overnight',day:2,n:1,dk:420,dt:'~4 saat',
+     desc:'3. GECE. Gotthard tüneli. Duomo, Galleria Vittorio Emanuele, Navigli kanalları.',
+     halal:'Via Padova Arap/Afrika bölgesi — helal restoran ve kasap yoğun. Porta Venezia civarında da seçenekler. Pizza ve risotto güvenli.',
+     accom:'Stazione Centrale civarı €90-110/gece.',
+     tips:[{t:'Gotthard tüneli uzun, sıra olabilir',c:'warn'},{t:'Via Padova helal bölge',c:'good'}]},
+    {c:'Ancona',co:'IT',la:43.62,lo:13.52,t:'ferry',day:3,n:0,dk:0,dt:'~4 saat',
+     desc:'⛴️ Bologna üzerinden Ancona. Akşam feribotu İgoumenitsa\'ya.',
+     halal:'Binmeden yemek yiyin veya erzak alın.',
+     tips:[{t:'Bilet önceden alın',c:'warn'},{t:'2 kabin alın',c:'info'}]},
+    {c:'Denizde',co:'SEA',la:40.50,lo:18.00,t:'ferry',day:4,n:0,dk:330,dt:'~18 saat',
+     desc:'⛴️ Adriyatik geçişi.',
+     tips:[{t:'Güvertede yunus!',c:'good'}]},
+    {c:'Selanik',co:'GR',la:40.63,lo:22.94,t:'overnight',day:5,n:1,dk:280,dt:'~4 saat',
+     desc:'4. GECE. Beyaz Kule, Ladadika.',
+     halal:'"Kotopoulo" (tavuk) isteyin! Balık güvenli.',
+     accom:'€60-80/gece.',
+     tips:[{t:'Gyros\'ta domuz dikkat!',c:'warn'}]},
+    {c:'İpsala',co:'GR',la:40.92,lo:26.38,t:'border',day:6,n:0,dk:900,dt:'~3 saat',
+     desc:'Schengen çıkış. Edirne molası.',
+     tips:[{t:'İpsala az beklemeli',c:'good'}]},
+    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'end',day:6,n:0,dk:0,dt:'~9 saat',
+     desc:'🏠 EVE DÖNÜŞ!',
+     tips:[{t:'Sabah erken hareket',c:'warn'}]}
+  ]
+},
+{
+  id:'france', name:'Fransa + Roma', icon:'🇫🇷',
+  tag:'Paris · Lyon · Nice · Roma · Bari Feribotu',
+  km:4600,
+  ferryFrom:'Bari', ferryTo:'İgoumenitsa', ferryCost:550,
+  tolls:[
+    {n:'FR Péage otoyol gişeleri',v:70},{n:'IT Autostrada',v:55},
+    {n:'GR Egnatia Odos',v:15},{n:'TR HGS',v:16}
+  ],
+  stops:[
+    {c:'Rotterdam',co:'NL',la:51.92,lo:4.48,t:'start',day:0,n:0,dk:500,dt:'~5 saat',
+     desc:'DÖNÜŞ. Brüksel üzerinden Paris\'e.',
+     tips:[{t:'Belçika geçiş ücretsiz',c:'good'}]},
+    {c:'Paris',co:'FR',la:48.86,lo:2.35,t:'sightseeing',day:0,n:2,dk:460,dt:'~4.5 saat',
+     desc:'1-2. GECE. ⭐ PARİS! Eyfel, Louvre, Notre-Dame, Champs-Élysées. Çocuklar için Disneyland (günübirlik).',
+     halal:'Belleville, Barbès, Goutte d\'Or helal cennet! Rue du Faubourg Saint-Denis dönerci ve kebapçılarla dolu. Quick fast food bazı şubeleri tamamen helal.',
+     accom:'10. veya 11. bölge uygun fiyatlı. €90-120/gece. Metro ile her yere ulaşım.',
+     tips:[{t:'Arabayı park edin, metro kullanın',c:'good'},{t:'Belleville helal restoran bölgesi',c:'good'},{t:'FR gişeli otoyol (péage)',c:'warn'},{t:'EUR kullanılır',c:'info'}]},
+    {c:'Lyon',co:'FR',la:45.76,lo:4.84,t:'overnight',day:2,n:1,dk:470,dt:'~4.5 saat',
+     desc:'3. GECE. Fransa\'nın gastronomi başkenti. Vieux Lyon, Fourvière tepesi.',
+     halal:'Guillotière bölgesi Arap/Türk restoranları dolu. Halal boucheries var. Lyon mutfağı domuz ağırlıklı — DİKKAT! Kebapçılar ve balık güvenli.',
+     accom:'Presqu\'île bölgesi €80-100/gece.',
+     tips:[{t:'Lyon mutfağı domuz ağırlıklı, dikkat',c:'warn'},{t:'Guillotière helal bölge',c:'good'}]},
+    {c:'Nice',co:'FR',la:43.71,lo:7.26,t:'overnight',day:3,n:1,dk:530,dt:'~5.5 saat',
+     desc:'4. GECE. Côte d\'Azur! Promenade des Anglais, eski şehir, plaj. Çocuklar denize bayılır.',
+     halal:'Eski şehirde birkaç kebapçı. Socca (nohut pankeki) yerel helal spesiyalite. Deniz ürünleri bol ve güvenli.',
+     accom:'Sahil yakını €90-110/gece.',
+     tips:[{t:'Plaj çocuklar için süper',c:'good'},{t:'Socca deneyin (helal yerel lezzet)',c:'good'}]},
+    {c:'Roma',co:'IT',la:41.90,lo:12.50,t:'sightseeing',day:4,n:2,dk:450,dt:'~6 saat',
+     desc:'5-6. GECE. ⭐ ROMA! Kolezyum, Vatikan, Trevi Çeşmesi, Pantheon. Çocuklar gladyatör hikayeleriyle büyülenir.',
+     halal:'Esquilino (Termini yakını) çok kültürlü, kebap dükkanları. Via Cavour Arap/Hint restoranları. Pizza al taglio güvenli. Roma Büyük Camii ziyaret edilebilir.',
+     accom:'Termini civarı €90-110/gece. Metro ile her yere.',
+     tips:[{t:'Esquilino helal bölge',c:'good'},{t:'Vatikan kuyruğu uzun, online bilet',c:'warn'},{t:'Pizza al taglio ucuz ve helal',c:'good'}]},
+    {c:'Bari',co:'IT',la:41.12,lo:16.87,t:'ferry',day:6,n:0,dk:0,dt:'~4.5 saat',
+     desc:'⛴️ Bari → İgoumenitsa feribotu (~12 saat). Daha kısa deniz yolu.',
+     halal:'Bari\'de limon çıkmadan yemek yiyin. Focaccia Barese (zeytinyağlı ekmek) helal.',
+     tips:[{t:'Bari feribotu Ancona\'dan kısa',c:'good'},{t:'Bilet önceden alın',c:'warn'}]},
+    {c:'Selanik',co:'GR',la:40.63,lo:22.94,t:'overnight',day:7,n:1,dk:280,dt:'~4 saat',
+     desc:'7. GECE. İgoumenitsa → Selanik.',
+     halal:'"Kotopoulo" tavuk isteyin. Balık güvenli.',
+     accom:'€60-80/gece.',
+     tips:[{t:'Gyros domuz olabilir, dikkat!',c:'warn'}]},
+    {c:'İpsala',co:'GR',la:40.92,lo:26.38,t:'border',day:8,n:0,dk:900,dt:'~3 saat',
+     desc:'Schengen çıkış.',
+     tips:[{t:'Edirne tava ciğer molası',c:'good'}]},
+    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'end',day:8,n:0,dk:0,dt:'~9 saat',
+     desc:'🏠 EVE DÖNÜŞ!',
+     tips:[{t:'Uzun gün, erken hareket',c:'warn'}]}
+  ]
+}
+];
+
+/* ═══════ ROTTERDAM GÜNLERİ ═══════ */
+const RDAM_INFO = {
+  desc:'10 gün Rotterdam\'da! Günübirlik geziler:',
+  items:[
+    {title:'🚂 Amsterdam (tren 1.5 saat)', text:'Anne Frank Evi, kanal turu, Rijksmuseum. NS treni ile gidin, park imkansız. Halal: De Pijp bölgesi, Albert Cuyp Market.'},
+    {title:'🚂 Den Haag (30 dk)', text:'Madurodam minyatür parkı (çocuklar!), Scheveningen plajı. Halal: Hobbemastraat Türk dükkanları.'},
+    {title:'🚗 Kinderdijk', text:'UNESCO yel değirmenleri. Çocuklar değirmenlerin içine girebilir. Bisiklet kiralayın.'},
+    {title:'🚗 Delft', text:'Porselen fabrikası, küçük kanallar. Yarım günlük gezi.'},
+    {title:'🚗 Gouda', text:'Peynir pazarı (sadece Perşembe!). Stroopwafel deneyin.'},
+    {title:'🏠 Rotterdam\'da', text:'Markthal, Küp Evler, Erasmus Köprüsü, Europoort liman turu, Diergaarde Blijdorp hayvanat bahçesi.'}
+  ]
+};
+
+/* ═══════ İPUÇLARI ═══════ */
 const TIPS = [
-    {
-        icon: 'fas fa-child', color: 'linear-gradient(135deg, #ec4899, #8b5cf6)',
-        title: 'Çocuklu Seyahat',
-        text: 'Her 2-3 saatte mola verin. Tablet + kulaklık, boyama kitabı, atıştırmalık hazır olsun. Vito\'nun arkasına yastık/battaniye koyun, uzun yollarda uyurlar. Benzinliklerde çocuk WC\'si olan yerleri tercih edin.'
-    },
-    {
-        icon: 'fas fa-gas-pump', color: 'var(--gradient-warm)',
-        title: 'Yakıt Stratejisi',
-        text: 'En ucuz: Türkiye (€1.25) ve Çekya (€1.55). En pahalı: Hollanda (€2.30). Sınır geçmeden MUTLAKA doldurun. Vito deposu ~75L, full depoyla ~900 km. Macaristan ve Sırbistan da nispeten uygun.'
-    },
-    {
-        icon: 'fas fa-passport', color: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
-        title: 'Vize & Belgeler (6 kişi)',
-        text: '4 yetişkin × €90 + 2 çocuk × €45 = €450 vize. Yanınızda: pasaportlar, vize, ehliyet, uluslararası ehliyet, ruhsat, green card, otel rezervasyonları, seyahat sigortası poliçesi, çocuk nüfus cüzdanları.'
-    },
-    {
-        icon: 'fas fa-road', color: 'var(--gradient-accent)',
-        title: 'Vinyetler & Geçişler',
-        text: 'TÜM vinyetleri ÖNCEDEN online alın: Bulgaristan (bgtoll.bg), Macaristan (ematrica.nemzetiutdij.hu), Slovakya (eznamka.sk), Çekya (edalnice.cz), Avusturya (asfinag.at). Avusturya dijital vinyette 18 gün bekleme süresi var!'
-    },
-    {
-        icon: 'fas fa-ship', color: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
-        title: 'İtalya-Yunanistan Feribotu',
-        text: 'Ancona → İgoumenitsa: ~16-20 saat gece feribotu. directferries.com veya anek.gr\'den bilet alın. Araç + 6 kişi + 2 kabin: ~€500-700. Yaz sezonu ÖNCEden ayırtın! Minoan Lines, Anek Lines veya Superfast tercih edin.'
-    },
-    {
-        icon: 'fas fa-bed', color: 'var(--gradient-primary)',
-        title: 'Konaklama (6 kişi)',
-        text: 'Booking.com\'dan "aile odası" veya Airbnb\'den "tüm ev" arayın. Balkanlar\'da (BG/RS) €40-55/gece, Orta Avrupa (HU/CZ) €60-80, Batı Avrupa (DE/NL) €100-130. Rotterdam\'da Airbnb otel\'den %40 ucuz!'
-    },
-    {
-        icon: 'fas fa-car', color: 'linear-gradient(135deg, #64748b, #94a3b8)',
-        title: 'Araç Hazırlığı (Vito)',
-        text: 'Kontrol: motor yağı, antifriz, lastik basıncı, fren, farlar. Yanınızda: stepne, kriko, reflektör yelek (AB\'de HERKESe zorunlu), yangın söndürücü, ilk yardım çantası, çekme halatı, yedek ampul seti.'
-    },
-    {
-        icon: 'fas fa-utensils', color: 'linear-gradient(135deg, #10b981, #f59e0b)',
-        title: 'Yemek Bütçesi (6 kişi)',
-        text: 'Market alışverişi her yerde en ucuz. Vito\'ya soğutucu çanta koyun (su, meyve, sandviç). Balkanlar\'da dışarıda yemek ~€30-40/aile. Batı Avrupa\'da market + ara sıra dışarı ~€60-80/gün. Lidl/Aldi/Biedronka ucuz marketler.'
-    }
+  {icon:'fas fa-sim-card', bg:'var(--teal)', title:'SIM Kart & İnternet',
+   text:'Türkiye\'den çıkmadan Vodafone/Turkcell roaming paketlerini kontrol edin (pahalı olabilir). En ekonomik: AB\'ye girince eSIM kullanın — Airalo veya Holafly uygulamaları €10-15 arası 30 gün AB geneli data. Sırbistan Schengen dışı, ayrı data paketi gerekebilir.'},
+  {icon:'fas fa-road', bg:'var(--accent)', title:'Vinyetler & Otoyol Geçişleri',
+   text:'TÜM vinyetleri ÖNCEDEN online alın: Bulgaristan (bgtoll.bg), Macaristan (ematrica.nemzetiutdij.hu), Slovakya (eznamka.sk), Çekya (edalnice.cz), Avusturya (asfinag.at — 18 gün bekleme süresi var!), Romanya (rovinieta.ro). Almanya/Hollanda ücretsiz. İtalya/Fransa/Yunanistan gişeli.'},
+  {icon:'fas fa-passport', bg:'var(--red)', title:'Vize & Belgeler (6 Kişi)',
+   text:'4 yetişkin × €90 + 2 çocuk × €45 = €450 vize ücreti + VFS hizmet bedeli ~€240. Yanınızda: pasaportlar, vize, ehliyet, uluslararası ehliyet, ruhsat, green card, otel rezervasyonları, seyahat sigortası, çocuk nüfus cüzdanları. Green Card sigortayı 2 hafta ÖNCEDEN başvurun.'},
+  {icon:'fas fa-ship', bg:'#5B86E5', title:'İtalya → Yunanistan Feribotu',
+   text:'Ancona→İgoumenitsa: ~16-20 saat gece feribotu. Bari→İgoumenitsa: ~12 saat. directferries.com veya anek.gr\'den bilet. Araç + 6 kişi + 2 kabin: ~€500-700. YAZ SEZONU erken ayırtın! Minoan Lines, Anek Lines, Superfast tercih edin.'},
+  {icon:'fas fa-utensils', bg:'var(--green)', title:'Helal Yemek Stratejisi',
+   text:'Almanya, Hollanda, Fransa = helal cennet (Türk/Arap nüfusu yoğun). Balkanlar = Boşnak ızgara eti genelde helal. İtalya = pizza + deniz ürünleri güvenli. Yunanistan = gyros\'ta DOMUZ var, tavuk isteyin! Her yerde: market + soğutucu çanta = en ucuz. Vito\'ya soğutucu çanta koyun.'},
+  {icon:'fas fa-gas-pump', bg:'var(--amber)', title:'Yakıt Stratejisi',
+   text:'En ucuz: Türkiye (€1.25), Çekya (€1.55), Lüksemburg (€1.55). En pahalı: Hollanda (€2.30), İsviçre (€2.10). Sınır geçmeden MUTLAKA doldurun! Vito deposu ~75L, full depoyla ~900 km. Almanya\'dan Hollanda\'ya geçmeden son istasyonda durun.'},
+  {icon:'fas fa-child', bg:'var(--accent)', title:'Çocuklu Seyahat',
+   text:'Her 2-3 saatte mola. Tablet + kulaklık, boyama kitabı, atıştırmalık hazır. Vito arkasına yastık/battaniye. AB\'de 135 cm altı çocuklara uygun koltuk ZORUNLU. Vito\'da 6 adet reflektör yelek bulunmalı (AB yasası). Raststätte molalarında çocuk parkı var (Almanya).'},
+  {icon:'fas fa-car', bg:'var(--muted)', title:'Araç Hazırlığı (Vito)',
+   text:'Kontrol: motor yağı, antifriz, lastik basıncı, fren, farlar. Yanınızda: stepne, kriko, 6 reflektör yelek (AB ZORUNLU), yangın söndürücü, ilk yardım çantası, çekme halatı, yedek ampul seti. Avusturya\'da floresan yelek zorunlu.'},
+  {icon:'fas fa-coins', bg:'var(--teal)', title:'Para Birimleri',
+   text:'EUR: Almanya, Hollanda, Avusturya, İtalya, Fransa, Yunanistan, Hırvatistan, Slovenya, Lüksemburg. Diğer: BGN (€1≈2), RSD (€1≈117 nakit!), HUF (€1≈400), CZK (€1≈25), RON (€1≈5), CHF (€1≈0.95). Sırbistan\'da EUR nakit de kabul edilir.'},
+  {icon:'fas fa-tachometer-alt', bg:'var(--red)', title:'Hız Sınırları (Otoyol)',
+   text:'TR:120 · BG:140 · RS:130 · HR:130 · SI:130 · HU:130 · AT:130 · CZ:130 · DE:sınırsız (önerilen 130) · NL:100(!) · IT:130 · FR:130 · CH:120 · RO:130 · GR:130. Hollanda\'da 100 km/h aşımı ciddi ceza!'},
+  {icon:'fas fa-mosque', bg:'var(--accent)', title:'Namaz & Camiler',
+   text:'Muslim Pro veya HalalTrip uygulaması indirin — kıble, namaz vakitleri, yakın cami gösterir. Önemli camiler: Sofya Banya Başı, Belgrad Bayraklı, Budapeşte, Frankfurt Merkez, Rotterdam Mevlana, Paris Büyük Camii, Roma Büyük Camii, Viyana İslam Merkezi.'},
+  {icon:'fas fa-phone', bg:'var(--green)', title:'Acil Durumlar',
+   text:'AB geneli acil numara: 112 (polis, ambulans, itfaiye). Sırbistan: 112/192/194. TC Dışişleri: +90 312 292 1000. En yakın konsolosluk numaralarını telefonunuza kaydedin. Seyahat sigortası poliçe numarasını yanınızda taşıyın.'}
 ];
 
-let map = null;
-let markers = [];
-let routeLines = [];
-let currentView = 'outbound';
-let editingStopId = null;
+/* ═══════ STATE ═══════ */
+let selOut = 0, selRet = 0, curTab = 'out';
+let map, markersG=[], linesG=[];
 
+/* ═══════ INIT ═══════ */
 document.addEventListener('DOMContentLoaded', () => {
-    initMap();
-    renderTimeline();
-    renderCosts();
-    renderStopsList();
-    renderTips();
-    updateHeaderStats();
-    bindEvents();
+  loadTheme();
+  renderRouteCards();
+  initMap();
+  renderAll();
+  bindEvents();
 });
 
-function initMap() {
-    map = L.map('map', { center: [46.0, 16.0], zoom: 5, zoomControl: true, scrollWheelZoom: true });
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap &copy; CARTO', subdomains: 'abcd', maxZoom: 19
-    }).addTo(map);
-    drawRoute();
+function loadTheme(){
+  const t = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('themeToggle').innerHTML = t==='dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
 }
 
-function createCustomIcon(type) {
-    const iconMap = { start: 'fa-flag-checkered', transit: 'fa-arrows-left-right', border: 'fa-passport', overnight: 'fa-moon', destination: 'fa-location-dot', sightseeing: 'fa-camera', ferry: 'fa-ship' };
-    return L.divIcon({ className: 'custom-marker', html: `<div class="marker-pin ${type}"><i class="fas ${iconMap[type] || 'fa-circle'}"></i></div>`, iconSize: [36, 36], iconAnchor: [18, 36], popupAnchor: [0, -36] });
+/* ═══════ ROUTE CARDS ═══════ */
+function renderRouteCards(){
+  const oc = document.getElementById('outboundCards');
+  oc.innerHTML = OUTBOUND.map((r,i) => `
+    <div class="route-card ${i===selOut?'selected':''}" onclick="pickOut(${i})">
+      <div class="rc-icon">${r.icon}</div>
+      <div class="rc-name">${r.name}</div>
+      <div class="rc-stops">${r.tag}</div>
+      <div class="rc-meta">
+        <span><i class="fas fa-road"></i> ~${(r.km).toLocaleString('tr')} km</span>
+        <span><i class="fas fa-moon"></i> ${r.stops.reduce((s,x)=>s+x.n,0)} gece</span>
+      </div>
+    </div>
+  `).join('');
+
+  const rc = document.getElementById('returnCards');
+  rc.innerHTML = RETURN.map((r,i) => `
+    <div class="route-card ${i===selRet?'selected':''}" onclick="pickRet(${i})">
+      <div class="rc-icon">${r.icon}</div>
+      <div class="rc-name">${r.name}</div>
+      <div class="rc-stops">${r.tag}</div>
+      <div class="rc-meta">
+        <span><i class="fas fa-road"></i> ~${(r.km).toLocaleString('tr')} km</span>
+        <span><i class="fas fa-ship"></i> ${r.ferryFrom}→${r.ferryTo}</span>
+      </div>
+    </div>
+  `).join('');
 }
 
-function drawRoute() {
-    markers.forEach(m => map.removeLayer(m));
-    routeLines.forEach(l => map.removeLayer(l));
-    markers = [];
-    routeLines = [];
+function pickOut(i){ selOut=i; renderRouteCards(); renderAll(); }
+function pickRet(i){ selRet=i; renderRouteCards(); renderAll(); }
 
-    const outbound = routeStops.filter(s => s.direction === 'outbound');
-    const ret = routeStops.filter(s => s.direction === 'return');
+/* ═══════ MAP ═══════ */
+function initMap(){
+  map = L.map('map',{center:[46,14],zoom:5,scrollWheelZoom:true});
+  setTiles();
+  drawMap();
+}
+function setTiles(){
+  const dark = document.documentElement.getAttribute('data-theme')==='dark';
+  const url = dark
+    ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+    : 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+  map.eachLayer(l => { if(l instanceof L.TileLayer) map.removeLayer(l); });
+  L.tileLayer(url,{attribution:'© OpenStreetMap © CARTO',subdomains:'abcd',maxZoom:19}).addTo(map);
+}
+function mIcon(t){
+  const ic = {start:'fa-flag',border:'fa-passport',overnight:'fa-moon',sightseeing:'fa-camera',destination:'fa-location-dot',ferry:'fa-ship',end:'fa-home'};
+  return L.divIcon({className:'custom-marker',html:`<div class="m-pin ${t}"><i class="fas ${ic[t]||'fa-circle'}"></i></div>`,iconSize:[28,28],iconAnchor:[14,28],popupAnchor:[0,-28]});
+}
+function drawMap(){
+  markersG.forEach(m=>map.removeLayer(m)); linesG.forEach(l=>map.removeLayer(l));
+  markersG=[]; linesG=[];
+  const out = OUTBOUND[selOut].stops;
+  const ret = RETURN[selRet].stops;
+  // outbound line
+  if(out.length>1){
+    const l=L.polyline(out.map(s=>[s.la,s.lo]),{color:'#2B7A78',weight:3,opacity:0.8}).addTo(map);
+    linesG.push(l);
+  }
+  // return line
+  if(ret.length>1){
+    const l=L.polyline(ret.map(s=>[s.la,s.lo]),{color:'#C4784A',weight:3,opacity:0.7,dashArray:'6,6'}).addTo(map);
+    linesG.push(l);
+  }
+  // markers
+  const allS = [...out, ...ret.slice(1)]; // skip Rotterdam duplicate
+  allS.forEach(s => {
+    const m = L.marker([s.la,s.lo],{icon:mIcon(s.t)}).addTo(map);
+    const cn = C[s.co];
+    m.bindPopup(`<div style="font-family:'DM Sans',sans-serif;min-width:160px;"><strong>${cn.f} ${s.c}</strong><br><small>${cn.n}</small></div>`,{maxWidth:250});
+    markersG.push(m);
+  });
+  const coords = allS.map(s=>[s.la,s.lo]);
+  if(coords.length) map.fitBounds(coords,{padding:[25,25]});
+}
 
-    if (outbound.length > 1) {
-        const line = L.polyline(outbound.map(s => [s.lat, s.lng]), { color: '#3b82f6', weight: 3, opacity: 0.8, smoothFactor: 1 }).addTo(map);
-        routeLines.push(line);
-    }
-    if (ret.length > 1) {
-        const line = L.polyline(ret.map(s => [s.lat, s.lng]), { color: '#f59e0b', weight: 3, opacity: 0.6, dashArray: '8, 8', smoothFactor: 1 }).addTo(map);
-        routeLines.push(line);
-    }
+/* ═══════ TIMELINE ═══════ */
+function renderTimeline(){
+  const box = document.getElementById('timeline');
+  if(curTab==='rdam'){ renderRdam(box); return; }
+  const stops = curTab==='out' ? OUTBOUND[selOut].stops : RETURN[selRet].stops;
+  // calculate day offsets for return
+  let dayBase = 0;
+  if(curTab==='ret'){
+    const outN = OUTBOUND[selOut].stops.reduce((s,x)=>s+Math.max(x.n,x.t==='start'||x.t==='border'?0:0),0);
+    // total outbound days
+    const lastOut = OUTBOUND[selOut].stops[OUTBOUND[selOut].stops.length-1];
+    dayBase = lastOut.day + lastOut.n;
+  }
 
-    const allStops = routeStops.filter(s => s.direction !== 'rotterdam');
-    allStops.forEach(stop => {
-        const marker = L.marker([stop.lat, stop.lng], { icon: createCustomIcon(stop.type) }).addTo(map);
-        const country = COUNTRY_DATA[stop.country];
-        marker.bindPopup(`<div style="font-family:'Inter',sans-serif;min-width:200px;padding:4px;"><h4 style="margin:0 0 6px;font-size:14px;">${country.flag} ${stop.city}</h4><p style="margin:0 0 4px;font-size:12px;color:#666;"><strong>${getDateStr(stop.dayIndex)}</strong> · ${country.name}</p>${stop.driveTime ? `<p style="margin:0;font-size:11px;color:#888;">🚗 ${stop.driveTime}</p>` : ''}</div>`, { maxWidth: 280 });
-        markers.push(marker);
+  box.innerHTML = stops.map(s => {
+    const cn = C[s.co];
+    const isTR = s.co==='TR';
+    const gDay = s.day + dayBase;
+    const tipsH = s.tips ? s.tips.map(t=>`<span class="tip-tag ${t.c}">${t.t}</span>`).join('') : '';
+    return `
+    <div class="tl-card" data-type="${s.t}">
+      <div class="tl-top">
+        <span class="tl-day">Gün ${gDay+1}</span>
+        <span class="tl-date">${dateStr(gDay)}</span>
+      </div>
+      <div class="tl-city">
+        ${cn.f} ${s.c}
+        ${s.n>0 ? `<span class="tl-nights">🛏️ ${s.n} gece</span>` : ''}
+      </div>
+      <div class="tl-meta">
+        ${s.dk>0 ? `<span><i class="fas fa-road"></i> ${s.dk} km</span>` : ''}
+        ${s.dt ? `<span><i class="fas fa-clock"></i> ${s.dt}</span>` : ''}
+        ${s.n>0 && !isTR ? `<span><i class="fas fa-bed"></i> ~€${cn.hp}/gece</span>` : ''}
+      </div>
+      ${s.desc ? `<div class="tl-desc">${s.desc}</div>` : ''}
+      ${s.halal && !isTR ? `<div class="tl-halal">${s.halal}</div>` : ''}
+      ${s.accom && !isTR ? `<div class="tl-accom">${s.accom}</div>` : ''}
+      ${tipsH ? `<div class="tl-tips">${tipsH}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function renderRdam(box){
+  box.innerHTML = `
+    <div class="tl-card" data-type="destination">
+      <div class="tl-city">🇳🇱 ${RDAM_INFO.desc}</div>
+      ${RDAM_INFO.items.map(it => `
+        <div style="margin-top:12px;">
+          <strong style="font-size:0.9rem;">${it.title}</strong>
+          <p style="font-size:0.8rem;color:var(--text2);margin-top:4px;line-height:1.6;">${it.text}</p>
+        </div>
+      `).join('')}
+    </div>`;
+}
+
+/* ═══════ COSTS ═══════ */
+function calcCosts(){
+  const out = OUTBOUND[selOut];
+  const ret = RETURN[selRet];
+  const allStops = [...out.stops, ...ret.stops.slice(1)];
+  const costs = {fuel:{items:[],total:0},tolls:{items:[],total:0},acc:{items:[],total:0},food:{items:[],total:0},visa:{items:[],total:0},extra:{items:[],total:0}};
+
+  // Fuel by country
+  const cd={};
+  allStops.forEach(s=>{ if(s.dk>0) cd[s.co]=(cd[s.co]||0)+s.dk; });
+  Object.entries(cd).forEach(([co,km])=>{
+    const c=C[co]; if(!c||c.d===0) return;
+    const l=(km/100)*VITO_LPK, cost=l*c.d;
+    costs.fuel.items.push({l:`${c.f} ${c.n} (${km} km)`,v:cost});
+    costs.fuel.total+=cost;
+  });
+
+  // Tolls
+  [...out.tolls, ...ret.tolls].forEach(t=>{
+    costs.tolls.items.push({l:t.n,v:t.v});
+    costs.tolls.total+=t.v;
+  });
+
+  // Accommodation (NOT in Turkey)
+  allStops.filter(s=>s.n>0 && s.co!=='TR' && s.co!=='SEA').forEach(s=>{
+    const c=C[s.co], cost=s.n*c.hp;
+    costs.acc.items.push({l:`${c.f} ${s.c} (${s.n} gece)`,v:cost});
+    costs.acc.total+=cost;
+  });
+
+  // Food (NOT in Turkey, 6 people)
+  const fd={};
+  allStops.forEach(s=>{ if(s.co!=='TR'&&s.co!=='SEA') fd[s.co]=(fd[s.co]||0)+Math.max(1,s.n); });
+  Object.entries(fd).forEach(([co,days])=>{
+    const c=C[co]; if(!c||c.fp===0) return;
+    const cost=days*c.fp*6;
+    costs.food.items.push({l:`${c.f} ${c.n} (${days}g × 6 kişi)`,v:cost});
+    costs.food.total+=cost;
+  });
+
+  // Visa, insurance, ferry
+  const fc = ret.ferryCost||600;
+  costs.visa.items=[
+    {l:'🛂 Schengen Vizesi (4 yetişkin)',v:360},
+    {l:'🛂 Schengen Vizesi (2 çocuk)',v:90},
+    {l:'📋 VFS Hizmet Bedeli (6 kişi)',v:240},
+    {l:'🚗 Green Card Sigorta',v:59},
+    {l:'🏥 Seyahat Sigortası (6 kişi)',v:180},
+    {l:`⛴️ Feribot: ${ret.ferryFrom}→${ret.ferryTo}`,v:fc}
+  ];
+  costs.visa.total=costs.visa.items.reduce((s,i)=>s+i.v,0);
+
+  // Extras
+  costs.extra.items=[
+    {l:'🅿️ Park ücretleri',v:80},
+    {l:'📱 eSIM / data paketi',v:15},
+    {l:'🎫 Müze/gezi/gondol/termal',v:150},
+    {l:'🚂 Amsterdam/Den Haag tren',v:60},
+    {l:'⛽ Acil yedek bütçe',v:200}
+  ];
+  costs.extra.total=costs.extra.items.reduce((s,i)=>s+i.v,0);
+
+  return costs;
+}
+
+function renderCosts(){
+  const costs = calcCosts();
+  const cats = [
+    {k:'fuel',icon:'fuel',title:'Yakıt Maliyeti'},
+    {k:'tolls',icon:'toll',title:'Otoyol & Vinyetler'},
+    {k:'acc',icon:'acc',title:'Konaklama'},
+    {k:'food',icon:'food',title:'Yemek (6 kişi)'},
+    {k:'visa',icon:'visa',title:'Vize & Sigorta & Feribot'},
+    {k:'extra',icon:'extra',title:'Diğer Giderler'}
+  ];
+
+  document.getElementById('costGrid').innerHTML = cats.map(cat => {
+    const d = costs[cat.k];
+    return `
+    <div class="cost-card">
+      <div class="cc-head"><div class="cc-icon ${cat.icon}"><i class="fas fa-${cat.icon==='fuel'?'gas-pump':cat.icon==='toll'?'road':cat.icon==='acc'?'bed':cat.icon==='food'?'utensils':cat.icon==='visa'?'passport':'ellipsis'}"></i></div><h3>${cat.title}</h3></div>
+      <div class="cc-body">${d.items.map(i=>`<div class="cc-row"><span class="label">${i.l}</span><span class="val">€${Math.round(i.v)}</span></div>`).join('')}</div>
+      <div class="cc-total"><span>Toplam</span><strong>€${Math.round(d.total)}</strong></div>
+    </div>`;
+  }).join('');
+
+  const gt = Object.values(costs).reduce((s,c)=>s+c.total,0);
+  const segs = [
+    {c:'fuel',v:costs.fuel.total,l:'Yakıt'},
+    {c:'toll',v:costs.tolls.total,l:'Geçiş'},
+    {c:'acc',v:costs.acc.total,l:'Konaklama'},
+    {c:'food',v:costs.food.total,l:'Yemek'},
+    {c:'visa',v:costs.visa.total,l:'Vize/Feribot'},
+    {c:'extra',v:costs.extra.total,l:'Diğer'}
+  ];
+
+  document.getElementById('grandTotal').innerHTML = `
+    <div class="gt-inner">
+      <div class="gt-left">
+        <h3>Toplam Tahmini Maliyet</h3>
+        <p>${OUTBOUND[selOut].name} + ${RETURN[selRet].name} · 6 Kişi</p>
+      </div>
+      <div class="gt-right">
+        <div class="gt-eur">€${Math.round(gt).toLocaleString('tr')}</div>
+        <div class="gt-try">≈ ₺${Math.round(gt*EUR_TRY).toLocaleString('tr')}</div>
+      </div>
+    </div>
+    <div class="gt-bar">${segs.map(s=>`<div class="gt-seg ${s.c}" style="width:${(s.v/gt*100)}%" title="${s.l}: €${Math.round(s.v)}"></div>`).join('')}</div>
+    <div class="gt-legend">${segs.map(s=>`<div><span class="dot gt-seg ${s.c}" style="display:inline-block;width:8px;height:8px;border-radius:2px;"></span> ${s.l}: €${Math.round(s.v)}</div>`).join('')}</div>
+  `;
+
+  // Header chip
+  document.getElementById('chipCost').querySelector('span').textContent = `€${Math.round(gt).toLocaleString('tr')}`;
+  const totalKm = OUTBOUND[selOut].km + RETURN[selRet].km;
+  document.getElementById('chipKm').querySelector('span').textContent = `~${totalKm.toLocaleString('tr')} km`;
+}
+
+/* ═══════ TIPS ═══════ */
+function renderTips(){
+  document.getElementById('tipsGrid').innerHTML = TIPS.map(t => `
+    <div class="tip-card">
+      <div class="tc-icon" style="background:${t.bg}"><i class="${t.icon}"></i></div>
+      <h4>${t.title}</h4>
+      <p>${t.text}</p>
+    </div>
+  `).join('');
+}
+
+/* ═══════ RENDER ALL ═══════ */
+function renderAll(){
+  drawMap();
+  renderTimeline();
+  renderCosts();
+  renderTips();
+}
+
+/* ═══════ EVENTS ═══════ */
+function bindEvents(){
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      this.classList.add('active');
+      curTab = this.dataset.tab;
+      renderTimeline();
     });
+  });
 
-    const allCoords = allStops.map(s => [s.lat, s.lng]);
-    if (allCoords.length > 0) map.fitBounds(allCoords, { padding: [30, 30] });
+  // Theme toggle
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur==='dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    document.getElementById('themeToggle').innerHTML = next==='dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    setTiles();
+  });
+
+  // Header scroll shadow
+  window.addEventListener('scroll', () => {
+    document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+  });
 }
 
-function renderTimeline() {
-    const container = document.getElementById('timelineContainer');
-    let stops;
-    if (currentView === 'rotterdam') {
-        stops = routeStops.filter(s => s.direction === 'rotterdam');
-    } else {
-        stops = routeStops.filter(s => s.direction === currentView);
-    }
-    container.innerHTML = '';
-
-    stops.forEach((stop) => {
-        const country = COUNTRY_DATA[stop.country];
-        const item = document.createElement('div');
-        item.className = 'timeline-item';
-        item.dataset.id = stop.id;
-
-        const tipsHtml = (stop.tips && stop.tips.length > 0) ? `<div class="timeline-tips">${stop.tips.map(t => `<span class="timeline-tip-tag ${t.type}">${t.text}</span>`).join('')}</div>` : '';
-
-        item.innerHTML = `
-            <div class="timeline-dot ${stop.type}"></div>
-            <div class="timeline-card" onclick="focusOnStop(${stop.id})">
-                <div class="timeline-card-header">
-                    <span class="timeline-day">Gün ${stop.dayIndex + 1}</span>
-                    <span class="timeline-date">${getDateStr(stop.dayIndex)}</span>
-                </div>
-                <div class="timeline-city"><span class="flag">${country.flag}</span> ${stop.city}
-                    ${stop.stayNights > 0 ? `<span style="font-size:0.7rem;color:var(--accent-purple);margin-left:auto;">🛏️ ${stop.stayNights} gece</span>` : ''}
-                </div>
-                <div class="timeline-info">
-                    ${stop.distToNext > 0 ? `<div class="timeline-info-item"><i class="fas fa-road"></i> ${stop.distToNext} km</div>` : ''}
-                    ${stop.driveTime ? `<div class="timeline-info-item"><i class="fas fa-clock"></i> ${stop.driveTime}</div>` : ''}
-                    ${stop.stayNights > 0 ? `<div class="timeline-info-item"><i class="fas fa-bed"></i> ~€${country.hotelFamily}/gece</div>` : ''}
-                </div>
-                ${stop.notes ? `<div class="timeline-notes">${stop.notes}</div>` : ''}
-                ${tipsHtml}
-            </div>
-        `;
-        container.appendChild(item);
-    });
-}
-
-function focusOnStop(stopId) {
-    const stop = routeStops.find(s => s.id === stopId);
-    if (stop && map) {
-        map.flyTo([stop.lat, stop.lng], 10, { duration: 1.5 });
-        const allDisplayed = routeStops.filter(s => s.direction !== 'rotterdam');
-        const idx = allDisplayed.findIndex(s => s.id === stopId);
-        if (idx >= 0 && markers[idx]) markers[idx].openPopup();
-    }
-}
-
-function calculateCosts() {
-    const costs = { fuel: { items: [], total: 0 }, tolls: { items: [], total: 0 }, accommodation: { items: [], total: 0 }, food: { items: [], total: 0 }, visa: { items: [], total: 0 }, extras: { items: [], total: 0 } };
-
-    // FUEL
-    const countryDist = {};
-    routeStops.forEach(s => { if (s.distToNext > 0) { countryDist[s.country] = (countryDist[s.country] || 0) + s.distToNext; } });
-    Object.entries(countryDist).forEach(([code, dist]) => {
-        const c = COUNTRY_DATA[code];
-        if (!c || c.diesel === 0) return;
-        const liters = (dist / 100) * VITO_CONSUMPTION;
-        const cost = liters * c.diesel;
-        costs.fuel.items.push({ label: `${c.flag} ${c.name} (${dist} km)`, value: cost });
-        costs.fuel.total += cost;
-    });
-
-    // TOLLS
-    TOLL_COSTS.forEach(t => {
-        costs.tolls.items.push({ label: `${COUNTRY_DATA[t.country]?.flag || '🏁'} ${t.name}`, value: t.cost });
-        costs.tolls.total += t.cost;
-    });
-
-    // ACCOMMODATION
-    routeStops.filter(s => s.stayNights > 0).forEach(s => {
-        const c = COUNTRY_DATA[s.country];
-        const cost = s.stayNights * c.hotelFamily;
-        costs.accommodation.items.push({ label: `${c.flag} ${s.city} (${s.stayNights} gece)`, value: cost });
-        costs.accommodation.total += cost;
-    });
-
-    // FOOD (6 people)
-    const daysByCountry = {};
-    routeStops.forEach(s => {
-        const days = Math.max(1, s.stayNights);
-        daysByCountry[s.country] = (daysByCountry[s.country] || 0) + days;
-    });
-    Object.entries(daysByCountry).forEach(([code, days]) => {
-        const c = COUNTRY_DATA[code];
-        if (!c || c.foodPP === 0) return;
-        const cost = days * c.foodPP * 6;
-        costs.food.items.push({ label: `${c.flag} ${c.name} (${days} gün × 6 kişi)`, value: cost });
-        costs.food.total += cost;
-    });
-
-    // VISA & INSURANCE & FERRY
-    costs.visa.items.push({ label: '🛂 Schengen Vizesi (4 yetişkin)', value: 360 });
-    costs.visa.items.push({ label: '🛂 Schengen Vizesi (2 çocuk)', value: 90 });
-    costs.visa.items.push({ label: '📋 VFS Hizmet Bedeli (6 kişi)', value: 240 });
-    costs.visa.items.push({ label: '🚗 Green Card Sigorta (1 ay)', value: 59 });
-    costs.visa.items.push({ label: '🏥 Seyahat Sigortası (6 kişi)', value: 180 });
-    costs.visa.items.push({ label: '⛴️ Feribot: Ancona→İgoumenitsa', value: 600 });
-    costs.visa.total = costs.visa.items.reduce((s, i) => s + i.value, 0);
-
-    // EXTRAS
-    costs.extras.items.push({ label: '🅿️ Park ücretleri (Venedik vb.)', value: 80 });
-    costs.extras.items.push({ label: '📱 İletişim (Sırbistan SIM)', value: 10 });
-    costs.extras.items.push({ label: '🎫 Müze/gezi/gondol/termal', value: 150 });
-    costs.extras.items.push({ label: '🚂 Amsterdam/Den Haag tren', value: 60 });
-    costs.extras.items.push({ label: '⛽ Acil durum yedek bütçe', value: 200 });
-    costs.extras.total = costs.extras.items.reduce((s, i) => s + i.value, 0);
-
-    return costs;
-}
-
-function renderCosts() {
-    const costs = calculateCosts();
-    renderCostCard('fuelCostBody', 'fuelCostTotal', costs.fuel);
-    renderCostCard('tollCostBody', 'tollCostTotal', costs.tolls);
-    renderCostCard('accCostBody', 'accCostTotal', costs.accommodation);
-    renderCostCard('foodCostBody', 'foodCostTotal', costs.food);
-    renderCostCard('visaCostBody', 'visaCostTotal', costs.visa);
-    renderCostCard('extraCostBody', 'extraCostTotal', costs.extras);
-
-    const gt = costs.fuel.total + costs.tolls.total + costs.accommodation.total + costs.food.total + costs.visa.total + costs.extras.total;
-    document.getElementById('grandTotalEur').textContent = `€ ${Math.round(gt).toLocaleString('tr-TR')}`;
-    document.getElementById('grandTotalTry').textContent = `≈ ₺ ${Math.round(gt * EUR_TO_TRY).toLocaleString('tr-TR')}`;
-    document.getElementById('totalCostStat').querySelector('span').textContent = `€${Math.round(gt).toLocaleString('tr-TR')}`;
-
-    const bd = document.getElementById('grandTotalBreakdown');
-    const segs = [
-        { class: 'fuel', value: costs.fuel.total, label: 'Yakıt' },
-        { class: 'toll', value: costs.tolls.total, label: 'Geçiş' },
-        { class: 'acc', value: costs.accommodation.total, label: 'Konaklama' },
-        { class: 'food', value: costs.food.total, label: 'Yemek' },
-        { class: 'visa', value: costs.visa.total, label: 'Vize/Sigorta/Feribot' },
-        { class: 'extra', value: costs.extras.total, label: 'Diğer' }
-    ];
-    bd.innerHTML = segs.map(s => `<div class="breakdown-segment ${s.class}" style="width:${(s.value/gt*100)}%" title="${s.label}: €${Math.round(s.value)}"></div>`).join('');
-
-    // remove old legend if exists
-    const oldLegend = bd.nextElementSibling;
-    if (oldLegend && oldLegend.classList && !oldLegend.classList.contains('grand-total-content')) {
-        if (oldLegend.style) oldLegend.remove();
-    }
-    bd.insertAdjacentHTML('afterend', `<div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;font-size:0.75rem;color:var(--text-muted);">${segs.map(s => `<div style="display:flex;align-items:center;gap:6px;"><div style="width:10px;height:10px;border-radius:2px;" class="breakdown-segment ${s.class}"></div><span>${s.label}: €${Math.round(s.value)}</span></div>`).join('')}</div>`);
-}
-
-function renderCostCard(bodyId, totalId, data) {
-    document.getElementById(bodyId).innerHTML = data.items.map(i => `<div class="cost-row"><span class="cost-row-label">${i.label}</span><span class="cost-row-value">€${Math.round(i.value)}</span></div>`).join('');
-    document.getElementById(totalId).querySelector('strong').textContent = `€${Math.round(data.total)}`;
-}
-
-function renderStopsList() {
-    const list = document.getElementById('stopsList');
-    list.innerHTML = '';
-    const typeLabels = { start: '🟢 Başlangıç', transit: '🔵 Transit', border: '🟠 Sınır/Feribot', overnight: '🟣 Konaklama', destination: '🔴 Varış', sightseeing: '🟡 Gezi', ferry: '⛴️ Feribot' };
-    routeStops.forEach((stop, index) => {
-        const c = COUNTRY_DATA[stop.country];
-        const dir = stop.direction === 'outbound' ? '→ Gidiş' : stop.direction === 'return' ? '← Dönüş' : '📍 Rotterdam';
-        const item = document.createElement('div');
-        item.className = 'stop-item';
-        item.innerHTML = `
-            <div class="stop-number">${index + 1}</div>
-            <div class="stop-info">
-                <div class="stop-city">${c.flag} ${stop.city}</div>
-                <div class="stop-meta">
-                    <span>${dir}</span><span>${typeLabels[stop.type] || stop.type}</span><span>${getDateStr(stop.dayIndex)}</span>
-                    ${stop.stayNights > 0 ? `<span>🛏️ ${stop.stayNights} gece</span>` : ''}
-                    ${stop.distToNext > 0 ? `<span>→ ${stop.distToNext} km</span>` : ''}
-                </div>
-            </div>
-            <div class="stop-actions">
-                <button class="btn btn-glass" onclick="editStop(${stop.id})" title="Düzenle"><i class="fas fa-pen"></i></button>
-                <button class="btn btn-danger" onclick="deleteStop(${stop.id})" title="Sil"><i class="fas fa-trash"></i></button>
-            </div>
-        `;
-        list.appendChild(item);
-    });
-}
-
-function renderTips() {
-    document.getElementById('tipsGrid').innerHTML = TIPS.map(t => `<div class="tip-card"><div class="tip-card-icon" style="background:${t.color};"><i class="${t.icon}"></i></div><h4>${t.title}</h4><p>${t.text}</p></div>`).join('');
-}
-
-function updateHeaderStats() {
-    const totalDist = routeStops.reduce((s, r) => s + (r.distToNext || 0), 0);
-    document.getElementById('totalDistanceStat').querySelector('span').textContent = `~${totalDist.toLocaleString('tr-TR')} km`;
-}
-
-function editStop(id) {
-    editingStopId = id;
-    const stop = routeStops.find(s => s.id === id);
-    if (!stop) return;
-    document.getElementById('modalTitle').textContent = `${stop.city} Düzenle`;
-    document.getElementById('inputCity').value = stop.city;
-    document.getElementById('inputCountry').value = stop.country;
-    document.getElementById('inputDays').value = stop.stayNights;
-    document.getElementById('inputType').value = stop.type;
-    document.getElementById('inputNotes').value = stop.notes || '';
-    document.getElementById('editModal').classList.add('active');
-}
-
-function saveStop() {
-    const stop = routeStops.find(s => s.id === editingStopId);
-    if (!stop) return;
-    stop.city = document.getElementById('inputCity').value;
-    stop.country = document.getElementById('inputCountry').value;
-    stop.stayNights = parseInt(document.getElementById('inputDays').value);
-    stop.type = document.getElementById('inputType').value;
-    stop.notes = document.getElementById('inputNotes').value;
-    closeModal();
-    refreshAll();
-}
-
-function deleteStop(id) {
-    if (!confirm('Bu durağı silmek istediğinize emin misiniz?')) return;
-    routeStops = routeStops.filter(s => s.id !== id);
-    refreshAll();
-}
-
-function addNewStop() {
-    const maxId = Math.max(...routeStops.map(s => s.id), 0);
-    const newStop = {
-        id: maxId + 1, city: 'Yeni Durak', country: 'DE', lat: 50.0, lng: 10.0,
-        type: 'transit', dayIndex: 10, stayNights: 0, distToNext: 100,
-        driveTime: '~2 saat', notes: '', tips: [], direction: currentView === 'rotterdam' ? 'outbound' : currentView
-    };
-    const viewStops = routeStops.filter(s => s.direction === newStop.direction);
-    const lastStop = viewStops[viewStops.length - 1];
-    const insertIndex = lastStop ? routeStops.indexOf(lastStop) : routeStops.length;
-    routeStops.splice(insertIndex, 0, newStop);
-    refreshAll();
-    editStop(newStop.id);
-}
-
-function closeModal() { document.getElementById('editModal').classList.remove('active'); editingStopId = null; }
-
-function refreshAll() {
-    drawRoute();
-    renderTimeline();
-    const oldLegend = document.getElementById('grandTotalBreakdown')?.nextElementSibling;
-    if (oldLegend && oldLegend.tagName === 'DIV' && !oldLegend.id) oldLegend.remove();
-    renderCosts();
-    renderStopsList();
-    updateHeaderStats();
-}
-
-function bindEvents() {
-    document.getElementById('btnFitBounds').addEventListener('click', () => {
-        const allCoords = routeStops.filter(s => s.direction !== 'rotterdam').map(s => [s.lat, s.lng]);
-        map.fitBounds(allCoords, { padding: [30, 30] });
-    });
-
-    document.getElementById('btnOutbound').addEventListener('click', function() {
-        currentView = 'outbound';
-        this.classList.add('active');
-        document.getElementById('btnReturn').classList.remove('active');
-        document.getElementById('btnRotterdam').classList.remove('active');
-        renderTimeline();
-    });
-    document.getElementById('btnRotterdam').addEventListener('click', function() {
-        currentView = 'rotterdam';
-        this.classList.add('active');
-        document.getElementById('btnOutbound').classList.remove('active');
-        document.getElementById('btnReturn').classList.remove('active');
-        renderTimeline();
-    });
-    document.getElementById('btnReturn').addEventListener('click', function() {
-        currentView = 'return';
-        this.classList.add('active');
-        document.getElementById('btnOutbound').classList.remove('active');
-        document.getElementById('btnRotterdam').classList.remove('active');
-        renderTimeline();
-    });
-
-    document.getElementById('btnAddStop').addEventListener('click', addNewStop);
-    document.getElementById('btnModalClose').addEventListener('click', closeModal);
-    document.getElementById('btnModalCancel').addEventListener('click', closeModal);
-    document.getElementById('btnModalSave').addEventListener('click', saveStop);
-    document.getElementById('editModal').addEventListener('click', (e) => { if (e.target.id === 'editModal') closeModal(); });
-
-    let stopsVisible = true;
-    document.getElementById('btnToggleStops').addEventListener('click', () => {
-        stopsVisible = !stopsVisible;
-        markers.forEach(m => stopsVisible ? m.addTo(map) : map.removeLayer(m));
-    });
-
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
-    window.addEventListener('scroll', () => {
-        document.getElementById('header').style.boxShadow = window.scrollY > 100 ? 'var(--shadow-md)' : 'none';
-    });
-}
-
-window.focusOnStop = focusOnStop;
-window.editStop = editStop;
-window.deleteStop = deleteStop;
+// Global functions for onclick
+window.pickOut = pickOut;
+window.pickRet = pickRet;
