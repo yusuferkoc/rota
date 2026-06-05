@@ -36,14 +36,22 @@
         <!-- Route Selector -->
         <section id="routeSection">
             <h2 class="sec-title">Rotanızı Belirleyin</h2>
-            <p class="sec-sub">Avrupa turunda gezmek için 3 farklı gidiş, 3 farklı dönüş rotası. Beğendiğinizi seçin, harita ve maliyetler otomatik güncellenir.</p>
+            <p class="sec-sub">Özel Tam Tur'u seçebilir veya Gidiş ve Dönüş rotalarınızı ayrı ayrı birleştirebilirsiniz.</p>
+            
+            <div class="route-selector" style="margin-bottom: 2rem;">
+                <div>
+                    <div class="route-label" style="color: var(--accent);"><i class="fas fa-star"></i> Avrupa Büyük Tur (Gidiş - Dönüş Tam Rota)</div>
+                    <div class="route-cards" id="completeCards"></div>
+                </div>
+            </div>
+
             <div class="route-selector">
                 <div>
-                    <div class="route-label"><i class="fas fa-arrow-right"></i> Gidiş Rotası</div>
+                    <div class="route-label"><i class="fas fa-arrow-right"></i> Gidiş Rotası Seçenekleri</div>
                     <div class="route-cards" id="outboundCards"></div>
                 </div>
                 <div>
-                    <div class="route-label"><i class="fas fa-arrow-left"></i> Dönüş Rotası (İtalya Feribotu)</div>
+                    <div class="route-label"><i class="fas fa-arrow-left"></i> Dönüş Rotası Seçenekleri</div>
                     <div class="route-cards" id="returnCards"></div>
                 </div>
             </div>

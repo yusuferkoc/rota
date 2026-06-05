@@ -23,6 +23,7 @@ const C = {
   GR:{n:'Yunanistan',f:'🇬🇷',d:1.70,fp:10,hp:70},
   LU:{n:'Lüksemburg',f:'🇱🇺',d:1.55,fp:14,hp:110},
   CH:{n:'İsviçre',f:'🇨🇭',d:2.10,fp:20,hp:150},
+  BE:{n:'Belçika',f:'🇧🇪',d:1.75,fp:14,hp:100},
   FR:{n:'Fransa',f:'🇫🇷',d:1.82,fp:14,hp:100},
   SEA:{n:'Deniz',f:'⛴️',d:0,fp:0,hp:0}
 };
@@ -30,6 +31,66 @@ const C = {
 const DW = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
 const MO = ['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'];
 function dateStr(off){ const d=new Date(2026,5,15); d.setDate(d.getDate()+off); return `${d.getDate()} ${MO[d.getMonth()]} ${DW[d.getDay()]}`; }
+
+/* ═══════ TAM ROTALAR ═══════ */
+const COMPLETE = [
+{
+  id:'special_tour', name:'Avrupa Büyük Tur', icon:'🌟',
+  tag:'Balkanlar · Orta Avrupa · Hollanda · İsviçre · İtalya',
+  km:9500,
+  tolls:[
+    {n:'TR HGS',v:16},{n:'BG e-Vinyeti',v:8},{n:'RS Otoyol',v:15},
+    {n:'HU e-Matrica',v:18},{n:'SK e-Známka',v:16},{n:'AT Vinyeti',v:11},
+    {n:'CZ e-Známka',v:16},{n:'CH Vinyeti',v:43},{n:'FR Péage',v:50},
+    {n:'IT Autostrada',v:80}
+  ],
+  stops:[
+    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'start',day:0,n:0,dk:260,dt:'~3 saat',desc:'Başlangıç.'},
+    {c:'İstanbul',co:'TR',la:41.00,lo:28.97,t:'transit',day:0,n:0,dk:240,dt:'~3 saat',desc:'İstanbul geçişi.'},
+    {c:'Edirne',co:'TR',la:41.67,lo:26.55,t:'transit',day:0,n:0,dk:180,dt:'~2 saat',desc:'Kapıkule Sınır Kapısı öncesi mola.',tips:[{t:'Sınır kapısı yoğun olabilir',c:'warn'}]},
+    {c:'Plovdiv',co:'BG',la:42.15,lo:24.75,t:'transit',day:0,n:0,dk:140,dt:'~1.5 saat',desc:'Avrupa Kültür Başkenti Plovdiv (Filibe) molası.'},
+    {c:'Sofya',co:'BG',la:42.70,lo:23.32,t:'overnight',day:0,n:1,dk:160,dt:'~2.5 saat',desc:'1. GECE. Bulgaristan başkenti.'},
+    {c:'Niş',co:'RS',la:43.32,lo:21.89,t:'transit',day:1,n:0,dk:240,dt:'~2.5 saat',desc:'Sırbistan\'a giriş ve Niş molası.'},
+    {c:'Belgrad',co:'RS',la:44.79,lo:20.45,t:'overnight',day:1,n:1,dk:90,dt:'~1.5 saat',desc:'2. GECE. Kalemegdan Kalesi, Tuna ve Sava nehirleri buluşması.'},
+    {c:'Novi Sad',co:'RS',la:45.26,lo:19.83,t:'transit',day:2,n:0,dk:130,dt:'~1.5 saat',desc:'Petrovaradin Kalesi ve tarihi şehir merkezi.'},
+    {c:'Segedin',co:'HU',la:46.25,lo:20.14,t:'transit',day:2,n:0,dk:90,dt:'~1 saat',desc:'Macaristan sınırı geçişi, Tisza nehri kıyısı.'},
+    {c:'Keçkemet',co:'HU',la:46.90,lo:19.69,t:'transit',day:2,n:0,dk:90,dt:'~1 saat',desc:'Büyük Macar Ovası (Puszta) molası.'},
+    {c:'Budapeşte',co:'HU',la:47.50,lo:19.04,t:'overnight',day:2,n:1,dk:200,dt:'~2.5 saat',desc:'3. GECE. Tuna nehri, Parlamento, Buda Kalesi.'},
+    {c:'Bratislava',co:'SK',la:48.14,lo:17.10,t:'transit',day:3,n:0,dk:80,dt:'~1 saat',desc:'Slovakya başkenti kısa mola.'},
+    {c:'Viyana',co:'AT',la:48.21,lo:16.37,t:'overnight',day:3,n:1,dk:330,dt:'~3.5 saat',desc:'4. GECE. Schönbrunn Sarayı, Hofburg, Stephansdom.'},
+    {c:'Prag',co:'CZ',la:50.08,lo:14.44,t:'overnight',day:4,n:1,dk:150,dt:'~2 saat',desc:'5. GECE. Karlov Köprüsü, Astronomik Saat.'},
+    {c:'Dresden',co:'DE',la:51.05,lo:13.73,t:'transit',day:5,n:0,dk:190,dt:'~2 saat',desc:'Elbe Floransası molası.'},
+    {c:'Berlin',co:'DE',la:52.52,lo:13.40,t:'overnight',day:5,n:1,dk:290,dt:'~3 saat',desc:'6. GECE. Brandenburg Kapısı, Reichstag, Berlin Duvarı.'},
+    {c:'Hamburg',co:'DE',la:53.55,lo:9.99,t:'overnight',day:6,n:1,dk:120,dt:'~1.5 saat',desc:'7. GECE. Elbphilharmonie, liman turu, Speicherstadt.'},
+    {c:'Bremen',co:'DE',la:53.07,lo:8.80,t:'transit',day:7,n:0,dk:180,dt:'~2 saat',desc:'Bremen Mızıkacıları heykeli, Schnoor mahallesi.'},
+    {c:'Groningen',co:'NL',la:53.21,lo:6.56,t:'transit',day:7,n:0,dk:80,dt:'~1 saat',desc:'Hollanda öğrenci şehri, Martini Kulesi.'},
+    {c:'Heerenveen',co:'NL',la:52.96,lo:5.92,t:'transit',day:7,n:0,dk:40,dt:'~45 dk',desc:'Friesland bölgesi molası.'},
+    {c:'Giethoorn',co:'NL',la:52.73,lo:6.07,t:'transit',day:7,n:0,dk:30,dt:'~30 dk',desc:'Hollanda\'nın Venedik\'i, masalsı kanallar ve evler.',tips:[{t:'Bot kiralayıp kanallarda gezin',c:'good'}]},
+    {c:'Zwolle',co:'NL',la:52.51,lo:6.09,t:'transit',day:7,n:0,dk:40,dt:'~45 dk',desc:'Tarihi Hansa şehri, Sassenpoort.'},
+    {c:'Harderwijk',co:'NL',la:52.34,lo:5.62,t:'transit',day:7,n:0,dk:30,dt:'~30 dk',desc:'Eski balıkçı kasabası, yunus parkı.'},
+    {c:'Amersfoort',co:'NL',la:52.15,lo:5.38,t:'transit',day:7,n:0,dk:70,dt:'~1 saat',desc:'Orta çağdan kalma Koppelpoort kapısı.'},
+    {c:'Spijkenisse',co:'NL',la:51.84,lo:4.32,t:'transit',day:7,n:0,dk:150,dt:'~1.5 saat',desc:'Rotterdam öncesi Euro banknotlarındaki köprülerin kopyaları.'},
+    {c:'Antwerp',co:'BE',la:51.21,lo:4.40,t:'transit',day:7,n:0,dk:45,dt:'~45 dk',desc:'Belçika geçişi, muhteşem tren istasyonu.'},
+    {c:'Brüksel',co:'BE',la:50.85,lo:4.35,t:'overnight',day:7,n:1,dk:320,dt:'~3.5 saat',desc:'8. GECE. Grand-Place, Atomium, Manneken Pis.'},
+    {c:'Paris',co:'FR',la:48.85,lo:2.35,t:'overnight',day:8,n:2,dk:45,dt:'~45 dk',desc:'9-10. GECE. Eyfel Kulesi, Louvre, Seine nehri.'},
+    {c:'Disneyland',co:'FR',la:48.87,lo:2.78,t:'sightseeing',day:9,n:0,dk:460,dt:'~4.5 saat',desc:'Avrupa\'nın en büyük tema parkı.'},
+    {c:'Lyon',co:'FR',la:45.76,lo:4.83,t:'overnight',day:10,n:1,dk:150,dt:'~1.5 saat',desc:'11. GECE. Gastronomi başkenti, Vieux Lyon.'},
+    {c:'Cenevre',co:'CH',la:46.20,lo:6.14,t:'transit',day:11,n:0,dk:280,dt:'~3 saat',desc:'İsviçre girişi, Leman Gölü, Jet d\'Eau.'},
+    {c:'Zürih',co:'CH',la:47.37,lo:8.54,t:'overnight',day:11,n:1,dk:120,dt:'~1.5 saat',desc:'12. GECE. Zürih Gölü, Bahnhofstrasse.'},
+    {c:'Chur',co:'CH',la:46.85,lo:9.53,t:'sightseeing',day:12,n:0,dk:120,dt:'~1.5 saat',desc:'Bernina Express treni (Tirano\'ya) veya araçla geçiş muhteşem Alp manzaraları.',tips:[{t:'Tirano treni manzarası efsane',c:'good'}]},
+    {c:'İnterlaken',co:'CH',la:46.68,lo:7.86,t:'transit',day:12,n:0,dk:20,dt:'~30 dk',desc:'İki göl arası (Thun ve Brienz).'},
+    {c:'Grindelwald',co:'CH',la:46.62,lo:8.03,t:'transit',day:12,n:0,dk:15,dt:'~30 dk',desc:'Eiger Dağı eteklerinde masalsı köy.'},
+    {c:'Lauterbrunnen',co:'CH',la:46.59,lo:7.90,t:'sightseeing',day:12,n:0,dk:250,dt:'~3 saat',desc:'72 şelaleli muhteşem vadi (Staubbach Şelalesi).',tips:[{t:'Vadide yürüyüş yapın',c:'good'}]},
+    {c:'Como Gölü',co:'IT',la:45.98,lo:9.26,t:'transit',day:12,n:0,dk:50,dt:'~1 saat',desc:'İtalya\'ya geçiş, Alplerin eteklerinde lüks göl hayatı.'},
+    {c:'Milano',co:'IT',la:45.46,lo:9.19,t:'overnight',day:12,n:1,dk:270,dt:'~3 saat',desc:'13. GECE. Duomo, Galleria Vittorio Emanuele.'},
+    {c:'Venedik',co:'IT',la:45.44,lo:12.31,t:'overnight',day:13,n:1,dk:150,dt:'~2 saat',desc:'14. GECE. Kanallar, San Marco, gondol turu.'},
+    {c:'Bologna',co:'IT',la:44.49,lo:11.34,t:'transit',day:14,n:0,dk:100,dt:'~1.5 saat',desc:'Kızıl Şehir, revaklı sokaklar, Due Torri.'},
+    {c:'Floransa',co:'IT',la:43.76,lo:11.25,t:'overnight',day:14,n:1,dk:270,dt:'~3 saat',desc:'15. GECE. Rönesans başkenti, Duomo, Ponte Vecchio.'},
+    {c:'Roma',co:'IT',la:41.90,lo:12.49,t:'overnight',day:15,n:2,dk:270,dt:'~3.5 saat',desc:'16-17. GECE. Kolezyum, Vatikan, Trevi Çeşmesi.'},
+    {c:'Amalfi',co:'IT',la:40.63,lo:14.60,t:'destination',day:17,n:0,dk:0,dt:'',desc:'18. GÜN. Amalfi kıyıları, Positano, harika manzaralar.'}
+  ]
+}
+];
 
 /* ═══════ GİDİŞ ROTALARI ═══════ */
 const OUTBOUND = [
@@ -376,7 +437,8 @@ const TIPS = [
 ];
 
 /* ═══════ STATE ═══════ */
-let selOut = 0, selRet = 0, curTab = 'out';
+let routeMode = 'complete'; // 'complete' veya 'split'
+let selComp = 0, selOut = 0, selRet = 0, curTab = 'out';
 let map, markersG=[], linesG=[];
 
 /* ═══════ INIT ═══════ */
@@ -396,22 +458,37 @@ function loadTheme(){
 
 /* ═══════ ROUTE CARDS ═══════ */
 function renderRouteCards(){
+  const cc = document.getElementById('completeCards');
+  if(cc){
+    cc.innerHTML = COMPLETE.map((r,i) => `
+      <div class="route-card ${routeMode==='complete' && i===selComp?'selected':''}" onclick="pickComp(${i})">
+        <div class="rc-icon">${r.icon}</div>
+        <div class="rc-name">${r.name}</div>
+        <div class="rc-stops">${r.tag}</div>
+        <div class="rc-meta">
+          <span><i class="fas fa-road"></i> ~${(r.km).toLocaleString('tr')} km</span>
+          <span><i class="fas fa-moon"></i> ${r.stops.reduce((s,x)=>s+(x.n||0),0)} gece</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
   const oc = document.getElementById('outboundCards');
   oc.innerHTML = OUTBOUND.map((r,i) => `
-    <div class="route-card ${i===selOut?'selected':''}" onclick="pickOut(${i})">
+    <div class="route-card ${routeMode==='split' && i===selOut?'selected':''}" onclick="pickOut(${i})">
       <div class="rc-icon">${r.icon}</div>
       <div class="rc-name">${r.name}</div>
       <div class="rc-stops">${r.tag}</div>
       <div class="rc-meta">
         <span><i class="fas fa-road"></i> ~${(r.km).toLocaleString('tr')} km</span>
-        <span><i class="fas fa-moon"></i> ${r.stops.reduce((s,x)=>s+x.n,0)} gece</span>
+        <span><i class="fas fa-moon"></i> ${r.stops.reduce((s,x)=>s+(x.n||0),0)} gece</span>
       </div>
     </div>
   `).join('');
 
   const rc = document.getElementById('returnCards');
   rc.innerHTML = RETURN.map((r,i) => `
-    <div class="route-card ${i===selRet?'selected':''}" onclick="pickRet(${i})">
+    <div class="route-card ${routeMode==='split' && i===selRet?'selected':''}" onclick="pickRet(${i})">
       <div class="rc-icon">${r.icon}</div>
       <div class="rc-name">${r.name}</div>
       <div class="rc-stops">${r.tag}</div>
@@ -423,8 +500,9 @@ function renderRouteCards(){
   `).join('');
 }
 
-function pickOut(i){ selOut=i; renderRouteCards(); renderAll(); }
-function pickRet(i){ selRet=i; renderRouteCards(); renderAll(); }
+function pickComp(i){ routeMode='complete'; selComp=i; renderRouteCards(); renderAll(); }
+function pickOut(i){ routeMode='split'; selOut=i; renderRouteCards(); renderAll(); }
+function pickRet(i){ routeMode='split'; selRet=i; renderRouteCards(); renderAll(); }
 
 /* ═══════ MAP ═══════ */
 function initMap(){
@@ -447,8 +525,16 @@ function mIcon(t){
 function drawMap(){
   markersG.forEach(m=>map.removeLayer(m)); linesG.forEach(l=>map.removeLayer(l));
   markersG=[]; linesG=[];
-  const out = OUTBOUND[selOut].stops;
-  const ret = RETURN[selRet].stops;
+  
+  let out = [], ret = [];
+  if (routeMode === 'complete') {
+    out = COMPLETE[selComp].stops;
+    ret = [];
+  } else {
+    out = OUTBOUND[selOut].stops;
+    ret = RETURN[selRet].stops;
+  }
+  
   // outbound line
   if(out.length>1){
     const l=L.polyline(out.map(s=>[s.la,s.lo]),{color:'#2B7A78',weight:3,opacity:0.8}).addTo(map);
@@ -475,14 +561,25 @@ function drawMap(){
 function renderTimeline(){
   const box = document.getElementById('timeline');
   if(curTab==='rdam'){ renderRdam(box); return; }
-  const stops = curTab==='out' ? OUTBOUND[selOut].stops : RETURN[selRet].stops;
-  // calculate day offsets for return
+  
+  let stops = [];
   let dayBase = 0;
-  if(curTab==='ret'){
-    const outN = OUTBOUND[selOut].stops.reduce((s,x)=>s+Math.max(x.n,x.t==='start'||x.t==='border'?0:0),0);
-    // total outbound days
-    const lastOut = OUTBOUND[selOut].stops[OUTBOUND[selOut].stops.length-1];
-    dayBase = lastOut.day + lastOut.n;
+
+  if (routeMode === 'complete') {
+    if(curTab === 'ret') {
+      box.innerHTML = '<div style="padding:20px;text-align:center;">Avrupa Büyük Tur seçili olduğundan dönüş rotası da gidişin (Tüm Rota) içindedir. Lütfen Gidiş sekmesini kullanın.</div>';
+      return;
+    }
+    stops = COMPLETE[selComp].stops;
+  } else {
+    stops = curTab==='out' ? OUTBOUND[selOut].stops : RETURN[selRet].stops;
+    // calculate day offsets for return
+    if(curTab==='ret'){
+      const outN = OUTBOUND[selOut].stops.reduce((s,x)=>s+Math.max(x.n,x.t==='start'||x.t==='border'?0:0),0);
+      // total outbound days
+      const lastOut = OUTBOUND[selOut].stops[OUTBOUND[selOut].stops.length-1];
+      dayBase = lastOut.day + lastOut.n;
+    }
   }
 
   box.innerHTML = stops.map(s => {
@@ -528,9 +625,20 @@ function renderRdam(box){
 
 /* ═══════ COSTS ═══════ */
 function calcCosts(){
-  const out = OUTBOUND[selOut];
-  const ret = RETURN[selRet];
-  const allStops = [...out.stops, ...ret.stops.slice(1)];
+  let out, ret, allStops, fc;
+  
+  if (routeMode === 'complete') {
+    out = COMPLETE[selComp];
+    ret = {tolls:[], stops:[]};
+    allStops = out.stops;
+    fc = out.ferryCost || 0;
+  } else {
+    out = OUTBOUND[selOut];
+    ret = RETURN[selRet];
+    allStops = [...out.stops, ...ret.stops.slice(1)];
+    fc = ret.ferryCost || 600;
+  }
+
   const costs = {fuel:{items:[],total:0},tolls:{items:[],total:0},acc:{items:[],total:0},food:{items:[],total:0},visa:{items:[],total:0},extra:{items:[],total:0}};
 
   // Fuel by country
@@ -567,15 +675,16 @@ function calcCosts(){
   });
 
   // Visa, insurance, ferry
-  const fc = ret.ferryCost||600;
   costs.visa.items=[
     {l:'🛂 Schengen Vizesi (4 yetişkin)',v:360},
     {l:'🛂 Schengen Vizesi (2 çocuk)',v:90},
     {l:'📋 VFS Hizmet Bedeli (6 kişi)',v:240},
     {l:'🚗 Green Card Sigorta',v:59},
-    {l:'🏥 Seyahat Sigortası (6 kişi)',v:180},
-    {l:`⛴️ Feribot: ${ret.ferryFrom}→${ret.ferryTo}`,v:fc}
+    {l:'🏥 Seyahat Sigortası (6 kişi)',v:180}
   ];
+  if (fc > 0) {
+    costs.visa.items.push({l:`⛴️ Feribot: ${ret.ferryFrom}→${ret.ferryTo}`,v:fc});
+  }
   costs.visa.total=costs.visa.items.reduce((s,i)=>s+i.v,0);
 
   // Extras
@@ -691,5 +800,6 @@ function bindEvents(){
 }
 
 // Global functions for onclick
+window.pickComp = pickComp;
 window.pickOut = pickOut;
 window.pickRet = pickRet;
