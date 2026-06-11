@@ -45,49 +45,176 @@ const COMPLETE = [
     {n:'IT Autostrada',v:80}
   ],
   stops:[
-    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'start',day:0,n:0,dk:260,dt:'~3 saat',desc:'Başlangıç.'},
-    {c:'İstanbul',co:'TR',la:41.00,lo:28.97,t:'transit',day:0,n:0,dk:240,dt:'~3 saat',desc:'İstanbul geçişi.'},
-    {c:'Edirne',co:'TR',la:41.67,lo:26.55,t:'transit',day:0,n:0,dk:180,dt:'~2 saat',desc:'Kapıkule Sınır Kapısı öncesi mola.',tips:[{t:'Sınır kapısı yoğun olabilir',c:'warn'}]},
-    {c:'Plovdiv',co:'BG',la:42.15,lo:24.75,t:'transit',day:0,n:0,dk:140,dt:'~1.5 saat',desc:'Avrupa Kültür Başkenti Plovdiv (Filibe) molası.'},
-    {c:'Sofya',co:'BG',la:42.70,lo:23.32,t:'overnight',day:0,n:1,dk:160,dt:'~2.5 saat',desc:'1. GECE. Bulgaristan başkenti.'},
-    {c:'Niş',co:'RS',la:43.32,lo:21.89,t:'transit',day:1,n:0,dk:240,dt:'~2.5 saat',desc:'Sırbistan\'a giriş ve Niş molası.'},
-    {c:'Belgrad',co:'RS',la:44.79,lo:20.45,t:'overnight',day:1,n:1,dk:90,dt:'~1.5 saat',desc:'2. GECE. Kalemegdan Kalesi, Tuna ve Sava nehirleri buluşması.'},
-    {c:'Novi Sad',co:'RS',la:45.26,lo:19.83,t:'transit',day:2,n:0,dk:130,dt:'~1.5 saat',desc:'Petrovaradin Kalesi ve tarihi şehir merkezi.'},
-    {c:'Segedin',co:'HU',la:46.25,lo:20.14,t:'transit',day:2,n:0,dk:90,dt:'~1 saat',desc:'Macaristan sınırı geçişi, Tisza nehri kıyısı.'},
-    {c:'Keçkemet',co:'HU',la:46.90,lo:19.69,t:'transit',day:2,n:0,dk:90,dt:'~1 saat',desc:'Büyük Macar Ovası (Puszta) molası.'},
-    {c:'Budapeşte',co:'HU',la:47.50,lo:19.04,t:'overnight',day:2,n:1,dk:200,dt:'~2.5 saat',desc:'3. GECE. Tuna nehri, Parlamento, Buda Kalesi.'},
-    {c:'Bratislava',co:'SK',la:48.14,lo:17.10,t:'transit',day:3,n:0,dk:80,dt:'~1 saat',desc:'Slovakya başkenti kısa mola.'},
-    {c:'Viyana',co:'AT',la:48.21,lo:16.37,t:'overnight',day:3,n:1,dk:330,dt:'~3.5 saat',desc:'4. GECE. Schönbrunn Sarayı, Hofburg, Stephansdom.'},
-    {c:'Prag',co:'CZ',la:50.08,lo:14.44,t:'overnight',day:4,n:1,dk:150,dt:'~2 saat',desc:'5. GECE. Karlov Köprüsü, Astronomik Saat.'},
-    {c:'Dresden',co:'DE',la:51.05,lo:13.73,t:'transit',day:5,n:0,dk:190,dt:'~2 saat',desc:'Elbe Floransası molası.'},
-    {c:'Berlin',co:'DE',la:52.52,lo:13.40,t:'overnight',day:5,n:1,dk:290,dt:'~3 saat',desc:'6. GECE. Brandenburg Kapısı, Reichstag, Berlin Duvarı.'},
-    {c:'Hamburg',co:'DE',la:53.55,lo:9.99,t:'overnight',day:6,n:1,dk:120,dt:'~1.5 saat',desc:'7. GECE. Elbphilharmonie, liman turu, Speicherstadt.'},
-    {c:'Bremen',co:'DE',la:53.07,lo:8.80,t:'transit',day:7,n:0,dk:180,dt:'~2 saat',desc:'Bremen Mızıkacıları heykeli, Schnoor mahallesi.'},
-    {c:'Groningen',co:'NL',la:53.21,lo:6.56,t:'transit',day:7,n:0,dk:80,dt:'~1 saat',desc:'Hollanda öğrenci şehri, Martini Kulesi.'},
-    {c:'Heerenveen',co:'NL',la:52.96,lo:5.92,t:'transit',day:7,n:0,dk:40,dt:'~45 dk',desc:'Friesland bölgesi molası.'},
-    {c:'Giethoorn',co:'NL',la:52.73,lo:6.07,t:'transit',day:7,n:0,dk:30,dt:'~30 dk',desc:'Hollanda\'nın Venedik\'i, masalsı kanallar ve evler.',tips:[{t:'Bot kiralayıp kanallarda gezin',c:'good'}]},
-    {c:'Zwolle',co:'NL',la:52.51,lo:6.09,t:'transit',day:7,n:0,dk:40,dt:'~45 dk',desc:'Tarihi Hansa şehri, Sassenpoort.'},
-    {c:'Harderwijk',co:'NL',la:52.34,lo:5.62,t:'transit',day:7,n:0,dk:30,dt:'~30 dk',desc:'Eski balıkçı kasabası, yunus parkı.'},
-    {c:'Amersfoort',co:'NL',la:52.15,lo:5.38,t:'transit',day:7,n:0,dk:70,dt:'~1 saat',desc:'Orta çağdan kalma Koppelpoort kapısı.'},
-    {c:'Spijkenisse',co:'NL',la:51.84,lo:4.32,t:'transit',day:7,n:0,dk:150,dt:'~1.5 saat',desc:'Rotterdam öncesi Euro banknotlarındaki köprülerin kopyaları.'},
-    {c:'Antwerp',co:'BE',la:51.21,lo:4.40,t:'transit',day:7,n:0,dk:45,dt:'~45 dk',desc:'Belçika geçişi, muhteşem tren istasyonu.'},
-    {c:'Brüksel',co:'BE',la:50.85,lo:4.35,t:'overnight',day:7,n:1,dk:320,dt:'~3.5 saat',desc:'8. GECE. Grand-Place, Atomium, Manneken Pis.'},
-    {c:'Paris',co:'FR',la:48.85,lo:2.35,t:'overnight',day:8,n:2,dk:45,dt:'~45 dk',desc:'9-10. GECE. Eyfel Kulesi, Louvre, Seine nehri.'},
-    {c:'Disneyland',co:'FR',la:48.87,lo:2.78,t:'sightseeing',day:9,n:0,dk:460,dt:'~4.5 saat',desc:'Avrupa\'nın en büyük tema parkı.'},
-    {c:'Lyon',co:'FR',la:45.76,lo:4.83,t:'overnight',day:10,n:1,dk:150,dt:'~1.5 saat',desc:'11. GECE. Gastronomi başkenti, Vieux Lyon.'},
-    {c:'Cenevre',co:'CH',la:46.20,lo:6.14,t:'transit',day:11,n:0,dk:280,dt:'~3 saat',desc:'İsviçre girişi, Leman Gölü, Jet d\'Eau.'},
-    {c:'Zürih',co:'CH',la:47.37,lo:8.54,t:'overnight',day:11,n:1,dk:120,dt:'~1.5 saat',desc:'12. GECE. Zürih Gölü, Bahnhofstrasse.'},
-    {c:'Chur',co:'CH',la:46.85,lo:9.53,t:'sightseeing',day:12,n:0,dk:120,dt:'~1.5 saat',desc:'Bernina Express treni (Tirano\'ya) veya araçla geçiş muhteşem Alp manzaraları.',tips:[{t:'Tirano treni manzarası efsane',c:'good'}]},
-    {c:'İnterlaken',co:'CH',la:46.68,lo:7.86,t:'transit',day:12,n:0,dk:20,dt:'~30 dk',desc:'İki göl arası (Thun ve Brienz).'},
-    {c:'Grindelwald',co:'CH',la:46.62,lo:8.03,t:'transit',day:12,n:0,dk:15,dt:'~30 dk',desc:'Eiger Dağı eteklerinde masalsı köy.'},
-    {c:'Lauterbrunnen',co:'CH',la:46.59,lo:7.90,t:'sightseeing',day:12,n:0,dk:250,dt:'~3 saat',desc:'72 şelaleli muhteşem vadi (Staubbach Şelalesi).',tips:[{t:'Vadide yürüyüş yapın',c:'good'}]},
-    {c:'Como Gölü',co:'IT',la:45.98,lo:9.26,t:'transit',day:12,n:0,dk:50,dt:'~1 saat',desc:'İtalya\'ya geçiş, Alplerin eteklerinde lüks göl hayatı.'},
-    {c:'Milano',co:'IT',la:45.46,lo:9.19,t:'overnight',day:12,n:1,dk:270,dt:'~3 saat',desc:'13. GECE. Duomo, Galleria Vittorio Emanuele.'},
-    {c:'Venedik',co:'IT',la:45.44,lo:12.31,t:'overnight',day:13,n:1,dk:150,dt:'~2 saat',desc:'14. GECE. Kanallar, San Marco, gondol turu.'},
-    {c:'Bologna',co:'IT',la:44.49,lo:11.34,t:'transit',day:14,n:0,dk:100,dt:'~1.5 saat',desc:'Kızıl Şehir, revaklı sokaklar, Due Torri.'},
-    {c:'Floransa',co:'IT',la:43.76,lo:11.25,t:'overnight',day:14,n:1,dk:270,dt:'~3 saat',desc:'15. GECE. Rönesans başkenti, Duomo, Ponte Vecchio.'},
-    {c:'Roma',co:'IT',la:41.90,lo:12.49,t:'overnight',day:15,n:2,dk:270,dt:'~3.5 saat',desc:'16-17. GECE. Kolezyum, Vatikan, Trevi Çeşmesi.'},
-    {c:'Amalfi',co:'IT',la:40.63,lo:14.60,t:'destination',day:17,n:0,dk:0,dt:'',desc:'18. GÜN. Amalfi kıyıları, Positano, harika manzaralar.'}
+    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'start',day:0,n:0,dk:260,dt:'~3 saat',
+     desc:'06:00 hareket. Ankara-Niğde Otoyolu → Ankara Çevre → Bolu → KMO → İstanbul bypass. İstanbul\'a GİRMEYİN, KMO ile bypass edin.',
+     tips:[{t:'HGS bakiyesini kontrol edin',c:'warn'},{t:'Bolu\'da mola + kahvaltı',c:'good'},{t:'TR\'de full depo — en ucuz yakıt',c:'good'},{t:'KMO çıkışı Kınalı→Edirne',c:'info'}]},
+    {c:'İstanbul',co:'TR',la:41.00,lo:28.97,t:'transit',day:0,n:0,dk:240,dt:'~3 saat',
+     desc:'KMO ile İstanbul çevresinden geçiş. Şehre girmeden Kınalı bağlantısıyla Edirne istikametine devam.',
+     tips:[{t:'KMO gişeleri yoğun olabilir',c:'warn'},{t:'Ömerli-Kınalı arası mola noktaları mevcut',c:'info'}]},
+    {c:'Edirne',co:'TR',la:41.67,lo:26.55,t:'transit',day:0,n:0,dk:180,dt:'~2 saat',
+     desc:'Kapıkule Sınır Kapısı öncesi son Türkiye molası. Selimiye Camii ziyareti ve meşhur Edirne tava ciğeri kaçırılmaz!',
+     tips:[{t:'Kapıkule yaz aylarında 1-3 saat bekleme',c:'warn'},{t:'AB EES biyometrik kontrol aktif',c:'warn'},{t:'Edirne tava ciğer + beyaz peynir deneyin',c:'good'},{t:'BG vinyetini bgtoll.bg\'den ÖNCEDEN alın',c:'info'}]},
+    {c:'Plovdiv',co:'BG',la:42.15,lo:24.75,t:'transit',day:0,n:0,dk:140,dt:'~1.5 saat',
+     desc:'Avrupa Kültür Başkenti Plovdiv (Filibe). Antik Roma Tiyatrosu, Eski Şehir\'in renkli Osmanlı evleri ve Kapana sanat bölgesi.',
+     halal:'Eski şehir civarında Türk lokantaları mevcut. Kebap ve pide kolayca bulunur. Müslüman Türk nüfusu sayesinde helal et bulmak kolay. Marketlerde \'Халал\' etiketli ürünler var.',
+     tips:[{t:'Roma Tiyatrosu ücretsiz manzara noktası',c:'good'},{t:'Kapana bölgesinde kahve molası',c:'good'},{t:'BGN para birimi, €1≈2 BGN',c:'info'}]},
+    {c:'Sofya',co:'BG',la:42.70,lo:23.32,t:'overnight',day:0,n:1,dk:160,dt:'~2.5 saat',
+     desc:'1. GECE. Bulgaristan başkenti. Aleksander Nevski Katedrali, Vitosha Bulvarı yürüyüşü, Banya Başı Camii ziyareti.',
+     halal:'Banya Başı Camii civarında Türk restoranları yoğun. Zhenski Pazar çevresinde dönerci ve kebapçılar. Al Safa helal süpermarket mevcut.',
+     accom:'Şehir merkezinde apart otel €40-55/gece. Vitosha Bulvarı yürüme mesafesinde tercih edin. Booking.com\'dan aile odası arayın.',
+     tips:[{t:'Merkez Cami civarı helal restoran bölgesi',c:'good'},{t:'Vitosha Bulvarı akşam yürüyüşü harika',c:'good'},{t:'BGN para birimi, €1≈2 BGN',c:'info'}]},
+    {c:'Niş',co:'RS',la:43.32,lo:21.89,t:'transit',day:1,n:0,dk:240,dt:'~2.5 saat',
+     desc:'Sırbistan\'a giriş. Niş Kalesi (Osmanlı yapısı), Çele Kula (Kafatası Kulesi) tarih meraklıları için ilginç. Şehir merkezi kompakt ve yürünebilir.',
+     halal:'Boşnak restoranlarında ızgara eti helal (sığır/kuzu). Ćevapi ve pljeskavica güvenli. \"Svinjsko\" domuz demek — kaçının!',
+     tips:[{t:'RS Schengen DEĞİL, sınırda ayrı kontrol',c:'info'},{t:'RSD veya EUR nakit bulundurun',c:'warn'},{t:'Niş Kalesi çocuklarla gezmeye uygun',c:'good'}]},
+    {c:'Belgrad',co:'RS',la:44.79,lo:20.45,t:'overnight',day:1,n:1,dk:90,dt:'~1.5 saat',
+     desc:'2. GECE. Kalemegdan Kalesi (Tuna ve Sava buluşması muhteşem manzara), Knez Mihailova yürüyüş caddesi, Ada Ciganlija gölü (çocuklar için plaj ve bisiklet).',
+     halal:'Boşnak restoranlarında ızgara et helal (sığır/kuzu). Ćevapi ve pljeskavica güvenli. Dorćol ve Stari Grad\'da Boşnak lokantaları. \"Svinjsko\" domuz — kaçının!',
+     accom:'Stari Grad veya Vračar bölgesinde apart otel. €50-65/gece. Airbnb çok uygun fiyatlı.',
+     tips:[{t:'Ada Ciganlija çocuklar için süper plaj',c:'good'},{t:'Kalemegdan gün batımı muhteşem',c:'good'},{t:'RSD veya EUR nakit kullanılır',c:'info'}]},
+    {c:'Novi Sad',co:'RS',la:45.26,lo:19.83,t:'transit',day:2,n:0,dk:130,dt:'~1.5 saat',
+     desc:'Sırbistan\'ın 2. büyük şehri. Petrovaradin Kalesi (\"Tuna üzerindeki Cebelitarık\") müthiş panorama. Tarihi şehir merkezi ve Dunavska caddesinde kahve molası.',
+     halal:'Ćevapi ve pljeskavica helal. Liman (Liman) bölgesinde Boşnak restoranlar mevcut.',
+     tips:[{t:'Petrovaradin Kalesi manzarası kaçırılmaz',c:'good'},{t:'Kısa ama etkili mola noktası',c:'info'}]},
+    {c:'Segedin',co:'HU',la:46.25,lo:20.14,t:'transit',day:2,n:0,dk:90,dt:'~1 saat',
+     desc:'Macaristan sınırı geçişi. Tisza nehri kıyısında güzel bir üniversite şehri. Dóm Meydanı ve Votive Kilisesi etkileyici.',
+     tips:[{t:'Macaristan girişinde e-Matrica ZORUNLU',c:'warn'},{t:'HUF para birimi, €1≈400 HUF',c:'info'},{t:'Sınır geçişi genelde hızlı',c:'good'}]},
+    {c:'Keçkemet',co:'HU',la:46.90,lo:19.69,t:'transit',day:2,n:0,dk:90,dt:'~1 saat',
+     desc:'Büyük Macar Ovası (Puszta) ortasında tarihi şehir. Cifra Sarayı (Art Nouveau başyapıtı), Katona József Meydanı. Barackpálinka (kayısı likörü) meşhur.',
+     tips:[{t:'Cifra Sarayı fotoğraf için harika',c:'good'},{t:'Otoyol molasında Macar langos deneyin',c:'good'}]},
+    {c:'Budapeşte',co:'HU',la:47.50,lo:19.04,t:'overnight',day:2,n:1,dk:200,dt:'~2.5 saat',
+     desc:'3. GECE. Tuna\'nın ikiye böldüğü muhteşem başkent. Parlamento binası (gece ışıklandırma), Széchenyi Termal (çocuklar girebilir), Buda Kalesi, Büyük Pazar Hali.',
+     halal:'Kerepesi út civarında Türk restoranları ve dönerci. Istanbul Restaurant, Turkish Bistro. Langos helal. Büyük Pazar\'da taze meyve/sebze bol.',
+     accom:'Pest tarafı daha uygun fiyatlı. Airbnb ile 2 odalı daire €65-80/gece. Termal yakınında otel çocuklara uygun.',
+     tips:[{t:'e-Matrica\'yı ÖNCEDEN alın!',c:'warn'},{t:'Széchenyi termal çocuklarla harika',c:'good'},{t:'Tram 2 Tuna kıyısı manzara turu',c:'good'},{t:'Gece Parlamento ışıklandırması muhteşem',c:'good'},{t:'€1 ≈ 400 HUF',c:'info'}]},
+    {c:'Bratislava',co:'SK',la:48.14,lo:17.10,t:'transit',day:3,n:0,dk:80,dt:'~1 saat',
+     desc:'Slovakya başkenti. Budapeşte\'den sadece 2 saat! Eski Şehir çok kompakt — UFO Köprüsü gözlem terası (panoramik Tuna manzarası), Michael Kapısı, heykellerle dolu sokaklar.',
+     halal:'Obchodná caddesinde birkaç döner/kebap dükkanı mevcut. Küçük şehir ama Türk fast food bulunur.',
+     tips:[{t:'SK e-Známka zorunlu',c:'warn'},{t:'UFO Köprüsü terası muhteşem manzara',c:'good'},{t:'Eski şehir 1-2 saatte yürünür',c:'info'},{t:'EUR kullanılır',c:'info'}]},
+    {c:'Viyana',co:'AT',la:48.21,lo:16.37,t:'overnight',day:3,n:1,dk:330,dt:'~3.5 saat',
+     desc:'4. GECE. İmparatorluk başkenti! Schönbrunn Sarayı (bahçe ücretsiz), Stephansdom Katedrali, Prater lunapark (çocuklara dev dönme dolap), Naschmarkt alışveriş.',
+     halal:'Naschmarkt\'ta Türk ve Arap yemek tezgahları. Favoriten (10. Bölge) helal kasap ve lokanta yoğun. Etsan, Orient helal marketler. Döner/kebap her köşede.',
+     accom:'Favoriten veya Ottakring bölgeleri uygun. €100-130/gece. Wien Hauptbahnhof civarı ulaşım açısından pratik.',
+     tips:[{t:'AT vinyeti zorunlu (asfinag.at)',c:'warn'},{t:'Prater lunapark çocuklar için harika',c:'good'},{t:'Schönbrunn bahçesi ücretsiz',c:'good'},{t:'Naschmarkt\'ta helal street food',c:'good'},{t:'EUR kullanılır',c:'info'}]},
+    {c:'Prag',co:'CZ',la:50.08,lo:14.44,t:'overnight',day:4,n:1,dk:150,dt:'~2 saat',
+     desc:'5. GECE. ⭐ PRAG! Masaldan fırlamış şehir. Karlov Köprüsü (sabah erken gidin), Prag Kalesi, Astronomik Saat, Petřín teleferik + ayna labirenti (çocuklar bayılır).',
+     halal:'Kebapçılar Wenceslas Meydanı ve Můstek civarında yaygın. Trdelník (baca böreği) helal. \"Vepřové\" domuz demek — dikkat! Balık ve sebze güvenli.',
+     accom:'Staré Město veya Vinohrady bölgesi. Apart otel €65-80/gece. Batı Avrupa\'nın yarı fiyatına lüks kalabilirsiniz.',
+     tips:[{t:'CZ e-Známka zorunlu',c:'warn'},{t:'Petřín teleferik + ayna labirenti çocuklara',c:'good'},{t:'Karlov Köprüsü sabah erken boş olur',c:'good'},{t:'Trdelník (baca böreği) deneyin',c:'good'},{t:'€1 ≈ 25 CZK',c:'info'}]},
+    {c:'Dresden',co:'DE',la:51.05,lo:13.73,t:'transit',day:5,n:0,dk:190,dt:'~2 saat',
+     desc:'\"Elbe Floransası\" lakaplı barok başyapıt. Zwinger Sarayı, Frauenkirche (II. Dünya Savaşı sonrası yeniden inşa), Semperoper opera binası. Terrassenufer\'den Elbe manzarası.',
+     halal:'Hauptbahnhof civarında birkaç döner dükkanı. Prager Straße\'de kebapçılar mevcut. Almanya\'da helal bulmak kolay.',
+     tips:[{t:'Almanya otoyol ücretsiz ✓',c:'good'},{t:'Zwinger avlusu ücretsiz gezilebilir',c:'good'},{t:'Frauenkirche kubbesi panoramik manzara',c:'good'}]},
+    {c:'Berlin',co:'DE',la:52.52,lo:13.40,t:'overnight',day:5,n:1,dk:290,dt:'~3 saat',
+     desc:'6. GECE. Almanya\'nın dinamik başkenti. Brandenburg Kapısı, Reichstag (cam kubbe ücretsiz, online rezervasyon), Berlin Duvarı kalıntıları (East Side Gallery), Checkpoint Charlie.',
+     halal:'Kreuzberg \"Küçük İstanbul\" — Oranienstraße ve Kottbusser Damm helal cennet! Mustafa\'s Gemüse Kebap efsane (kuyruk uzun). Türk marketleri her yerde.',
+     accom:'Kreuzberg veya Mitte bölgesi. €90-120/gece. U-Bahn ile her yere ulaşım kolay.',
+     tips:[{t:'Reichstag cam kubbe ÖNCEDEN online rezervasyon',c:'warn'},{t:'Kreuzberg Türk bölgesi — evdeki gibi',c:'good'},{t:'East Side Gallery açık hava müzesi',c:'good'},{t:'BVG günlük bilet ile toplu taşıma',c:'info'}]},
+    {c:'Hamburg',co:'DE',la:53.55,lo:9.99,t:'overnight',day:6,n:1,dk:120,dt:'~1.5 saat',
+     desc:'7. GECE. Almanya\'nın deniz kapısı. Elbphilharmonie (plaza ücretsiz giriş, manzara muhteşem), Speicherstadt (UNESCO, Miniatur Wunderland çocuklar için ZORUNLU), liman turu.',
+     halal:'Steindamm bölgesi Türk/Arap lokantalarıyla dolu. Helal döner, pide, lahmacun kolay bulunur. Schanzenviertel\'de de seçenekler var.',
+     accom:'Hauptbahnhof veya St. Pauli civarı. €95-120/gece. Mercure, Motel One uygun fiyatlı zincirler.',
+     tips:[{t:'Miniatur Wunderland çocuklar için MUTLAKA',c:'good'},{t:'Elbphilharmonie plaza ücretsiz panorama',c:'good'},{t:'Liman turu ~1 saat, €20/kişi',c:'info'},{t:'Speicherstadt gece ışıklandırması harika',c:'good'}]},
+    {c:'Bremen',co:'DE',la:53.07,lo:8.80,t:'transit',day:7,n:0,dk:180,dt:'~2 saat',
+     desc:'Bremen Mızıkacıları heykeli (çocuklar bayılır), Schnoor mahallesi (dar sokaklar, renkli evler), Marktplatz ve Roland heykeli (UNESCO).',
+     halal:'Hauptbahnhof civarında döner dükkanları. Bahnhofsplatz\'da Türk fast food. Almanya\'da helal bulmak hiç sorun değil.',
+     tips:[{t:'Schnoor mahallesi çocuklarla yürüyüşe uygun',c:'good'},{t:'Mızıkacılar heykelinde bacaklara dokunun — şans getirir!',c:'good'}]},
+    {c:'Groningen',co:'NL',la:53.21,lo:6.56,t:'transit',day:7,n:0,dk:80,dt:'~1 saat',
+     desc:'Hollanda\'nın kuzeyinde canlı üniversite şehri. Martini Kulesi\'ne çıkın (panoramik manzara), Grote Markt meydanı, bisikletli Hollanda hayatının en güzel örneği.',
+     tips:[{t:'Martini Kulesi manzarası harika',c:'good'},{t:'NL\'de hız sınırı 100 km/h, DİKKAT!',c:'warn'},{t:'EUR kullanılır',c:'info'}]},
+    {c:'Heerenveen',co:'NL',la:52.96,lo:5.92,t:'transit',day:7,n:0,dk:40,dt:'~45 dk',
+     desc:'Friesland bölgesi, Hollanda\'nın en otantik kırsal kesimi. Göller ve çayırlar arasında kısa mola. Buz pateni kültürünün merkezi.',
+     tips:[{t:'Yakıt ikmali için uygun nokta',c:'info'}]},
+    {c:'Giethoorn',co:'NL',la:52.73,lo:6.07,t:'transit',day:7,n:0,dk:30,dt:'~30 dk',
+     desc:'\"Hollanda\'nın Venedik\'i\" — yolsuz köy, sadece kanallar ve ahşap köprüler! Masalsı sazdan çatılı evler, yemyeşil doğa. Çocuklar bot gezisine bayılır.',
+     tips:[{t:'Whisper bot (elektrikli bot) kiralayın ~€15/saat',c:'good'},{t:'Fotoğraf için en güzel köy',c:'good'},{t:'Yaz aylarında kalabalık, sabah erken gidin',c:'warn'}]},
+    {c:'Zwolle',co:'NL',la:52.51,lo:6.09,t:'transit',day:7,n:0,dk:40,dt:'~45 dk',
+     desc:'Tarihi Hansa şehri. Sassenpoort kapısı (orta çağ), Grote Kerk, canlı şehir merkezi. Hollanda\'nın en iyi korunan orta çağ şehirlerinden.',
+     tips:[{t:'Sassenpoort fotoğraf noktası',c:'good'},{t:'Şehir merkezi kompakt, kısa yürüyüş',c:'info'}]},
+    {c:'Harderwijk',co:'NL',la:52.34,lo:5.62,t:'transit',day:7,n:0,dk:30,dt:'~30 dk',
+     desc:'Eski balıkçı kasabası, Dolfinarium (Avrupa\'nın en büyük yunus parkı — çocuklar için harika). Veluwemeer gölü kıyısında huzurlu mola.',
+     tips:[{t:'Dolfinarium çocuklara tam gün aktivite',c:'good'},{t:'Veluwemeer kıyısında piknik yapılabilir',c:'info'}]},
+    {c:'Amersfoort',co:'NL',la:52.15,lo:5.38,t:'transit',day:7,n:0,dk:70,dt:'~1 saat',
+     desc:'Orta çağdan kalma muhteşem Koppelpoort su kapısı (fotoğrafçıların favorisi). Eski şehir surları, Onze Lieve Vrouwetoren kulesi. Hollanda\'nın en iyi korunan orta çağ merkezlerinden.',
+     tips:[{t:'Koppelpoort Hollanda\'nın en çok fotoğraflanan noktası',c:'good'},{t:'Eski şehir içinde kahve molası',c:'good'}]},
+    {c:'Spijkenisse',co:'NL',la:51.84,lo:4.32,t:'transit',day:7,n:0,dk:150,dt:'~1.5 saat',
+     desc:'Rotterdam yakınında ilginç bir nokta — Euro banknotlarındaki hayali köprülerin gerçek kopyaları burada! Çocuklar için eğlenceli fotoğraf fırsatı.',
+     tips:[{t:'Euro köprüleri fotoğraf noktası',c:'good'},{t:'Rotterdam\'a 15 dk mesafe',c:'info'}]},
+    {c:'Antwerp',co:'BE',la:51.21,lo:4.40,t:'transit',day:7,n:0,dk:45,dt:'~45 dk',
+     desc:'Belçika\'nın elmas başkenti. Antwerp-Centraal tren istasyonu (dünyanın en güzel istasyonu!), Grote Markt, Rubens\'in şehri. Belçika çikolatası alışverişi.',
+     halal:'Borgerhout ve Dam bölgesi helal restoran ve kasap dolu. Türk/Fas/Arap mutfağı zengin. Statiestraat civarı helal seçenekler.',
+     tips:[{t:'Tren istasyonu içi ziyaret MUTLAKA (ücretsiz)',c:'good'},{t:'Belçika çikolatası hediye için ideal',c:'good'},{t:'EUR kullanılır',c:'info'}]},
+    {c:'Brüksel',co:'BE',la:50.85,lo:4.35,t:'overnight',day:7,n:1,dk:320,dt:'~3.5 saat',
+     desc:'8. GECE. AB başkenti. Grand-Place (dünyanın en güzel meydanı — UNESCO), Atomium (çocuklar bayılır), Mini-Europe minyatür parkı, Manneken Pis, Belçika waffle ve çikolata.',
+     halal:'Rue du Midi ve Chaussée de Haecht helal restoran bölgesi. Schaerbeek ve Molenbeek semtlerinde Türk/Fas marketler ve lokantalar. Döner, kebap çok yaygın.',
+     accom:'Grand-Place civarı veya Gare du Midi. €85-110/gece. Apart otel tercih edin, aile için geniş oda.',
+     tips:[{t:'Grand-Place gece ışıklandırması muhteşem',c:'good'},{t:'Mini-Europe + Atomium kombo bilet alın',c:'good'},{t:'Belçika waffle\'ı Liège stili deneyin',c:'good'},{t:'EUR kullanılır',c:'info'}]},
+    {c:'Paris',co:'FR',la:48.85,lo:2.35,t:'overnight',day:8,n:2,dk:45,dt:'~45 dk',
+     desc:'9-10. GECE. ⭐ PARİS! Eyfel Kulesi (online bilet ŞART), Louvre (Pazartesi kapalı), Notre-Dame, Champs-Élysées, Seine nehir turu (çocuklar için Bateaux Mouches), Sacré-Cœur.',
+     halal:'Belleville, Barbès, Goutte d\'Or helal cennet! Rue du Faubourg Saint-Denis dönerci ve kebapçılarla dolu. Quick fast food bazı şubeleri tamamen helal. O\'Tacos zinciride helal.',
+     accom:'10. veya 11. bölge uygun fiyatlı. €90-120/gece. Metro ile her yere ulaşım. Airbnb 2 odalı daire €110-140/gece.',
+     tips:[{t:'Arabayı park edin, metro kullanın',c:'good'},{t:'Eyfel biletini online ÖNCEDEN alın',c:'warn'},{t:'Louvre Pazartesi kapalı!',c:'warn'},{t:'Seine nehir turu çocuklara harika',c:'good'},{t:'FR gişeli otoyol (péage) pahalı',c:'warn'},{t:'EUR kullanılır',c:'info'}]},
+    {c:'Disneyland',co:'FR',la:48.87,lo:2.78,t:'sightseeing',day:9,n:0,dk:460,dt:'~4.5 saat',
+     desc:'Disneyland Paris! Avrupa\'nın en büyük tema parkı. 2 park: Disneyland Park + Walt Disney Studios. Çocuklar için hayallerinin gerçek olduğu yer.',
+     halal:'Park içinde halal seçenekler sınırlı. Chicken nuggets, balık, patates kızartması güvenli. Yanınıza atıştırmalık alın. Park dışında Val d\'Europe AVM\'de kebapçılar var.',
+     tips:[{t:'Biletleri online ÖNCEDEN alın (daha ucuz)',c:'warn'},{t:'Sabah erken (park açılışında) gidin',c:'good'},{t:'2 park kombo bilet alın',c:'info'},{t:'Park içi yemek pahalı, yanınıza alın',c:'warn'},{t:'RER A treni ile Paris merkezden 40 dk',c:'info'}]},
+    {c:'Lyon',co:'FR',la:45.76,lo:4.83,t:'overnight',day:10,n:1,dk:150,dt:'~1.5 saat',
+     desc:'11. GECE. Fransa\'nın gastronomi başkenti. Vieux Lyon (UNESCO — Rönesans binaları), Fourvière Tepesi (basilika + panorama), Presqu\'île yarımadası, traboules (gizli geçitler — çocuklar bayılır).',
+     halal:'Guillotière bölgesi Arap/Türk restoranları dolu. Halal boucheries (kasap) var. Lyon mutfağı domuz ağırlıklı — DİKKAT! Kebapçılar ve balık güvenli. Part-Dieu AVM\'de seçenekler.',
+     accom:'Presqu\'île veya Part-Dieu bölgesi €80-100/gece. Fourvière manzaralı otel tercih edin.',
+     tips:[{t:'Lyon mutfağı domuz ağırlıklı, DİKKAT',c:'warn'},{t:'Guillotière helal bölge',c:'good'},{t:'Traboules gizli geçitler çocukları büyüler',c:'good'},{t:'Fourvière tepesine füniküler ile çıkın',c:'good'}]},
+    {c:'Cenevre',co:'CH',la:46.20,lo:6.14,t:'transit',day:11,n:0,dk:280,dt:'~3 saat',
+     desc:'İsviçre girişi! Leman Gölü kıyısında zarif şehir. Jet d\'Eau (140m su fıskiyesi — ikon), BM Avrupa Merkezi, Eski Şehir, Çiçek Saati. Göl kenarında yürüyüş çocuklarla güzel.',
+     halal:'Pâquis bölgesi çok kültürlü — kebap ve helal restoranlar mevcut. Manor Food süpermarkette çeşitli seçenekler.',
+     tips:[{t:'CH vinyeti 40 CHF ZORUNLU',c:'warn'},{t:'İsviçre ÇOK pahalı, bütçeye dikkat',c:'warn'},{t:'Jet d\'Eau rüzgarlı günde ıslanırsınız!',c:'info'},{t:'CHF para birimi, €1≈0.95 CHF',c:'info'}]},
+    {c:'Zürih',co:'CH',la:47.37,lo:8.54,t:'overnight',day:11,n:1,dk:120,dt:'~1.5 saat',
+     desc:'12. GECE. İsviçre\'nin finans merkezi ama çok güzel! Zürih Gölü kenarında yürüyüş, Bahnhofstrasse (dünyanın en pahalı caddesi), Lindenhof tepesi (panorama), Eski Şehir sokakları.',
+     halal:'Langstrasse bölgesinde kebap dükkanları ve çok kültürlü restoranlar. Migros/Coop süpermarketlerde helal etiketli ürünler. Kendi yemeğinizi hazırlamak bütçe dostu.',
+     accom:'PAHALI! €130-170/gece. Airbnb tercih edin. Hauptbahnhof civarı ulaşım açısından en pratik.',
+     tips:[{t:'İsviçre süpermarketi bile pahalı',c:'warn'},{t:'Zürih Gölü kenarı akşam yürüyüşü harika',c:'good'},{t:'Lindenhof tepesi ücretsiz panorama noktası',c:'good'},{t:'Market alışverişi restorandan %60 ucuz',c:'info'}]},
+    {c:'Chur',co:'CH',la:46.85,lo:9.53,t:'sightseeing',day:12,n:0,dk:120,dt:'~1.5 saat',
+     desc:'İsviçre\'nin en eski şehri, Alplerin kapısı. Bernina Express treni (Tirano\'ya — UNESCO rotası) veya araçla geçiş. Her iki durumda da muhteşem Alp manzaraları. Eski Şehir çok şirin.',
+     tips:[{t:'Bernina Express treni manzarası efsane (online bilet)',c:'good'},{t:'Araçla geçiş de muhteşem virajlı yollar',c:'good'},{t:'Chur Eski Şehir 30 dk yürüyüş',c:'info'}]},
+    {c:'İnterlaken',co:'CH',la:46.68,lo:7.86,t:'transit',day:12,n:0,dk:20,dt:'~30 dk',
+     desc:'İki göl arası (Thun ve Brienz) — tam bir İsviçre kartpostalı! Jungfrau, Eiger ve Mönch dağlarına bakan muhteşem panorama. Paraşüt ve macera sporlarının merkezi.',
+     tips:[{t:'Höhematte parkından Jungfrau manzarası',c:'good'},{t:'Tandem paraşüt çocuklar için (10+ yaş)',c:'info'},{t:'Brienz Gölü turkuaz rengi muhteşem',c:'good'}]},
+    {c:'Grindelwald',co:'CH',la:46.62,lo:8.03,t:'transit',day:12,n:0,dk:15,dt:'~30 dk',
+     desc:'Eiger Dağı\'nın kuzey yüzü eteklerinde masalsı Alp köyü. First Cliff Walk asma yolu (yükseklik korkusu olmayanlar için), Grindelwald Glacier kanyonu. Fotoğraf tutkunları için cennet.',
+     tips:[{t:'First Cliff Walk cam teras (yükseklik korkusu?)',c:'info'},{t:'Eiger kuzey yüzü manzarası dağcılık efsanesi',c:'good'},{t:'Köy içinde şirin kafeler',c:'good'}]},
+    {c:'Lauterbrunnen',co:'CH',la:46.59,lo:7.90,t:'sightseeing',day:12,n:0,dk:250,dt:'~3 saat',
+     desc:'72 şelaleli muhteşem vadi! Staubbach Şelalesi (297m, köyün ortasında), Trümmelbach Şelaleleri (dağın içinde — çocuklar büyülenir). Tolkien\'in İlk Çağ ilhamı aldığı yer.',
+     tips:[{t:'Staubbach Şelalesi köy içinden ücretsiz izlenir',c:'good'},{t:'Trümmelbach Şelaleleri dağın İÇİNDE (biletli)',c:'good'},{t:'Vadide yürüyüş yapın, her adım kartpostal',c:'good'},{t:'Jungfraujoch treni buradan kalkar (pahalı ama efsane)',c:'info'}]},
+    {c:'Como Gölü',co:'IT',la:45.98,lo:9.26,t:'transit',day:12,n:0,dk:50,dt:'~1 saat',
+     desc:'İtalya\'ya geçiş! Alplerin eteklerinde lüks göl hayatı. George Clooney\'nin villası burada. Bellagio kasabası (göl üzerinde manzara), Como şehri katedrali. Muhteşem manzara yolu.',
+     tips:[{t:'Bellagio köyünde 1 saat mola harika',c:'good'},{t:'İtalya girişinde Autostrada başlıyor',c:'info'},{t:'Göl kenarında gelato molası',c:'good'}]},
+    {c:'Milano',co:'IT',la:45.46,lo:9.19,t:'overnight',day:12,n:1,dk:270,dt:'~3 saat',
+     desc:'13. GECE. İtalya\'nın moda ve iş başkenti. Duomo (gotik başyapıt, çatıya çıkın), Galleria Vittorio Emanuele II (dünyanın en eski AVM\'si), Navigli kanalları (akşam yürüyüşü).',
+     halal:'Via Padova Arap/Afrika bölgesi — helal restoran ve kasap yoğun. Porta Venezia civarında da seçenekler. Pizza Margherita ve risotto güvenli. Coop/Esselunga\'da helal etiketli tavuk.',
+     accom:'Stazione Centrale civarı €90-110/gece. Metro ile Duomo\'ya 10 dk.',
+     tips:[{t:'Duomo çatısına çıkın (merdiven daha ucuz)',c:'good'},{t:'Via Padova helal restoran bölgesi',c:'good'},{t:'Son Akşam Yemeği tablosu rezervasyonla (2 ay önceden!)',c:'warn'},{t:'Navigli akşam yürüyüşü romantik',c:'good'}]},
+    {c:'Venedik',co:'IT',la:45.44,lo:12.31,t:'overnight',day:13,n:1,dk:150,dt:'~2 saat',
+     desc:'14. GECE. ⭐ VENEDİK! Dünyanın eşsiz şehri. Arabayı Mestre\'de park edin. San Marco Meydanı, Rialto Köprüsü, Murano cam adası (yapım gösterisi çocukları büyüler), gondol turu.',
+     halal:'Ada\'da helal restoran neredeyse yok. Mestre\'de döner dükkanları var. Pizza ve deniz ürünleri güvenli. Rialto balık pazarında taze deniz ürünü. Gelato helal.',
+     accom:'Mestre\'de otel €80-100/gece (ada\'da çok pahalı). Tren/vaporetto ile ada\'ya 15 dk.',
+     tips:[{t:'Arabayı MESTRE\'de park edin (ada yasak)',c:'warn'},{t:'Vaporetto 24h aile bileti alın (~€40)',c:'good'},{t:'Murano cam yapımı çocukları büyüler',c:'good'},{t:'Gondol ~€80/30dk (max 6 kişi, ailece binin)',c:'info'},{t:'San Marco sabah erken boş',c:'good'}]},
+    {c:'Bologna',co:'IT',la:44.49,lo:11.34,t:'transit',day:14,n:0,dk:100,dt:'~1.5 saat',
+     desc:'\"Kızıl Şehir\" (terracotta çatılar), \"Şişman Şehir\" (İtalya\'nın en lezzetli mutfağı), \"Bilge Şehir\" (en eski üniversite). Due Torri kuleleri, 40 km revaklı sokak (UNESCO). Pizza al taglio muhteşem.',
+     halal:'Via Zamboni civarında birkaç kebap dükkanı. Piazza Maggiore civarında dönerci. Pizza al taglio (dilim pizza) ve pasta helal. Piadina\'da domuz şarküteri dikkat!',
+     tips:[{t:'Due Torri (Asinelli) kulesine çıkın — panorama',c:'good'},{t:'Bologna İtalya\'nın yemek başkenti',c:'good'},{t:'\"Prosciutto\" domuz, \"pollo\" tavuk',c:'warn'}]},
+    {c:'Floransa',co:'IT',la:43.76,lo:11.25,t:'overnight',day:14,n:1,dk:270,dt:'~3 saat',
+     desc:'15. GECE. Rönesans\'ın beşiği! Duomo (Brunelleschi kubbesi — çatıya çıkın), Ponte Vecchio (kuyumcular köprüsü), Uffizi Galerisi (Botticelli!), Piazzale Michelangelo (gün batımı panorama).',
+     halal:'San Lorenzo pazarı civarında birkaç kebapçı. Via dei Neri\'de döner dükkanı. Pizza ve gelato her yerde helal. Trattoria\'larda \"bistecca\" sığır ama genellikle helal KESİM değil — dikkat.',
+     accom:'Santa Maria Novella veya San Lorenzo civarı €90-120/gece. Merkeze yürüme mesafesi önemli.',
+     tips:[{t:'Duomo kubbe tırmanışı online bilet ŞART',c:'warn'},{t:'Piazzale Michelangelo gün batımı KAÇIRMAYIN',c:'good'},{t:'Uffizi online bilet (kuyruk çok uzun)',c:'warn'},{t:'Gelato: Vivoli veya Gelateria dei Neri en iyiler',c:'good'}]},
+    {c:'Roma',co:'IT',la:41.90,lo:12.49,t:'overnight',day:15,n:2,dk:270,dt:'~3.5 saat',
+     desc:'16-17. GECE. ⭐ ROMA! Ebedi Şehir. Kolezyum (gladyatör hikayeleri çocukları büyüler), Vatikan (Sistina Şapeli, San Pietro), Trevi Çeşmesi (para at + dilek tut), Pantheon, İspanyol Merdivenleri.',
+     halal:'Esquilino (Termini yakını) çok kültürlü — kebap dükkanları. Via Cavour Arap/Hint restoranları. Pizza al taglio güvenli. Roma Büyük Camii (Avrupa\'nın en büyüğü) ziyaret edin.',
+     accom:'Termini civarı €90-110/gece. Metro A ve B hattı kesişimi, her yere kolay ulaşım.',
+     tips:[{t:'Kolezyum + Forum + Palatine kombo bilet ÖNCEDEN alın',c:'warn'},{t:'Vatikan kuyruğu uzun, online bilet ŞART',c:'warn'},{t:'Pizza al taglio ucuz ve helal öğle yemeği',c:'good'},{t:'Roma Büyük Camii ziyaret edilebilir',c:'good'},{t:'Trevi\'ye gece gidin, daha az kalabalık',c:'good'},{t:'EUR kullanılır',c:'info'}]},
+    {c:'Amalfi',co:'IT',la:40.63,lo:14.60,t:'destination',day:17,n:0,dk:0,dt:'',
+     desc:'18. GÜN. Amalfi Kıyıları! İtalya\'nın en güzel sahil yolu. Positano (pastel renkli evler uçurumda), Amalfi kasabası (katedral + limonata), Ravello (muhteşem bahçeler). Mavi mağara (Grotta dello Smeraldo) tekne turu.',
+     halal:'Deniz ürünleri ve pizza güvenli. Limoncello (alkollü) yerine limonata deneyin. Küçük kasabalarda helal restoran yok — yanınıza erzak alın veya deniz ürünü tercih edin.',
+     tips:[{t:'Amalfi sahil yolu dar ve virajlı — dikkatli sürün',c:'warn'},{t:'Positano fotoğraf için İtalya\'nın en ikonigi',c:'good'},{t:'Amalfi limoncello yerine limonata',c:'good'},{t:'Plajlarda şezlong kiralama ~€20/gün',c:'info'},{t:'Erken sabah çıkın, yol kalabalık',c:'warn'}]}
   ]
 }
 ];
@@ -582,11 +709,42 @@ function renderTimeline(){
     }
   }
 
-  box.innerHTML = stops.map(s => {
+  box.innerHTML = stops.map((s, idx) => {
     const cn = C[s.co];
     const isTR = s.co==='TR';
     const gDay = s.day + dayBase;
     const tipsH = s.tips ? s.tips.map(t=>`<span class="tip-tag ${t.c}">${t.t}</span>`).join('') : '';
+    
+    // Build the route connector between this stop and the next
+    let connector = '';
+    if(idx < stops.length - 1) {
+      const next = stops[idx + 1];
+      const nextCn = C[next.co];
+      const distLabel = next.dk > 0 ? `${next.dk} km` : '';
+      const timeLabel = next.dt || '';
+      const infoItems = [];
+      if(distLabel) infoItems.push(`<i class="fas fa-road"></i> ${distLabel}`);
+      if(timeLabel) infoItems.push(`<i class="fas fa-clock"></i> ${timeLabel}`);
+      
+      connector = `
+      <div class="route-connector">
+        <div class="route-connector-inner">
+          <div class="rc-dot"></div>
+          <div class="rc-line-wrap">
+            <svg viewBox="0 0 200 32" preserveAspectRatio="none">
+              <path d="M0,16 C40,4 60,28 100,16 C140,4 160,28 200,16"/>
+            </svg>
+            ${infoItems.length ? `<div class="rc-info">${infoItems.join('<span style="opacity:0.3">|</span>')}</div>` : ''}
+          </div>
+          <div class="rc-dot rc-dot-end"></div>
+        </div>
+        <div class="rc-city-labels">
+          <span class="rc-city-label">${cn.f} ${s.c}</span>
+          <span class="rc-city-label" style="text-align:right">${nextCn.f} ${next.c}</span>
+        </div>
+      </div>`;
+    }
+    
     return `
     <div class="tl-card" data-type="${s.t}">
       <div class="tl-top">
@@ -606,7 +764,7 @@ function renderTimeline(){
       ${s.halal && !isTR ? `<div class="tl-halal">${s.halal}</div>` : ''}
       ${s.accom && !isTR ? `<div class="tl-accom">${s.accom}</div>` : ''}
       ${tipsH ? `<div class="tl-tips">${tipsH}</div>` : ''}
-    </div>`;
+    </div>${connector}`;
   }).join('');
 }
 
