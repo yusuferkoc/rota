@@ -345,3 +345,123 @@ img { max-width:100%; }
 @media (max-width:480px) {
   .chat-panel { right:10px; left:10px; width:auto; bottom:90px; }
 }
+
+/* ── Departure Config Panel ── */
+.dep-config {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  margin-bottom: 24px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  box-shadow: var(--shadow);
+}
+.dep-config-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 150px;
+}
+.dep-config-group label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text2);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dep-config-group input {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--bd);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.dep-config-group input:focus {
+  border-color: var(--accent);
+}
+.dep-config-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--r);
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--bd);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--ease);
+}
+.dep-config-btn:hover {
+  background: var(--accent-h);
+  transform: translateY(-1px);
+}
+.dep-config-btn:active {
+  transform: translateY(0);
+}
+
+.dep-time-display {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--text2);
+  background: var(--tag-bg);
+  padding: 8px 12px;
+  border-radius: var(--r);
+  border: 1px solid var(--border);
+  margin-top: 8px;
+}
+.dep-time-display strong {
+  color: var(--accent);
+}
+.tl-card-times {
+  margin-top: 12px;
+  border-top: 1px dashed var(--border);
+  padding-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.time-box {
+  background: var(--tag-bg);
+  padding: 8px 12px;
+  border-radius: var(--r);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.time-box span {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+.time-box strong {
+  font-size: 0.82rem;
+  color: var(--text);
+}
+.time-box.arr i {
+  color: var(--green);
+}
+.time-box.dep i {
+  color: var(--accent);
+}
+.connector-duration {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  background: var(--bg2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+

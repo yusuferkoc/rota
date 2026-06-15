@@ -30,7 +30,87 @@ const C = {
 
 const DW = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
 const MO = ['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'];
-function dateStr(off){ const d=new Date(2026,5,15); d.setDate(d.getDate()+off); return `${d.getDate()} ${MO[d.getMonth()]} ${DW[d.getDay()]}`; }
+
+let baseStartDate = new Date(2026, 5, 16); // 16 Haz 2026 default
+let baseStartTime = "00:00"; // 00:00 default
+
+function dateStr(off){ 
+  const d = new Date(baseStartDate); 
+  d.setDate(d.getDate() + off); 
+  return `${d.getDate()} ${MO[d.getMonth()]} ${DW[d.getDay()]}`; 
+}
+
+function parseDuration(dtStr) {
+  if (!dtStr) return 0;
+  let hours = 0;
+  let minutes = 0;
+  const hMatch = dtStr.match(/(\d+(?:\.\d+)?)\s*saat/);
+  if (hMatch) hours = parseFloat(hMatch[1]);
+  const mMatch = dtStr.match(/(\d+)\s*dk/);
+  if (mMatch) minutes = parseInt(mMatch[1]);
+  return hours * 60 + minutes;
+}
+
+function formatDateTime(date) {
+  const day = date.getDate();
+  const monthStr = MO[date.getMonth()];
+  const weekdayStr = DW[date.getDay()];
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return `${day} ${monthStr} ${weekdayStr}, ${hours}:${minutes}`;
+}
+
+function calculateRouteTimes(stops) {
+  if (!stops || stops.length === 0) return [];
+  const processed = stops.map(s => ({ ...s }));
+  const startParts = baseStartTime.split(':');
+  const startHours = parseInt(startParts[0]) || 0;
+  const startMins = parseInt(startParts[1]) || 0;
+  
+  let currentDateTime = new Date(baseStartDate.getFullYear(), baseStartDate.getMonth(), baseStartDate.getDate(), startHours, startMins);
+  
+  processed[0].arrivalStr = '';
+  processed[0].departureStr = formatDateTime(currentDateTime);
+  
+  for (let i = 0; i < processed.length - 1; i++) {
+    const current = processed[i];
+    const next = processed[i + 1];
+    const driveDurationMin = parseDuration(current.dt);
+    
+    let arrivalTime = new Date(currentDateTime.getTime() + driveDurationMin * 60000);
+    next.arrivalStr = formatDateTime(arrivalTime);
+    
+    let nextDepartureTime;
+    if (next.t === 'border') {
+      nextDepartureTime = new Date(arrivalTime.getTime() + 120 * 60000);
+      next.stayDesc = 'Sınır ve pasaport kontrolü: ~2 saat';
+    } else if (next.t === 'transit') {
+      nextDepartureTime = new Date(arrivalTime.getTime() + 60 * 60000);
+      next.stayDesc = 'Mola ve dinlenme: ~1 saat';
+    } else if (next.n > 0 || next.t === 'overnight' || next.t === 'destination') {
+      const nights = next.n || 1;
+      nextDepartureTime = new Date(arrivalTime.getFullYear(), arrivalTime.getMonth(), arrivalTime.getDate() + nights, 9, 0);
+      next.stayDesc = `${nights} gece konaklama`;
+    } else if (next.t === 'sightseeing') {
+      nextDepartureTime = new Date(arrivalTime.getTime() + 180 * 60000);
+      next.stayDesc = 'Şehir gezisi ve mola: ~3 saat';
+    } else if (next.t === 'ferry') {
+      nextDepartureTime = new Date(arrivalTime.getTime() + 180 * 60000);
+      next.stayDesc = 'Feribot biniş hazırlıkları: ~3 saat';
+    } else {
+      nextDepartureTime = new Date(arrivalTime.getTime() + 60 * 60000);
+      next.stayDesc = 'Mola: ~1 saat';
+    }
+    
+    if (i + 1 === processed.length - 1) {
+      next.departureStr = '';
+    } else {
+      next.departureStr = formatDateTime(nextDepartureTime);
+    }
+    currentDateTime = nextDepartureTime;
+  }
+  return processed;
+}
 
 /* ═══════ TAM ROTALAR ═══════ */
 const COMPLETE = [
@@ -45,20 +125,17 @@ const COMPLETE = [
     {n:'IT Autostrada',v:80}
   ],
   stops:[
-    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'start',day:0,n:0,dk:260,dt:'~3 saat',
-     desc:'06:00 hareket. Ankara-Niğde Otoyolu → Ankara Çevre → Bolu → KMO → İstanbul bypass. İstanbul\'a GİRMEYİN, KMO ile bypass edin.',
-     tips:[{t:'HGS bakiyesini kontrol edin',c:'warn'},{t:'Bolu\'da mola + kahvaltı',c:'good'},{t:'TR\'de full depo — en ucuz yakıt',c:'good'},{t:'KMO çıkışı Kınalı→Edirne',c:'info'}]},
-    {c:'İstanbul',co:'TR',la:41.00,lo:28.97,t:'transit',day:0,n:0,dk:240,dt:'~3 saat',
-     desc:'KMO ile İstanbul çevresinden geçiş. Şehre girmeden Kınalı bağlantısıyla Edirne istikametine devam.',
-     tips:[{t:'KMO gişeleri yoğun olabilir',c:'warn'},{t:'Ömerli-Kınalı arası mola noktaları mevcut',c:'info'}]},
-    {c:'Edirne',co:'TR',la:41.67,lo:26.55,t:'transit',day:0,n:0,dk:180,dt:'~2 saat',
-     desc:'Kapıkule Sınır Kapısı öncesi son Türkiye molası. Selimiye Camii ziyareti ve meşhur Edirne tava ciğeri kaçırılmaz!',
-     tips:[{t:'Kapıkule yaz aylarında 1-3 saat bekleme',c:'warn'},{t:'AB EES biyometrik kontrol aktif',c:'warn'},{t:'Edirne tava ciğer + beyaz peynir deneyin',c:'good'},{t:'BG vinyetini bgtoll.bg\'den ÖNCEDEN alın',c:'info'}]},
-    {c:'Plovdiv',co:'BG',la:42.15,lo:24.75,t:'transit',day:0,n:0,dk:140,dt:'~1.5 saat',
+    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'start',day:0,n:0,dk:970,dt:'~10 saat',
+     desc:'00:00 hareket. Ankara-Niğde Otoyolu → Ankara Çevre → Bolu → Kuzey Marmara Otoyolu (KMO) → Edirne → Kapıkule Gümrük. Türkiye içinde başka bir şehirde durulmayacaktır.',
+     tips:[{t:'HGS bakiyesini kontrol edin',c:'warn'},{t:'TR\'de full depo yapın — en ucuz yakıt',c:'good'},{t:'Kapıkule öncesi Edirne bypass edilir',c:'info'}]},
+    {c:'Kapıkule Sınır',co:'TR',la:41.68,lo:26.56,t:'border',day:0,n:0,dk:150,dt:'~1.5 saat',
+     desc:'Kapıkule Sınır Kapısı gümrük geçişi. Pasaport, ehliyet, ruhsat, green card, vize belgeleri hazır tutulmalıdır.',
+     tips:[{t:'Yaz aylarında 1-3 saat bekleme',c:'warn'},{t:'AB EES biyometrik kontrol aktif',c:'warn'},{t:'BG vinyetini bgtoll.bg\'den alın',c:'info'}]},
+    {c:'Plovdiv',co:'BG',la:42.15,lo:24.75,t:'transit',day:0,n:0,dk:150,dt:'~1.5 saat',
      desc:'Avrupa Kültür Başkenti Plovdiv (Filibe). Antik Roma Tiyatrosu, Eski Şehir\'in renkli Osmanlı evleri ve Kapana sanat bölgesi.',
      halal:'Eski şehir civarında Türk lokantaları mevcut. Kebap ve pide kolayca bulunur. Müslüman Türk nüfusu sayesinde helal et bulmak kolay. Marketlerde \'Халал\' etiketli ürünler var.',
      tips:[{t:'Roma Tiyatrosu ücretsiz manzara noktası',c:'good'},{t:'Kapana bölgesinde kahve molası',c:'good'},{t:'BGN para birimi, €1≈2 BGN',c:'info'}]},
-    {c:'Sofya',co:'BG',la:42.70,lo:23.32,t:'overnight',day:0,n:1,dk:160,dt:'~2.5 saat',
+    {c:'Sofya',co:'BG',la:42.70,lo:23.32,t:'overnight',day:0,n:1,dk:150,dt:'~1.5 saat',
      desc:'1. GECE. Bulgaristan başkenti. Aleksander Nevski Katedrali, Vitosha Bulvarı yürüyüşü, Banya Başı Camii ziyareti.',
      halal:'Banya Başı Camii civarında Türk restoranları yoğun. Zhenski Pazar çevresinde dönerci ve kebapçılar. Al Safa helal süpermarket mevcut.',
      accom:'Şehir merkezinde apart otel €40-55/gece. Vitosha Bulvarı yürüme mesafesinde tercih edin. Booking.com\'dan aile odası arayın.',
@@ -231,10 +308,10 @@ const OUTBOUND = [
     {n:'SK e-Známka (10 gün)',v:16},{n:'CZ e-Známka (10 gün)',v:16}
   ],
   stops:[
-    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'start',day:0,n:0,dk:840,dt:'~9 saat',
-     desc:'06:00 hareket. Ankara-Niğde Otoyolu → Ankara Çevre → Bolu → KMO → Edirne → Kapıkule. İstanbul\'a GİRMEYİN, KMO ile bypass.',
-     tips:[{t:'HGS bakiyesini kontrol edin',c:'warn'},{t:'Bolu\'da mola + kahvaltı',c:'good'},{t:'TR\'de full depo — en ucuz yakıt',c:'good'},{t:'KMO çıkışı Kınalı→Edirne',c:'info'}]},
-    {c:'Kapıkule Sınır',co:'TR',la:41.68,lo:26.56,t:'border',day:0,n:0,dk:230,dt:'~2.5 saat',
+    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'start',day:0,n:0,dk:970,dt:'~10 saat',
+     desc:'00:00 hareket. Ankara-Niğde Otoyolu → Ankara Çevre → Bolu → KMO → Edirne → Kapıkule Gümrük. Türkiye içinde duraklama yapılmaksızın doğrudan sınır kapısına geçiş yapılacaktır.',
+     tips:[{t:'HGS bakiyesini kontrol edin',c:'warn'},{t:'TR\'de full depo — en ucuz yakıt',c:'good'},{t:'Kapıkule öncesi Edirne bypass edilir',c:'info'}]},
+    {c:'Kapıkule Sınır',co:'TR',la:41.68,lo:26.56,t:'border',day:0,n:0,dk:150,dt:'~1.5 saat',
      desc:'~15:00 varış. Pasaport, ehliyet, ruhsat, green card, vize, çocuk belgeleri hazır tutun.',
      tips:[{t:'Yaz aylarında 1-3 saat bekleme',c:'warn'},{t:'AB EES biyometrik kontrol',c:'warn'},{t:'BG vinyetini bgtoll.bg\'den alın',c:'info'}]},
     {c:'Plovdiv',co:'BG',la:42.15,lo:24.75,t:'overnight',day:0,n:1,dk:390,dt:'~4 saat',
@@ -279,10 +356,10 @@ const OUTBOUND = [
     {n:'AT Vinyeti (10 gün)',v:11}
   ],
   stops:[
-    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'start',day:0,n:0,dk:840,dt:'~9 saat',
-     desc:'06:00 hareket. Ankara-Niğde Otoyolu → KMO → Kapıkule.',
+    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'start',day:0,n:0,dk:970,dt:'~10 saat',
+     desc:'00:00 hareket. Ankara-Niğde Otoyolu → KMO → Kapıkule.',
      tips:[{t:'HGS bakiyesi kontrol',c:'warn'},{t:'TR\'de full depo yapın',c:'good'}]},
-    {c:'Kapıkule',co:'TR',la:41.68,lo:26.56,t:'border',day:0,n:0,dk:250,dt:'~3 saat',
+    {c:'Kapıkule',co:'TR',la:41.68,lo:26.56,t:'border',day:0,n:0,dk:150,dt:'~1.5 saat',
      desc:'~15:00 varış. Belgeler hazır olsun.',
      tips:[{t:'Yaz aylarında 1-3 saat bekleme',c:'warn'}]},
     {c:'Sofya',co:'BG',la:42.70,lo:23.32,t:'overnight',day:0,n:1,dk:390,dt:'~4 saat',
@@ -327,10 +404,10 @@ const OUTBOUND = [
     {n:'CZ e-Známka',v:16}
   ],
   stops:[
-    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'start',day:0,n:0,dk:840,dt:'~9 saat',
-     desc:'06:00 hareket. KMO üzerinden Kapıkule.',
+    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'start',day:0,n:0,dk:970,dt:'~10 saat',
+     desc:'00:00 hareket. KMO üzerinden Kapıkule.',
      tips:[{t:'TR\'de full depo',c:'good'}]},
-    {c:'Kapıkule',co:'TR',la:41.68,lo:26.56,t:'border',day:0,n:0,dk:350,dt:'~4 saat',
+    {c:'Kapıkule',co:'TR',la:41.68,lo:26.56,t:'border',day:0,n:0,dk:150,dt:'~1.5 saat',
      desc:'Sınır geçişi. Ruse Köprüsü üzerinden Romanya\'ya.',
      tips:[{t:'RO vinyetini online alın',c:'warn'}]},
     {c:'Bükreş',co:'RO',la:44.43,lo:26.10,t:'overnight',day:0,n:1,dk:280,dt:'~3.5 saat',
@@ -409,15 +486,15 @@ const RETURN = [
     {c:'Denizde',co:'SEA',la:40.50,lo:18.00,t:'ferry',day:4,n:0,dk:330,dt:'Feribot ~18 saat',
      desc:'⛴️ Adriyatik geçişi. Kabinde uyku, güvertede güneşlenme. Sabah İgoumenitsa varış.',
      tips:[{t:'Kabinde priz var, şarj edin',c:'info'},{t:'Güvertede yunus görebilirsiniz!',c:'good'}]},
-    {c:'Selanik',co:'GR',la:40.63,lo:22.94,t:'overnight',day:5,n:1,dk:280,dt:'~4 saat',
+    {c:'Selanik',co:'GR',la:40.63,lo:22.94,t:'overnight',day:5,n:1,dk:350,dt:'~3.5 saat',
      desc:'4. GECE. İgoumenitsa → Egnatia Odos → Selanik. Beyaz Kule, sahil yürüyüşü.',
      halal:'DİKKAT: Yunan gyros genelde domuz! "Kotopoulo" (tavuk) isteyin. Ladadika\'da balık restoranları güvenli. Sahilde meyve suyu ve tatlıcılar.',
      accom:'Sahil civarı €60-80/gece.',
      tips:[{t:'Gyros\'ta "kotopoulo" (tavuk) isteyin!',c:'warn'},{t:'Yunan yemekleri lezzetli ve uygun',c:'good'},{t:'EUR kullanılır',c:'info'}]},
-    {c:'İpsala Sınır',co:'GR',la:40.92,lo:26.38,t:'border',day:6,n:0,dk:900,dt:'~3 saat',
+    {c:'İpsala Sınır',co:'GR',la:40.92,lo:26.38,t:'border',day:6,n:0,dk:840,dt:'~9 saat',
      desc:'Schengen çıkış. Edirne\'de Selimiye + tava ciğer molası.',
      tips:[{t:'İpsala Kapıkule\'den az beklemeli',c:'good'},{t:'Edirne tava ciğer!',c:'good'}]},
-    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'end',day:6,n:0,dk:0,dt:'~9 saat',
+    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'end',day:6,n:0,dk:0,dt:'',
      desc:'🏠 EVE DÖNÜŞ! KMO → Bolu → Ankara → Konya. Uzun son gün, sabah erken çıkın.',
      tips:[{t:'Son gün çok uzun, erken hareket',c:'warn'},{t:'Bolu\'da öğle molası',c:'good'}]}
   ]
@@ -457,15 +534,15 @@ const RETURN = [
     {c:'Denizde',co:'SEA',la:40.50,lo:18.00,t:'ferry',day:4,n:0,dk:330,dt:'~18 saat',
      desc:'⛴️ Adriyatik geçişi.',
      tips:[{t:'Güvertede yunus!',c:'good'}]},
-    {c:'Selanik',co:'GR',la:40.63,lo:22.94,t:'overnight',day:5,n:1,dk:280,dt:'~4 saat',
+    {c:'Selanik',co:'GR',la:40.63,lo:22.94,t:'overnight',day:5,n:1,dk:350,dt:'~3.5 saat',
      desc:'4. GECE. Beyaz Kule, Ladadika.',
      halal:'"Kotopoulo" (tavuk) isteyin! Balık güvenli.',
      accom:'€60-80/gece.',
      tips:[{t:'Gyros\'ta domuz dikkat!',c:'warn'}]},
-    {c:'İpsala',co:'GR',la:40.92,lo:26.38,t:'border',day:6,n:0,dk:900,dt:'~3 saat',
+    {c:'İpsala',co:'GR',la:40.92,lo:26.38,t:'border',day:6,n:0,dk:840,dt:'~9 saat',
      desc:'Schengen çıkış. Edirne molası.',
      tips:[{t:'İpsala az beklemeli',c:'good'}]},
-    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'end',day:6,n:0,dk:0,dt:'~9 saat',
+    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'end',day:6,n:0,dk:0,dt:'',
      desc:'🏠 EVE DÖNÜŞ!',
      tips:[{t:'Sabah erken hareket',c:'warn'}]}
   ]
@@ -507,15 +584,15 @@ const RETURN = [
      desc:'⛴️ Bari → İgoumenitsa feribotu (~12 saat). Daha kısa deniz yolu.',
      halal:'Bari\'de limon çıkmadan yemek yiyin. Focaccia Barese (zeytinyağlı ekmek) helal.',
      tips:[{t:'Bari feribotu Ancona\'dan kısa',c:'good'},{t:'Bilet önceden alın',c:'warn'}]},
-    {c:'Selanik',co:'GR',la:40.63,lo:22.94,t:'overnight',day:7,n:1,dk:280,dt:'~4 saat',
+    {c:'Selanik',co:'GR',la:40.63,lo:22.94,t:'overnight',day:7,n:1,dk:350,dt:'~3.5 saat',
      desc:'7. GECE. İgoumenitsa → Selanik.',
      halal:'"Kotopoulo" tavuk isteyin. Balık güvenli.',
      accom:'€60-80/gece.',
      tips:[{t:'Gyros domuz olabilir, dikkat!',c:'warn'}]},
-    {c:'İpsala',co:'GR',la:40.92,lo:26.38,t:'border',day:8,n:0,dk:900,dt:'~3 saat',
+    {c:'İpsala',co:'GR',la:40.92,lo:26.38,t:'border',day:8,n:0,dk:840,dt:'~9 saat',
      desc:'Schengen çıkış.',
      tips:[{t:'Edirne tava ciğer molası',c:'good'}]},
-    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'end',day:8,n:0,dk:0,dt:'~9 saat',
+    {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'end',day:8,n:0,dk:0,dt:'',
      desc:'🏠 EVE DÖNÜŞ!',
      tips:[{t:'Uzun gün, erken hareket',c:'warn'}]}
   ]
@@ -570,6 +647,15 @@ let map, markersG=[], linesG=[];
 
 /* ═══════ INIT ═══════ */
 document.addEventListener('DOMContentLoaded', () => {
+  const dateInput = document.getElementById('startDateInput');
+  const timeInput = document.getElementById('startTimeInput');
+  if (dateInput && dateInput.value) {
+    const val = dateInput.value.split('-');
+    baseStartDate = new Date(parseInt(val[0]), parseInt(val[1]) - 1, parseInt(val[2]));
+  }
+  if (timeInput && timeInput.value) {
+    baseStartTime = timeInput.value;
+  }
   loadTheme();
   renderRouteCards();
   initMap();
@@ -685,8 +771,100 @@ function drawMap(){
 }
 
 /* ═══════ TIMELINE ═══════ */
+function getTimedStopsForCurrentTab() {
+  if (routeMode === 'complete') {
+    return calculateRouteTimes(COMPLETE[selComp].stops);
+  }
+  
+  const outStops = OUTBOUND[selOut].stops;
+  const retStops = RETURN[selRet].stops;
+  
+  if (curTab === 'out') {
+    return calculateRouteTimes(outStops);
+  } else {
+    // Return tab timing: calculate departure date from Rotterdam
+    const timedOut = calculateRouteTimes(outStops);
+    const lastOut = timedOut[timedOut.length - 1]; // Rotterdam
+    
+    const outParts = baseStartTime.split(':');
+    const outHours = parseInt(outParts[0]) || 0;
+    const outMins = parseInt(outParts[1]) || 0;
+    let currentDateTime = new Date(baseStartDate.getFullYear(), baseStartDate.getMonth(), baseStartDate.getDate(), outHours, outMins);
+    
+    for (let i = 0; i < outStops.length - 1; i++) {
+      const driveMin = parseDuration(outStops[i].dt);
+      currentDateTime = new Date(currentDateTime.getTime() + driveMin * 60000);
+      
+      const next = outStops[i + 1];
+      if (i + 1 === outStops.length - 1) break;
+      
+      if (next.t === 'border') {
+        currentDateTime = new Date(currentDateTime.getTime() + 120 * 60000);
+      } else if (next.t === 'transit') {
+        currentDateTime = new Date(currentDateTime.getTime() + 60 * 60000);
+      } else if (next.n > 0 || next.t === 'overnight' || next.t === 'destination') {
+        currentDateTime = new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() + (next.n || 1), 9, 0);
+      } else if (next.t === 'sightseeing') {
+        currentDateTime = new Date(currentDateTime.getTime() + 180 * 60000);
+      } else {
+        currentDateTime = new Date(currentDateTime.getTime() + 60 * 60000);
+      }
+    }
+    
+    const rdamNights = lastOut.n || 10;
+    const rdamDepartureDateTime = new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() + rdamNights, 9, 0);
+    
+    const processedRet = retStops.map(s => ({ ...s }));
+    let retDateTime = rdamDepartureDateTime;
+    
+    processedRet[0].arrivalStr = '';
+    processedRet[0].departureStr = formatDateTime(retDateTime);
+    
+    for (let i = 0; i < processedRet.length - 1; i++) {
+      const current = processedRet[i];
+      const next = processedRet[i + 1];
+      const driveMin = parseDuration(current.dt);
+      
+      let arrivalTime = new Date(retDateTime.getTime() + driveMin * 60000);
+      next.arrivalStr = formatDateTime(arrivalTime);
+      
+      let nextDepartureTime;
+      if (next.t === 'border') {
+        nextDepartureTime = new Date(arrivalTime.getTime() + 120 * 60000);
+        next.stayDesc = 'Sınır ve pasaport kontrolü: ~2 saat';
+      } else if (next.t === 'transit') {
+        nextDepartureTime = new Date(arrivalTime.getTime() + 60 * 60000);
+        next.stayDesc = 'Mola ve dinlenme: ~1 saat';
+      } else if (next.n > 0 || next.t === 'overnight' || next.t === 'end') {
+        const nights = next.n || 1;
+        nextDepartureTime = new Date(arrivalTime.getFullYear(), arrivalTime.getMonth(), arrivalTime.getDate() + nights, 9, 0);
+        next.stayDesc = `${nights} gece konaklama`;
+      } else if (next.t === 'sightseeing') {
+        nextDepartureTime = new Date(arrivalTime.getTime() + 180 * 60000);
+        next.stayDesc = 'Şehir gezisi ve mola: ~3 saat';
+      } else if (next.t === 'ferry') {
+        nextDepartureTime = new Date(arrivalTime.getTime() + 180 * 60000);
+        next.stayDesc = 'Feribot biniş hazırlıkları: ~3 saat';
+      } else {
+        nextDepartureTime = new Date(arrivalTime.getTime() + 60 * 60000);
+        next.stayDesc = 'Mola: ~1 saat';
+      }
+      
+      if (i + 1 === processedRet.length - 1) {
+        next.departureStr = '';
+      } else {
+        next.departureStr = formatDateTime(nextDepartureTime);
+      }
+      retDateTime = nextDepartureTime;
+    }
+    
+    return processedRet;
+  }
+}
+
 function renderTimeline(){
-  const box = document.getElementById('timeline');
+  const box = document.getElementById('timeline') || document.getElementById('timelineContainer');
+  if(!box) return;
   if(curTab==='rdam'){ renderRdam(box); return; }
   
   let stops = [];
@@ -700,28 +878,27 @@ function renderTimeline(){
     stops = COMPLETE[selComp].stops;
   } else {
     stops = curTab==='out' ? OUTBOUND[selOut].stops : RETURN[selRet].stops;
-    // calculate day offsets for return
     if(curTab==='ret'){
-      const outN = OUTBOUND[selOut].stops.reduce((s,x)=>s+Math.max(x.n,x.t==='start'||x.t==='border'?0:0),0);
-      // total outbound days
       const lastOut = OUTBOUND[selOut].stops[OUTBOUND[selOut].stops.length-1];
       dayBase = lastOut.day + lastOut.n;
     }
   }
 
-  box.innerHTML = stops.map((s, idx) => {
+  const timedStops = getTimedStopsForCurrentTab();
+
+  box.innerHTML = timedStops.map((s, idx) => {
     const cn = C[s.co];
     const isTR = s.co==='TR';
     const gDay = s.day + dayBase;
     const tipsH = s.tips ? s.tips.map(t=>`<span class="tip-tag ${t.c}">${t.t}</span>`).join('') : '';
     
-    // Build the route connector between this stop and the next
     let connector = '';
-    if(idx < stops.length - 1) {
-      const next = stops[idx + 1];
+    if(idx < timedStops.length - 1) {
+      const next = timedStops[idx + 1];
       const nextCn = C[next.co];
-      const distLabel = next.dk > 0 ? `${next.dk} km` : '';
-      const timeLabel = next.dt || '';
+      // Display the actual travel details stored on s (current stop)
+      const distLabel = s.dk > 0 ? `${s.dk} km` : '';
+      const timeLabel = s.dt || '';
       const infoItems = [];
       if(distLabel) infoItems.push(`<i class="fas fa-road"></i> ${distLabel}`);
       if(timeLabel) infoItems.push(`<i class="fas fa-clock"></i> ${timeLabel}`);
@@ -760,6 +937,22 @@ function renderTimeline(){
         ${s.dt ? `<span><i class="fas fa-clock"></i> ${s.dt}</span>` : ''}
         ${s.n>0 && !isTR ? `<span><i class="fas fa-bed"></i> ~€${cn.hp}/gece</span>` : ''}
       </div>
+      
+      <!-- Time calculations -->
+      <div class="tl-card-times">
+        ${s.arrivalStr ? `
+        <div class="time-box arr">
+          <span><i class="fas fa-sign-in-alt"></i> Varış</span>
+          <strong>${s.arrivalStr}</strong>
+        </div>` : ''}
+        ${s.departureStr ? `
+        <div class="time-box dep">
+          <span><i class="fas fa-sign-out-alt"></i> Kalkış</span>
+          <strong>${s.departureStr}</strong>
+        </div>` : ''}
+      </div>
+      ${s.stayDesc ? `<div style="font-size:0.75rem; color:var(--muted); margin-top:8px; font-style:italic;"><i class="fas fa-clock"></i> ${s.stayDesc}</div>` : ''}
+
       ${s.desc ? `<div class="tl-desc">${s.desc}</div>` : ''}
       ${s.halal && !isTR ? `<div class="tl-halal">${s.halal}</div>` : ''}
       ${s.accom && !isTR ? `<div class="tl-accom">${s.accom}</div>` : ''}
@@ -955,6 +1148,43 @@ function bindEvents(){
   window.addEventListener('scroll', () => {
     document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
   });
+
+  // Departure date/time event listeners
+  const btnRecalc = document.getElementById('btnRecalculateTimes');
+  const dateInput = document.getElementById('startDateInput');
+  const timeInput = document.getElementById('startTimeInput');
+  
+  if (btnRecalc) {
+    btnRecalc.addEventListener('click', () => {
+      if (dateInput && dateInput.value) {
+        const val = dateInput.value.split('-');
+        baseStartDate = new Date(parseInt(val[0]), parseInt(val[1]) - 1, parseInt(val[2]));
+      }
+      if (timeInput && timeInput.value) {
+        baseStartTime = timeInput.value;
+      }
+      renderTimeline();
+    });
+  }
+  
+  if (dateInput) {
+    dateInput.addEventListener('change', () => {
+      if (dateInput.value) {
+        const val = dateInput.value.split('-');
+        baseStartDate = new Date(parseInt(val[0]), parseInt(val[1]) - 1, parseInt(val[2]));
+        renderTimeline();
+      }
+    });
+  }
+  
+  if (timeInput) {
+    timeInput.addEventListener('change', () => {
+      if (timeInput.value) {
+        baseStartTime = timeInput.value;
+        renderTimeline();
+      }
+    });
+  }
 }
 
 // Global functions for onclick

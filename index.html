@@ -79,6 +79,17 @@
         <section id="timelineSection">
             <h2 class="sec-title">Gün Gün Plan</h2>
             <p class="sec-sub">Her durakta konaklama, helal yemek önerileri ve pratik ipuçları. Türkiye içi duraklar sadece transit.</p>
+            <div class="dep-config">
+                <div class="dep-config-group">
+                    <label for="startDateInput"><i class="fas fa-calendar-alt"></i> Başlangıç Tarihi</label>
+                    <input type="date" id="startDateInput" value="2026-06-16">
+                </div>
+                <div class="dep-config-group">
+                    <label for="startTimeInput"><i class="fas fa-clock"></i> Hareket Saati</label>
+                    <input type="time" id="startTimeInput" value="00:00">
+                </div>
+                <button class="dep-config-btn" id="btnRecalculateTimes">Hesapla</button>
+            </div>
             <div class="tabs" id="tabs">
                 <button class="tab-btn active" data-tab="out"><i class="fas fa-arrow-right"></i> Gidiş</button>
                 <button class="tab-btn" data-tab="rdam"><i class="fas fa-city"></i> Rotterdam</button>
