@@ -547,3 +547,255 @@ img { max-width:100%; }
   text-transform: uppercase;
 }
 
+/* ── Vignette Guide Styles ── */
+.vignette-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 24px;
+  margin-top: 16px;
+}
+.vignette-individual-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.vig-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  transition: var(--ease);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.vig-card:hover {
+  box-shadow: var(--shadow);
+  border-color: var(--border-h);
+}
+.vig-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.vig-country-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.vig-flag {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+.vig-title {
+  font-family: var(--hd);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.vig-price {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  background: var(--tag-bg);
+  color: var(--teal);
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+}
+.vig-desc {
+  font-size: 0.8rem;
+  color: var(--text2);
+  line-height: 1.6;
+}
+.vig-warning {
+  font-size: 0.76rem;
+  color: var(--red);
+  background: rgba(217, 79, 61, 0.06);
+  border: 1px solid rgba(217, 79, 61, 0.15);
+  padding: 10px 14px;
+  border-radius: var(--r);
+  line-height: 1.5;
+}
+.vig-warning i {
+  margin-right: 6px;
+}
+.vig-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+.btn-vig {
+  padding: 8px 16px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: var(--r);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--bd);
+  transition: var(--ease);
+  border: 1px solid transparent;
+}
+.btn-vig-primary {
+  background: var(--teal);
+  color: #fff !important;
+}
+.btn-vig-primary:hover {
+  background: var(--teal-h);
+}
+.btn-vig-secondary {
+  background: transparent;
+  color: var(--text2);
+  border-color: var(--border);
+}
+.btn-vig-secondary:hover {
+  background: var(--tag-bg);
+  border-color: var(--border-h);
+}
+
+/* Bulk section */
+.vignette-bulk {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.vig-bulk-container {
+  background: var(--card);
+  border: 2px dashed var(--accent);
+  border-radius: var(--r-xl);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 100px;
+}
+.vig-bulk-title {
+  font-family: var(--hd);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vig-bulk-desc {
+  font-size: 0.8rem;
+  color: var(--text2);
+  line-height: 1.6;
+}
+.vig-bulk-services {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.service-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 16px;
+  transition: var(--ease);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.service-card:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+}
+.service-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.service-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+.service-tag {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-weight: 600;
+  background: rgba(196, 120, 74, 0.08);
+}
+.service-desc {
+  font-size: 0.74rem;
+  color: var(--text2);
+  line-height: 1.5;
+}
+.service-countries {
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+.service-action {
+  margin-top: 4px;
+}
+
+/* Toll-only info box */
+.toll-only-box {
+  grid-column: span 2;
+  background: var(--tag-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 18px 22px;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.toll-only-title {
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+}
+.toll-only-title i {
+  color: var(--accent);
+}
+.toll-only-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+}
+.toll-only-item {
+  font-size: 0.76rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text2);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 900px) {
+  .vignette-grid {
+    grid-template-columns: 1fr;
+  }
+  .toll-only-box {
+    grid-column: span 1;
+  }
+  .vig-bulk-container {
+    position: static;
+  }
+}
+
+

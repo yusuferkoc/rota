@@ -767,6 +767,91 @@ const TIPS = [
    text:'AB geneli acil numara: 112 (polis, ambulans, itfaiye). Sırbistan: 112/192/194. TC Dışişleri: +90 312 292 1000. En yakın konsolosluk numaralarını telefonunuza kaydedin. Seyahat sigortası poliçe numarasını yanınızda taşıyın.'}
 ];
 
+/* ═══════ VİNYET BİLGİLERİ ═══════ */
+const VIGNETTE_INFO = {
+  TR: {
+    name: 'Türkiye (HGS)',
+    flag: '🇹🇷',
+    desc: 'Kuzey Marmara Otoyolu, Ankara-Niğde Otoyolu vb. otoyol/köprü geçişleri için HGS bakiyenizin yeterli olduğundan emin olun.',
+    officialUrl: 'https://hgsmusteri.ptt.gov.tr/',
+    officialLabel: 'PTT HGS Portalına Git',
+    costDesc: 'Geçişe göre bakiye',
+    warning: 'Sınırdan çıkmadan önce HGS bakiyenizi PTT veya bankacılık uygulamalarından sorgulayıp yükleme yapın.'
+  },
+  BG: {
+    name: 'Bulgaristan e-Vinyeti',
+    flag: '🇧🇬',
+    desc: 'Bulgaristan sınırını geçmeden veya geçtikten hemen sonra satın alınmalıdır.',
+    officialUrl: 'https://www.bgtoll.bg/',
+    officialLabel: 'BGTOLL Resmi Sitesine Git',
+    costDesc: 'Haftalık: ~8 € (15 BGN)',
+    warning: 'Sınır kapısından geçer geçmez kameralar vinyet kontrolü yapar. Cezalı duruma düşmemek için online satın alımı sınır öncesi tamamlayın.'
+  },
+  HU: {
+    name: 'Macaristan e-Matrica',
+    flag: '🇭🇺',
+    desc: 'Macaristan sınırından girmeden önce (en geç sınırdaki dinlenme tesislerinde) satın alınması zorunludur.',
+    officialUrl: 'https://ematrica.nemzetiutdij.hu/',
+    officialLabel: 'NÚSZ Resmi Sitesine Git',
+    costDesc: '10 Günlük: ~18 € (6.400 HUF)',
+    warning: 'Plaka bilginizi ve araç kategorisini (D1/D2) doğru girdiğinizden emin olun. Küçük bir plaka hatası dahi yüksek cezalara yol açar.'
+  },
+  SK: {
+    name: 'Slovakya e-Známka',
+    flag: '🇸🇰',
+    desc: 'Slovakya otoyollarında seyahat etmek için elektronik vinyet zorunludur.',
+    officialUrl: 'https://eznamka.sk/',
+    officialLabel: 'eznamka Resmi Sitesine Git',
+    costDesc: '10 Günlük: 16 €',
+    warning: 'Vinyet tamamen dijitaldir ve plakanıza tanımlanır. Sınır öncesi online alabilirsiniz.'
+  },
+  CZ: {
+    name: 'Çekya e-Známka',
+    flag: '🇨🇿',
+    desc: 'Çekya otoyollarını kullanmak için elektronik vinyet gereklidir.',
+    officialUrl: 'https://edalnice.cz/',
+    officialLabel: 'Edalnice Resmi Sitesine Git',
+    costDesc: '10 Günlük: ~16 € (400 CZK)',
+    warning: 'Plakanızı ve ülkenizi doğru seçerek internet sitesinden kolayca satın alabilirsiniz.'
+  },
+  AT: {
+    name: 'Avusturya Otoyol Vinyeti',
+    flag: '🇦🇹',
+    desc: 'Avusturya otobanları için zorunludur. Ayrıca Brenner otobanı gibi tüneller ve özel geçişler (Streckenmaut) için ekstra ücret ödenir.',
+    officialUrl: 'https://shop.asfinag.at/tr/',
+    officialLabel: 'ASFINAG Resmi Sitesine Git',
+    costDesc: '10 Günlük: 11,50 €',
+    warning: '🚨 <b>DİKKAT:</b> Dijital vinyetler tüketici koruma yasası nedeniyle satın alma tarihinden <b>18 gün sonra</b> geçerli olur. Seyahatinize 18 günden az varsa, satın alırken kendinizi <b>"Girişimci/Şirket" (Commercial/Entrepreneur)</b> olarak işaretleyip vinyeti <b>hemen aktif</b> edebilir veya sınır öncesindeki benzinliklerden fiziksel sticker olarak satın almalısınız.'
+  },
+  CH: {
+    name: 'İsviçre e-Vinyeti',
+    flag: '🇨🇭',
+    desc: 'İsviçre otobanları için yıllık vinyet zorunludur (kısa dönem vinyet yoktur).',
+    officialUrl: 'https://www.via.admin.ch/',
+    officialLabel: 'Via.admin.ch Resmi Sitesine Git',
+    costDesc: 'Yıllık: 40 CHF (~43 €)',
+    warning: 'Ülkeye girmeden online e-vinyet alabilir veya gümrük kapısından fiziksel sticker satın alıp ön cama yapıştırabilirsiniz.'
+  },
+  SI: {
+    name: 'Slovenya e-Vinyeti',
+    flag: '🇸🇮',
+    desc: 'Slovenya otoyollarında araç sınıfınıza uygun e-Vinyet bulunması zorunludur.',
+    officialUrl: 'https://evinjeta.dars.si/tr',
+    officialLabel: 'DARS Resmi Sitesine Git',
+    costDesc: 'Haftalık: 16 € (Sınıf 2A)',
+    warning: 'Slovenya sınırına girmeden önce online satın alım yapılmalıdır, kameralar çok sıkı denetim yapar.'
+  },
+  RO: {
+    name: 'Romanya e-Rovinieta',
+    flag: '🇷🇴',
+    desc: 'Romanya ulusal yolları ve otoyolları için e-Rovinieta alınması zorunludur.',
+    officialUrl: 'https://www.erovinieta.ro/',
+    officialLabel: 'CNAIR Resmi Sitesine Git',
+    costDesc: '30 Günlük: ~7 € (35 RON)',
+    warning: 'Romanya sınırını geçmeden önce online olarak veya sınırdaki yetkili noktalardan alınabilir.'
+  }
+};
+
 /* ═══════ STATE ═══════ */
 let routeMode = 'complete'; // 'complete' veya 'split'
 let selComp = 0, selOut = 0, selRet = 0, curTab = 'out';
@@ -1291,12 +1376,169 @@ function renderTips(){
   `).join('');
 }
 
+/* ═══════ VIGNETTES ═══════ */
+function renderVignettes() {
+  const container = document.getElementById('vignetteWrapper');
+  if (!container) return;
+
+  let out, ret, allStops;
+  if (routeMode === 'complete') {
+    out = COMPLETE[selComp];
+    ret = { tolls: [], stops: [] };
+    allStops = out.stops;
+  } else {
+    out = OUTBOUND[selOut];
+    ret = RETURN[selRet];
+    allStops = [...out.stops, ...ret.stops.slice(1)];
+  }
+
+  // Get unique country codes visited on this route
+  const visitedCountries = Array.from(new Set(allStops.map(s => s.co))).filter(c => c && c !== 'SEA');
+
+  const vignettesNeeded = [];
+  const tollCountries = [];
+
+  const TOLL_COUNTRIES_INFO = {
+    'RS': { name: 'Sırbistan', flag: '🇷🇸', desc: 'Otoyol gişelerinde nakit (RSD/EUR) veya kredi kartı ile ödeme.' },
+    'HR': { name: 'Hırvatistan', flag: '🇭🇷', desc: 'Otoyol gişelerinde kredi kartı veya EUR ile ödeme.' },
+    'IT': { name: 'İtalya', flag: '🇮🇹', desc: 'Autostrada gişelerinde nakit veya kredi kartı ile ödeme.' },
+    'FR': { name: 'Fransa', flag: '🇫🇷', desc: 'Péage gişelerinde nakit veya kredi kartı ile ödeme.' },
+    'GR': { name: 'Yunanistan', flag: '🇬🇷', desc: 'Egnatia Odos gişelerinde nakit veya kredi kartı ile ödeme.' }
+  };
+
+  visitedCountries.forEach(co => {
+    if (VIGNETTE_INFO[co]) {
+      vignettesNeeded.push({ code: co, ...VIGNETTE_INFO[co] });
+    } else if (TOLL_COUNTRIES_INFO[co]) {
+      tollCountries.push({ code: co, ...TOLL_COUNTRIES_INFO[co] });
+    }
+  });
+
+  if (vignettesNeeded.length === 0 && tollCountries.length === 0) {
+    container.innerHTML = '<p style="font-size:0.85rem; color:var(--text2);">Bu rota için aktif vinyet veya otoyol ücreti bulunmuyor.</p>';
+    return;
+  }
+
+  let html = `
+    <div class="vignette-grid">
+      <div class="vignette-individual">
+        <h3 style="font-size: 1rem; margin-bottom: 16px; font-family: var(--hd); display: flex; align-items: center; gap: 8px; color: var(--text);">
+          <i class="fas fa-ticket-alt" style="color: var(--teal);"></i> Tek Tek Resmi Sitelerden Al (Komisyonsuz)
+        </h3>
+        <div class="vignette-individual-list">
+          ${vignettesNeeded.map(v => `
+            <div class="vig-card">
+              <div class="vig-header">
+                <div class="vig-country-info">
+                  <span class="vig-flag">${v.flag}</span>
+                  <span class="vig-title">${v.name}</span>
+                </div>
+                <span class="vig-price">${v.costDesc}</span>
+              </div>
+              <div class="vig-desc">${v.desc}</div>
+              ${v.warning ? `
+                <div class="vig-warning">
+                  <i class="fas fa-exclamation-triangle"></i> ${v.warning}
+                </div>
+              ` : ''}
+              <div class="vig-actions">
+                <a href="${v.officialUrl}" target="_blank" class="btn-vig btn-vig-primary">
+                  <i class="fas fa-external-link-alt"></i> ${v.officialLabel}
+                </a>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      
+      <div class="vignette-bulk">
+        <h3 style="font-size: 1rem; margin-bottom: 16px; font-family: var(--hd); display: flex; align-items: center; gap: 8px; color: var(--text);">
+          <i class="fas fa-layer-group" style="color: var(--accent);"></i> Toplu Satın Al (Hızlı & Tek Seferde)
+        </h3>
+        
+        <div class="vig-bulk-container">
+          <div class="vig-bulk-title">
+            <i class="fas fa-shopping-basket"></i> Tek Tıkla Toplu Alım
+          </div>
+          <p class="vig-bulk-desc">
+            Vinyetleri tek tek resmi sitelerinden almak yerine, aracı platformlar üzerinden Türkçe destekle tek bir sepette satın alabilirsiniz. 
+            <i>(Aracı kurumlar işlem başına küçük bir servis bedeli ekler.)</i>
+          </p>
+          
+          <div class="vig-bulk-services">
+            <div class="service-card">
+              <div class="service-header">
+                <span class="service-name">Vintrica</span>
+                <span class="service-tag">Popüler</span>
+              </div>
+              <div class="service-desc">
+                Avusturya, Macaristan, Bulgaristan, Slovakya, Çekya, İsviçre ve Slovenya vinyetlerini Türkçe arayüz ile tek seferde alın.
+              </div>
+              <div class="service-countries">
+                <i class="fas fa-globe-europe"></i> Desteklenenler: BG, HU, SK, CZ, AT, CH, SI
+              </div>
+              <div class="service-action">
+                <a href="https://www.vintrica.com/tr/" target="_blank" class="btn-vig btn-vig-primary" style="width:100%; background:var(--accent); border-color:var(--accent);">
+                  <i class="fas fa-shopping-cart"></i> Vintrica ile Satın Al
+                </a>
+              </div>
+            </div>
+            
+            <div class="service-card">
+              <div class="service-header">
+                <span class="service-name">TollTickets</span>
+                <span class="service-tag">Geniş Kapsam</span>
+              </div>
+              <div class="service-desc">
+                Avrupa genelinde vinyetler ve gişeli yollar için transponder (otomatik geçiş cihazı) kiralama hizmeti sunar.
+              </div>
+              <div class="service-countries">
+                <i class="fas fa-globe-europe"></i> Tüm Avrupa vinyetleri ve otoyol kutuları
+              </div>
+              <div class="service-action">
+                <a href="https://www.tolltickets.com/" target="_blank" class="btn-vig btn-vig-secondary" style="width:100%;">
+                  <i class="fas fa-shopping-cart"></i> TollTickets ile Satın Al
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  `;
+
+  if (tollCountries.length > 0) {
+    html += `
+      <div class="toll-only-box">
+        <div class="toll-only-title">
+          <i class="fas fa-receipt"></i> Gişeli Otoyollar (Vinyetsiz Ülkeler)
+        </div>
+        <p style="font-size: 0.78rem; color: var(--text2); line-height: 1.5; margin-bottom: 6px;">
+          Aşağıdaki ülkelerde önceden vinyet satın almanız <b>gerekmez</b>. Otoyol ücretleri doğrudan geçiş yapılan gişelerde nakit veya kredi kartıyla ödenir:
+        </p>
+        <div class="toll-only-list">
+          ${tollCountries.map(tc => `
+            <div class="toll-only-item" title="${tc.desc}">
+              <span>${tc.flag}</span>
+              <strong>${tc.name}</strong>
+              <span style="font-size: 0.7rem; color: var(--muted);">| Gişe Ödemesi</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  html += `</div>`;
+  container.innerHTML = html;
+}
+
 /* ═══════ RENDER ALL ═══════ */
 function renderAll(){
   drawMap();
   renderTimeline();
   renderCosts();
   renderTips();
+  renderVignettes();
 }
 
 /* ═══════ EVENTS ═══════ */
