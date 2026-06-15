@@ -112,6 +112,133 @@ function calculateRouteTimes(stops) {
   return processed;
 }
 
+function getDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Radius of earth in km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon/2) * Math.sin(dLon/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c; // in km
+}
+
+function handleLocationSuccess(position) {
+  const lat = position.coords.latitude;
+  const lng = position.coords.longitude;
+  
+  const gpsIcon = L.divIcon({
+    className: 'user-location-marker-container',
+    html: '<div class="user-location-marker"></div>',
+    iconSize: [36, 36],
+    iconAnchor: [18, 18]
+  });
+  
+  if (userMarker) {
+    userMarker.setLatLng([lat, lng]);
+  } else {
+    userMarker = L.marker([lat, lng], { icon: gpsIcon }).addTo(map);
+  }
+  
+  if (isTrackingActive) {
+    map.setView([lat, lng], Math.max(map.getZoom(), 8));
+  }
+  
+  let stops = [];
+  if (routeMode === 'complete') {
+    stops = COMPLETE[selComp].stops;
+  } else {
+    stops = curTab === 'out' ? OUTBOUND[selOut].stops : RETURN[selRet].stops;
+  }
+  
+  if (stops.length > 0 && curTab !== 'rdam') {
+    let minD = Infinity;
+    let closestIdx = 0;
+    
+    stops.forEach((s, idx) => {
+      const d = getDistance(lat, lng, s.la, s.lo);
+      if (d < minD) {
+        minD = d;
+        closestIdx = idx;
+      }
+    });
+    
+    const cards = document.querySelectorAll('.tl-card');
+    if (cards.length > closestIdx) {
+      cards.forEach(c => {
+        c.classList.remove('active-stop');
+        const st = c.querySelector('.gps-status-text');
+        if (st) st.remove();
+      });
+      
+      cards[closestIdx].classList.add('active-stop');
+      
+      let statusText = cards[closestIdx].querySelector('.gps-status-text');
+      if (!statusText) {
+        statusText = document.createElement('div');
+        statusText.className = 'gps-status-text';
+        statusText.style.cssText = 'font-size:0.75rem; color:#007AFF; font-weight:600; margin-top:8px; display:flex; align-items:center; gap:6px;';
+        cards[closestIdx].appendChild(statusText);
+      }
+      statusText.innerHTML = `<i class="fas fa-location-crosshairs"></i> Konumunuza en yakın nokta (Mesafe: ~${Math.round(minD)} km)`;
+    }
+  }
+}
+
+function handleLocationError(error) {
+  console.warn("GPS Konum Takibi Başarısız: ", error.message);
+  alert("GPS Konum verisi alınamadı. Lütfen konum erişim izni verdiğinizden emin olun.");
+  stopLocationTracking();
+}
+
+function startLocationTracking() {
+  if (!navigator.geolocation) {
+    alert("Cihazınız veya tarayıcınız konum servislerini desteklemiyor.");
+    return;
+  }
+  
+  isTrackingActive = true;
+  const btn = document.getElementById('btnTrackLocation');
+  if (btn) btn.classList.add('active');
+  
+  watchId = navigator.geolocation.watchPosition(
+    handleLocationSuccess,
+    handleLocationError,
+    { enableHighAccuracy: true, maximumAge: 5000, timeout: 15000 }
+  );
+}
+
+function stopLocationTracking() {
+  isTrackingActive = false;
+  const btn = document.getElementById('btnTrackLocation');
+  if (btn) btn.classList.remove('active');
+  
+  if (watchId !== null) {
+    navigator.geolocation.clearWatch(watchId);
+    watchId = null;
+  }
+  
+  if (userMarker) {
+    map.removeLayer(userMarker);
+    userMarker = null;
+  }
+  
+  document.querySelectorAll('.tl-card').forEach(c => {
+    c.classList.remove('active-stop');
+    const st = c.querySelector('.gps-status-text');
+    if (st) st.remove();
+  });
+}
+
+function toggleLocationTracking() {
+  if (isTrackingActive) {
+    stopLocationTracking();
+  } else {
+    startLocationTracking();
+  }
+}
+
+
 /* ═══════ TAM ROTALAR ═══════ */
 const COMPLETE = [
 {
@@ -644,6 +771,10 @@ const TIPS = [
 let routeMode = 'complete'; // 'complete' veya 'split'
 let selComp = 0, selOut = 0, selRet = 0, curTab = 'out';
 let map, markersG=[], linesG=[];
+let watchId = null;
+let userMarker = null;
+let isTrackingActive = false;
+
 
 /* ═══════ INIT ═══════ */
 document.addEventListener('DOMContentLoaded', () => {
@@ -735,7 +866,37 @@ function mIcon(t){
   const ic = {start:'fa-flag',border:'fa-passport',overnight:'fa-moon',sightseeing:'fa-camera',destination:'fa-location-dot',ferry:'fa-ship',end:'fa-home'};
   return L.divIcon({className:'custom-marker',html:`<div class="m-pin ${t}"><i class="fas ${ic[t]||'fa-circle'}"></i></div>`,iconSize:[28,28],iconAnchor:[14,28],popupAnchor:[0,-28]});
 }
-function drawMap(){
+async function getRoadGeometry(stops) {
+  if (stops.length < 2) return [];
+  
+  const chunkSize = 15;
+  let allCoordinates = [];
+  
+  for (let i = 0; i < stops.length; i += chunkSize - 1) {
+    const chunk = stops.slice(i, i + chunkSize);
+    if (chunk.length < 2) break;
+    
+    const coordsStr = chunk.map(s => `${s.lo},${s.la}`).join(';');
+    const url = `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson`;
+    
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("OSRM API response error");
+      const data = await response.json();
+      
+      if (data.routes && data.routes[0] && data.routes[0].geometry) {
+        const coords = data.routes[0].geometry.coordinates.map(c => [c[1], c[0]]);
+        allCoordinates = allCoordinates.concat(coords);
+      }
+    } catch (e) {
+      console.warn("OSRM road calculation failed for chunk, falling back to straight lines:", e);
+      return null;
+    }
+  }
+  return allCoordinates;
+}
+
+async function drawMap(){
   markersG.forEach(m=>map.removeLayer(m)); linesG.forEach(l=>map.removeLayer(l));
   markersG=[]; linesG=[];
   
@@ -748,24 +909,40 @@ function drawMap(){
     ret = RETURN[selRet].stops;
   }
   
-  // outbound line
-  if(out.length>1){
-    const l=L.polyline(out.map(s=>[s.la,s.lo]),{color:'#2B7A78',weight:3,opacity:0.8}).addTo(map);
-    linesG.push(l);
+  if (out.length > 1) {
+    const roadCoords = await getRoadGeometry(out);
+    if (roadCoords && roadCoords.length > 0) {
+      const l = L.polyline(roadCoords, {color:'#2B7A78', weight:4, opacity:0.85}).addTo(map);
+      linesG.push(l);
+    } else {
+      const l = L.polyline(out.map(s=>[s.la,s.lo]), {color:'#2B7A78', weight:3, opacity:0.8}).addTo(map);
+      linesG.push(l);
+    }
   }
-  // return line
-  if(ret.length>1){
-    const l=L.polyline(ret.map(s=>[s.la,s.lo]),{color:'#C4784A',weight:3,opacity:0.7,dashArray:'6,6'}).addTo(map);
-    linesG.push(l);
+  
+  if (ret.length > 1) {
+    const roadCoords = await getRoadGeometry(ret);
+    if (roadCoords && roadCoords.length > 0) {
+      const l = L.polyline(roadCoords, {color:'#C4784A', weight:4, opacity:0.75, dashArray:'6,6'}).addTo(map);
+      linesG.push(l);
+    } else {
+      const l = L.polyline(ret.map(s=>[s.la,s.lo]), {color:'#C4784A', weight:3, opacity:0.7, dashArray:'6,6'}).addTo(map);
+      linesG.push(l);
+    }
   }
-  // markers
-  const allS = [...out, ...ret.slice(1)]; // skip Rotterdam duplicate
+  
+  const allS = [...out, ...ret.slice(1)];
   allS.forEach(s => {
     const m = L.marker([s.la,s.lo],{icon:mIcon(s.t)}).addTo(map);
     const cn = C[s.co];
     m.bindPopup(`<div style="font-family:'DM Sans',sans-serif;min-width:160px;"><strong>${cn.f} ${s.c}</strong><br><small>${cn.n}</small></div>`,{maxWidth:250});
     markersG.push(m);
   });
+  
+  if (isTrackingActive && userMarker) {
+    userMarker.addTo(map);
+  }
+  
   const coords = allS.map(s=>[s.la,s.lo]);
   if(coords.length) map.fitBounds(coords,{padding:[25,25]});
 }
@@ -1184,6 +1361,12 @@ function bindEvents(){
         renderTimeline();
       }
     });
+  }
+
+  // Live GPS Tracking button click listener
+  const btnTrack = document.getElementById('btnTrackLocation');
+  if (btnTrack) {
+    btnTrack.addEventListener('click', toggleLocationTracking);
   }
 }
 
