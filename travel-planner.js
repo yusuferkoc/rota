@@ -1946,6 +1946,98 @@ function getTimelineAccomHtml(cityName) {
   `;
 }
 
+function openOverlayTab(tabName) {
+  const overlay = document.getElementById('subPageOverlay');
+  if (overlay) {
+    overlay.style.display = 'flex';
+  }
+  switchSubTab(tabName);
+}
+
+function switchSubTab(tabName) {
+  const tabBtnVignettes = document.getElementById('tabBtnVignettes');
+  const tabBtnHotels = document.getElementById('tabBtnHotels');
+  if (tabBtnVignettes) tabBtnVignettes.classList.toggle('active', tabName === 'vignettes');
+  if (tabBtnHotels) tabBtnHotels.classList.toggle('active', tabName === 'hotels');
+
+  const paneVignettes = document.getElementById('paneVignettes');
+  const paneHotels = document.getElementById('paneHotels');
+  if (paneVignettes) paneVignettes.style.display = tabName === 'vignettes' ? 'block' : 'none';
+  if (paneHotels) paneHotels.style.display = tabName === 'hotels' ? 'block' : 'none';
+
+  if (tabName === 'vignettes') {
+    renderVignettes();
+  } else if (tabName === 'hotels') {
+    renderSubPageHotels();
+  }
+}
+
+function showMapHotelsFromOverlay(cityName) {
+  const overlay = document.getElementById('subPageOverlay');
+  if (overlay) {
+    overlay.style.display = 'none';
+  }
+  showMapHotels(cityName);
+}
+
+function renderSubPageHotels() {
+  const container = document.getElementById('hotelsOverviewList');
+  if (!container) return;
+
+  let stops = [];
+  if (routeMode === 'complete') {
+    stops = COMPLETE[selComp].stops;
+  } else {
+    stops = curTab === 'out' ? OUTBOUND[selOut].stops : RETURN[selRet].stops;
+  }
+
+  const overnightStops = stops.filter(s => s.n > 0 && s.co !== 'TR');
+
+  if (overnightStops.length === 0) {
+    container.innerHTML = `<div style="text-align:center; padding:40px; color:var(--text2); font-size:0.85rem;">Bu rotada geceleme yapılacak durak bulunmamaktadır.</div>`;
+    return;
+  }
+
+  container.innerHTML = overnightStops.map(s => {
+    const cityInfo = ACCOMMODATION_DATA[s.c];
+    if (!cityInfo) return '';
+
+    return `
+      <div class="overview-city-card">
+        <div class="overview-city-header">
+          <h3>${cityInfo.flag} ${s.c} <small>(${s.n} Gece - Önerilen Bölge: ${cityInfo.area})</small></h3>
+          <button onclick="showMapHotelsFromOverlay('${s.c}')" class="btn-toggle-accom" style="margin:0; font-size:0.72rem; padding: 4px 10px;">
+            <i class="fas fa-map-marker-alt"></i> Haritada Göster
+          </button>
+        </div>
+        <div class="overview-hotel-list">
+          ${cityInfo.hotels.map((h, idx) => {
+            const bookingUrl = `https://www.booking.com/searchresults.tr.html?ss=${encodeURIComponent(h.name + ', ' + s.c)}&group_adults=6&no_rooms=1`;
+            return `
+              <div class="overview-hotel-item">
+                <div class="overview-hotel-main">
+                  <div class="overview-hotel-name-wrap">
+                    <a href="${bookingUrl}" target="_blank" class="tl-hotel-link">
+                      <span class="tl-hotel-num">${idx + 1}</span>
+                      <span class="tl-hotel-name" style="font-weight: 700;">${h.name}</span>
+                    </a>
+                    <span class="tl-hotel-badge">${h.type}</span>
+                  </div>
+                  <div class="overview-hotel-meta">
+                    <span class="tl-hotel-rating">★ ${h.rating}</span>
+                    <span class="tl-hotel-price">${h.price} / gece</span>
+                  </div>
+                </div>
+                <p class="overview-hotel-desc">${h.desc}</p>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
 /* ═══════ RENDER ALL ═══════ */
 function renderAll(){
   drawMap();
@@ -1953,6 +2045,12 @@ function renderAll(){
   renderCosts();
   renderTips();
   renderVignettes();
+
+  // If overlay is open and hotels tab is active, refresh it
+  const paneHotels = document.getElementById('paneHotels');
+  if (paneHotels && paneHotels.style.display === 'block') {
+    renderSubPageHotels();
+  }
 }
 
 /* ═══════ EVENTS ═══════ */
@@ -2024,6 +2122,63 @@ function bindEvents(){
   if (btnTrack) {
     btnTrack.addEventListener('click', toggleLocationTracking);
   }
+
+  // Hamburger Menu click toggle
+  const btnHamburger = document.getElementById('hamburgerBtn');
+  const dropdownHamburger = document.getElementById('hamburgerDropdown');
+  if (btnHamburger && dropdownHamburger) {
+    btnHamburger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isHidden = dropdownHamburger.style.display === 'none' || !dropdownHamburger.style.display;
+      dropdownHamburger.style.display = isHidden ? 'flex' : 'none';
+    });
+  }
+
+  // Close hamburger dropdown when clicking elsewhere
+  document.addEventListener('click', () => {
+    if (dropdownHamburger) dropdownHamburger.style.display = 'none';
+  });
+
+  // Back button in overlay
+  const btnBack = document.getElementById('btnBackToMain');
+  const overlay = document.getElementById('subPageOverlay');
+  if (btnBack && overlay) {
+    btnBack.addEventListener('click', () => {
+      overlay.style.display = 'none';
+    });
+  }
+
+  // Hamburger Menu item actions
+  const menuVignettes = document.getElementById('menuVignettes');
+  const menuHotels = document.getElementById('menuHotels');
+  if (menuVignettes) {
+    menuVignettes.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (dropdownHamburger) dropdownHamburger.style.display = 'none';
+      openOverlayTab('vignettes');
+    });
+  }
+  if (menuHotels) {
+    menuHotels.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (dropdownHamburger) dropdownHamburger.style.display = 'none';
+      openOverlayTab('hotels');
+    });
+  }
+
+  // Tab buttons in overlay page
+  const tabBtnVignettes = document.getElementById('tabBtnVignettes');
+  const tabBtnHotels = document.getElementById('tabBtnHotels');
+  if (tabBtnVignettes) {
+    tabBtnVignettes.addEventListener('click', () => {
+      switchSubTab('vignettes');
+    });
+  }
+  if (tabBtnHotels) {
+    tabBtnHotels.addEventListener('click', () => {
+      switchSubTab('hotels');
+    });
+  }
 }
 
 // Global functions for onclick
@@ -2031,3 +2186,6 @@ window.pickComp = pickComp;
 window.pickOut = pickOut;
 window.pickRet = pickRet;
 window.showMapHotels = showMapHotels;
+window.showMapHotelsFromOverlay = showMapHotelsFromOverlay;
+window.openOverlayTab = openOverlayTab;
+window.switchSubTab = switchSubTab;

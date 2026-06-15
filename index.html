@@ -15,19 +15,30 @@
 <body>
     <header class="header" id="header">
         <div class="header-inner">
-            <div class="logo">
-                <div class="logo-mark"><i class="fas fa-route"></i></div>
-                <div>
-                    <h1>Konya → Rotterdam</h1>
-                    <small>Vito · 4 Yetişkin 2 Çocuk · 30 Gün Schengen</small>
+            <div class="header-top-row">
+                <div class="logo">
+                    <div class="logo-mark"><i class="fas fa-route"></i></div>
+                    <div>
+                        <h1>Konya → Rotterdam</h1>
+                        <small>Vito · 4 Yetişkin 2 Çocuk · 30 Gün Schengen</small>
+                    </div>
+                </div>
+                <div class="header-controls">
+                    <button class="theme-btn" id="themeToggle" title="Tema değiştir"><i class="fas fa-moon"></i></button>
+                    <div class="hamburger-menu-wrapper">
+                        <button class="hamburger-btn" id="hamburgerBtn" title="Menü"><i class="fas fa-bars"></i></button>
+                        <div class="hamburger-dropdown" id="hamburgerDropdown" style="display: none;">
+                            <a href="#" id="menuVignettes"><i class="fas fa-ticket-simple"></i> Vinyetler & Otoyollar</a>
+                            <a href="#" id="menuHotels"><i class="fas fa-hotel"></i> Konaklama Önerileri</a>
+                            <a href="checklist.html"><i class="fas fa-list-check"></i> Yapılacaklar Listesi</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="header-actions">
-                <a href="checklist.html" class="chip" style="background:var(--accent); color:#fff; border:none;"><i class="fas fa-list-check" style="color:#fff;"></i> Yapılacaklar</a>
+            <div class="header-stats-row">
                 <div class="chip"><i class="fas fa-calendar"></i> 15 Haz – 11 Tem 2026</div>
                 <div class="chip" id="chipKm"><i class="fas fa-road"></i> <span>~7.800 km</span></div>
                 <div class="chip green" id="chipCost"><i class="fas fa-euro-sign"></i> <span>...</span></div>
-                <button class="theme-btn" id="themeToggle" title="Tema değiştir"><i class="fas fa-moon"></i></button>
             </div>
         </div>
     </header>
@@ -107,19 +118,36 @@
             <div class="grand-total" id="grandTotal"></div>
         </section>
 
-        <!-- Vignette & Toll Purchase Guide -->
-        <section id="vignetteSection">
-            <h2 class="sec-title">Vinyet Satın Alma & Otoyol Rehberi</h2>
-            <p class="sec-sub">Seçtiğiniz rotadaki ülkelerin vinyetlerini tek tek resmi sitelerinden komisyonsuz veya toplu olarak tek seferde güvenle satın alabilirsiniz.</p>
-            <div id="vignetteWrapper"></div>
-        </section>
-
         <!-- Tips -->
         <section id="tipsSection">
             <h2 class="sec-title">Önemli Hatırlatmalar & İpuçları</h2>
             <p class="sec-sub">SIM kart, vinyetler, sınır geçişleri, helal yemek bulma, çocuklarla seyahat ve daha fazlası.</p>
             <div class="tips-grid" id="tipsGrid"></div>
         </section>
+    </div>
+
+    <!-- Sub Page Fullscreen Overlay -->
+    <div class="sub-page-overlay" id="subPageOverlay" style="display: none;">
+        <div class="sub-page-header">
+            <button class="btn-back" id="btnBackToMain"><i class="fas fa-arrow-left"></i> Geri</button>
+            <div class="sub-page-title">
+                <h2 id="subPageTitleText">Vinyet & Konaklama Rehberi</h2>
+            </div>
+            <div class="sub-page-tabs">
+                <button class="sub-tab-btn active" id="tabBtnVignettes" data-tab="vignettes"><i class="fas fa-ticket"></i> Vinyetler</button>
+                <button class="sub-tab-btn" id="tabBtnHotels" data-tab="hotels"><i class="fas fa-hotel"></i> Tüm Oteller</button>
+            </div>
+        </div>
+        <div class="sub-page-content">
+            <!-- Vignettes Content -->
+            <div class="sub-page-pane active" id="paneVignettes">
+                <div id="vignetteWrapper"></div>
+            </div>
+            <!-- Hotels Content -->
+            <div class="sub-page-pane" id="paneHotels">
+                <div class="hotels-overview-list" id="hotelsOverviewList"></div>
+            </div>
+        </div>
     </div>
 
     <!-- Chat Widget -->
