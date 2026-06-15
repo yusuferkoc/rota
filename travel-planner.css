@@ -798,4 +798,121 @@ img { max-width:100%; }
   }
 }
 
+/* ── Timeline Hotel Widget Styles ── */
+.tl-hotel-container {
+  margin-top: 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 14px;
+}
+[data-theme="dark"] .tl-hotel-container {
+  background: #111;
+}
+.tl-hotel-header {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px dashed var(--border);
+  padding-bottom: 6px;
+}
+.tl-hotel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.tl-hotel-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  transition: var(--ease);
+}
+.tl-hotel-item:hover {
+  border-color: var(--accent);
+}
+.tl-hotel-name-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tl-hotel-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+.tl-hotel-badge {
+  background: var(--tag-bg);
+  color: var(--accent);
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.tl-hotel-sub {
+  display: flex;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: var(--text2);
+  margin: 3px 0;
+  align-items: center;
+}
+.tl-hotel-rating {
+  color: var(--teal);
+  font-weight: 700;
+}
+.tl-hotel-price {
+  font-weight: 600;
+  color: var(--text);
+}
+.tl-hotel-desc {
+  font-size: 0.76rem;
+  color: var(--text2);
+  line-height: 1.4;
+  margin: 4px 0 0 0;
+}
+.tl-hotel-search-links {
+  display: flex;
+  gap: 8px;
+}
+.btn-tl-hotel {
+  flex: 1;
+  text-align: center;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: var(--ease);
+  box-shadow: var(--shadow);
+}
+.btn-tl-hotel.booking {
+  background: #003580;
+  color: #FFF;
+}
+.btn-tl-hotel.booking:hover {
+  background: #00224F;
+  transform: translateY(-1px);
+}
+.btn-tl-hotel.airbnb {
+  background: #FF5A5F;
+  color: #FFF;
+}
+.btn-tl-hotel.airbnb:hover {
+  background: #E03E42;
+  transform: translateY(-1px);
+}
+
+
 

@@ -243,13 +243,13 @@ function toggleLocationTracking() {
 const COMPLETE = [
 {
   id:'special_tour', name:'Avrupa Büyük Tur', icon:'🌟',
-  tag:'Balkanlar · Orta Avrupa · Hollanda · İsviçre · İtalya',
-  km:9500,
+  tag:'Bulgaristan · Romanya · Macaristan · Orta Avrupa · Hollanda · İsviçre · İtalya',
+  km:9460,
   tolls:[
-    {n:'TR HGS',v:16},{n:'BG e-Vinyeti',v:8},{n:'RS Otoyol',v:15},
-    {n:'HU e-Matrica',v:18},{n:'SK e-Známka',v:16},{n:'AT Vinyeti',v:11},
-    {n:'CZ e-Známka',v:16},{n:'CH Vinyeti',v:43},{n:'FR Péage',v:50},
-    {n:'IT Autostrada',v:80}
+    {n:'TR HGS',v:16},{n:'BG e-Vinyeti',v:8},{n:'RO e-Rovinieta',v:7},
+    {n:'Vidin-Calafat Köprüsü',v:6},{n:'HU e-Matrica',v:18},{n:'SK e-Známka',v:16},
+    {n:'AT Vinyeti',v:11},{n:'CZ e-Známka',v:16},{n:'CH Vinyeti',v:43},
+    {n:'FR Péage',v:50},{n:'IT Autostrada',v:80}
   ],
   stops:[
     {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'start',day:0,n:0,dk:970,dt:'~10 saat',
@@ -267,22 +267,17 @@ const COMPLETE = [
      halal:'Banya Başı Camii civarında Türk restoranları yoğun. Zhenski Pazar çevresinde dönerci ve kebapçılar. Al Safa helal süpermarket mevcut.',
      accom:'Şehir merkezinde apart otel €40-55/gece. Vitosha Bulvarı yürüme mesafesinde tercih edin. Booking.com\'dan aile odası arayın.',
      tips:[{t:'Merkez Cami civarı helal restoran bölgesi',c:'good'},{t:'Vitosha Bulvarı akşam yürüyüşü harika',c:'good'},{t:'BGN para birimi, €1≈2 BGN',c:'info'}]},
-    {c:'Niş',co:'RS',la:43.32,lo:21.89,t:'transit',day:1,n:0,dk:240,dt:'~2.5 saat',
-     desc:'Sırbistan\'a giriş. Niş Kalesi (Osmanlı yapısı), Çele Kula (Kafatası Kulesi) tarih meraklıları için ilginç. Şehir merkezi kompakt ve yürünebilir.',
-     halal:'Boşnak restoranlarında ızgara eti helal (sığır/kuzu). Ćevapi ve pljeskavica güvenli. \"Svinjsko\" domuz demek — kaçının!',
-     tips:[{t:'RS Schengen DEĞİL, sınırda ayrı kontrol',c:'info'},{t:'Ortalama Hız Kontrolü: Gişeler arasındaki seyahat sürenizden ortalama hızınız hesaplanır, sınır aşımında doğrudan ceza kesilir!',c:'warn'},{t:'RSD veya EUR nakit bulundurun',c:'warn'},{t:'Niş Kalesi çocuklarla gezmeye uygun',c:'good'}]},
-    {c:'Belgrad',co:'RS',la:44.79,lo:20.45,t:'overnight',day:1,n:1,dk:90,dt:'~1.5 saat',
-     desc:'2. GECE. Kalemegdan Kalesi (Tuna ve Sava buluşması muhteşem manzara), Knez Mihailova yürüyüş caddesi, Ada Ciganlija gölü (çocuklar için plaj ve bisiklet).',
-     halal:'Boşnak restoranlarında ızgara et helal (sığır/kuzu). Ćevapi ve pljeskavica güvenli. Dorćol ve Stari Grad\'da Boşnak lokantaları. \"Svinjsko\" domuz — kaçının!',
-     accom:'Stari Grad veya Vračar bölgesinde apart otel. €50-65/gece. Airbnb çok uygun fiyatlı.',
-     tips:[{t:'Ortalama Hız Kontrolü: Gişeler arasındaki seyahat sürenizden ortalama hızınız hesaplanır, sınır aşımında doğrudan ceza kesilir!',c:'warn'},{t:'Ada Ciganlija çocuklar için süper plaj',c:'good'},{t:'Kalemegdan gün batımı muhteşem',c:'good'},{t:'RSD veya EUR nakit kullanılır',c:'info'}]},
-    {c:'Novi Sad',co:'RS',la:45.26,lo:19.83,t:'transit',day:2,n:0,dk:130,dt:'~1.5 saat',
-     desc:'Sırbistan\'ın 2. büyük şehri. Petrovaradin Kalesi (\"Tuna üzerindeki Cebelitarık\") müthiş panorama. Tarihi şehir merkezi ve Dunavska caddesinde kahve molası.',
-     halal:'Ćevapi ve pljeskavica helal. Liman (Liman) bölgesinde Boşnak restoranlar mevcut.',
-     tips:[{t:'Petrovaradin Kalesi manzarası kaçırılmaz',c:'good'},{t:'Kısa ama etkili mola noktası',c:'info'}]},
-    {c:'Segedin',co:'HU',la:46.25,lo:20.14,t:'transit',day:2,n:0,dk:90,dt:'~1 saat',
-     desc:'Macaristan sınırı geçişi. Tisza nehri kıyısında güzel bir üniversite şehri. Dóm Meydanı ve Votive Kilisesi etkileyici.',
-     tips:[{t:'Macaristan girişinde e-Matrica ZORUNLU',c:'warn'},{t:'HUF para birimi, €1≈400 HUF',c:'info'},{t:'Sınır geçişi genelde hızlı',c:'good'}]},
+    {c:'Craiova',co:'RO',la:44.33,lo:23.79,t:'transit',day:1,n:0,dk:260,dt:'~4.5 saat',
+     desc:'Romanya sınırına giriş. Vidin-Calafat Köprüsü üzerinden geçiş yapılır. Craiova şehir merkezinde kısa bir dinlenme molası.',
+     tips:[{t:'Vidin-Calafat Köprüsü geçiş ücreti ~6€',c:'warn'},{t:'RO vinyeti (Rovinieta) online alınmalıdır',c:'warn'},{t:'Romen leyi (RON) kullanılır',c:'info'}]},
+    {c:'Timișoara',co:'RO',la:45.75,lo:21.23,t:'overnight',day:1,n:1,dk:240,dt:'~4 saat',
+     desc:'2. GECE. Timișoara (Temeşvar). Muhteşem meydanları (Victoria, Libertatii, Unirii) ve nehir kıyısı parkları ile Romanya\'nın en güzel tarihi şehirlerindendir.',
+     halal:'Türk döner ve kebap restoranları mevcuttur. Ailece akşam yemeği için uygundur.',
+     accom:'Merkez meydanlar civarında apart otel veya pension tercih edin. €40-55/gece.',
+     tips:[{t:'Timişoara meydanları trafiğe kapalıdır ve yürüyerek kolayca gezilir',c:'good'},{t:'Bega kanalı kıyısında yürüyüş yapın',c:'good'},{t:'RON para birimi, €1≈5 RON',c:'info'}]},
+    {c:'Segedin',co:'HU',la:46.25,lo:20.14,t:'transit',day:2,n:0,dk:120,dt:'~1.5 saat',
+     desc:'Romanya-Macaristan sınırı (Nădlac). Sınır geçişi sonrası Tisza nehri kıyısındaki güzel üniversite şehri Szeged\'e varış.',
+     tips:[{t:'Macaristan otoyolları için e-Matrica sınır öncesi ZORUNLU',c:'warn'},{t:'HUF para birimi, €1≈400 HUF',c:'info'},{t:'Cenad veya Nădlac sınır kapıları kullanılır',c:'info'}]},
     {c:'Keçkemet',co:'HU',la:46.90,lo:19.69,t:'transit',day:2,n:0,dk:90,dt:'~1 saat',
      desc:'Büyük Macar Ovası (Puszta) ortasında tarihi şehir. Cifra Sarayı (Art Nouveau başyapıtı), Katona József Meydanı. Barackpálinka (kayısı likörü) meşhur.',
      tips:[{t:'Cifra Sarayı fotoğraf için harika',c:'good'},{t:'Otoyol molasında Macar langos deneyin',c:'good'}]},
@@ -427,11 +422,12 @@ const COMPLETE = [
 const OUTBOUND = [
 {
   id:'balkan', name:'Balkan Klasik + Prag', icon:'🏰',
-  tag:'Plovdiv · Belgrad · Budapeşte · Prag · Frankfurt',
-  km:4145,
+  tag:'Plovdiv · Timișoara · Budapeşte · Viyana · Prag · Frankfurt',
+  km:4460,
   tolls:[
     {n:'TR HGS (Niğde-KMO-Kapıkule)',v:16},{n:'BG e-Vinyeti (haftalık)',v:8},
-    {n:'RS Otoyol Gişeleri',v:15},{n:'HU e-Matrica (10 gün)',v:18},
+    {n:'RO e-Rovinieta (30 gün)',v:7},{n:'Vidin-Calafat Köprüsü',v:6},
+    {n:'HU e-Matrica (10 gün)',v:18},{n:'AT Vinyeti (10 gün)',v:11},
     {n:'SK e-Známka (10 gün)',v:16},{n:'CZ e-Známka (10 gün)',v:16}
   ],
   stops:[
@@ -439,25 +435,29 @@ const OUTBOUND = [
      desc:'00:00 hareket. Ankara-Niğde Otoyolu → Ankara Çevre → Bolu → KMO → Edirne → Kapıkule Gümrük. Türkiye içinde duraklama yapılmaksızın doğrudan sınır kapısına geçiş yapılacaktır.',
      tips:[{t:'HGS bakiyesini kontrol edin',c:'warn'},{t:'TR\'de full depo — en ucuz yakıt',c:'good'},{t:'Kapıkule öncesi Edirne bypass edilir',c:'info'}]},
     {c:'Kapıkule Sınır',co:'TR',la:41.68,lo:26.56,t:'border',day:0,n:0,dk:150,dt:'~1.5 saat',
-     desc:'~15:00 varış. Pasaport, ehliyet, ruhsat, green card, vize, çocuk belgeleri hazır tutun.',
+     desc:'~15:00 varış. Pasaport, ehliyet, ruhsat, green card, vize, child belgeleri hazır tutun.',
      tips:[{t:'Yaz aylarında 1-3 saat bekleme',c:'warn'},{t:'AB EES biyometrik kontrol',c:'warn'},{t:'BG vinyetini bgtoll.bg\'den alın',c:'info'}]},
     {c:'Plovdiv',co:'BG',la:42.15,lo:24.75,t:'overnight',day:0,n:1,dk:390,dt:'~4 saat',
      desc:'İLK GECE. Sınırdan ~2.5 saat. Avrupa Kültür Başkenti — Eski Şehir, Roma Tiyatrosu, Kapana bölgesi harika.',
      halal:'Eski şehir civarında Türk lokantaları mevcut. Kebap ve pide kolayca bulunur. Müslüman Türk nüfusu sayesinde helal et bulmak kolay. Marketlerde \'Халал\' etiketli ürünler var.',
      accom:'Booking.com\'dan "aile odası" arayın. Şehir merkezinde €40-55/gece. Çocuklu aileler için apart otel ideal.',
      tips:[{t:'Şehir merkezi yürüme mesafesinde otel',c:'good'},{t:'Akşam yemeği ~€25-35/aile',c:'good'},{t:'BGN para birimi, €1≈2 BGN',c:'info'}]},
-    {c:'Belgrad',co:'RS',la:44.79,lo:20.45,t:'overnight',day:1,n:1,dk:375,dt:'~4 saat',
-     desc:'2. GECE. Sofya üzerinden Niş → Belgrad. Kalemegdan Kalesi, Knez Mihailova, Ada Ciganlija gölü (çocuklar için plaj).',
-     halal:'Boşnak restoranlarında ızgara et genelde helal (sığır/kuzu). Ćevapi ve pljeskavica güvenli. Dorćol ve Stari Grad\'da Boşnak lokantaları. "Svinjsko" domuz demek — kaçının!',
-     accom:'Stari Grad veya Vračar bölgesinde apart otel. €50-65/gece. Airbnb çok uygun.',
-     tips:[{t:'Ortalama Hız Kontrolü: Gişeler arasındaki seyahat sürenizden ortalama hızınız hesaplanır, sınır aşımında doğrudan ceza kesilir!',c:'warn'},{t:'Sırbistan Schengen DEĞİL, ayrı vize yok',c:'info'},{t:'RSD veya EUR nakit bulundurun',c:'warn'},{t:'Ada Ciganlija çocuklar için süper',c:'good'}]},
-    {c:'Budapeşte',co:'HU',la:47.50,lo:19.04,t:'sightseeing',day:2,n:2,dk:530,dt:'~5.5 saat',
-     desc:'3-4. GECE. Tuna kenarı, Parlamento, Széchenyi Termal (çocuklar girebilir), Buda Kalesi, Büyük Pazar.',
-     halal:'Kerepesi út civarında Türk restoranları ve dönerci. Istanbul Restaurant, Turkish Bistro. Langos helal. Büyük Pazar\'da taze meyve/sebze. HUF para birimi.',
-     accom:'Pest tarafı daha uygun. Airbnb ile 2 odalı daire €65-80/gece. Termal yakınında otel çocuklara uygun.',
-     tips:[{t:'e-Matrica\'yı ÖNCEDEN alın!',c:'warn'},{t:'Széchenyi termal çocuklarla harika',c:'good'},{t:'Tram 2 Tuna kıyısı manzara turu',c:'good'},{t:'€1 ≈ 400 HUF',c:'info'}]},
-    {c:'Prag',co:'CZ',la:50.08,lo:14.44,t:'sightseeing',day:4,n:2,dk:500,dt:'~5 saat',
-     desc:'5-6. GECE. ⭐ PRAG! Bratislava üzerinden (SK vinyeti gerekli). Karlov Köprüsü, Prag Kalesi, Astronomik Saat, Petřín teleferik.',
+    {c:'Timișoara',co:'RO',la:45.75,lo:21.23,t:'overnight',day:1,n:1,dk:520,dt:'~7.5 saat',
+     desc:'2. GECE. Plovdiv\'den Vidin-Calafat Köprüsü üzerinden Romanya\'ya geçiş ve Timișoara\'ya (Temeşvar) varış. Tarihi meydanları ve nehir kıyısı yolları ile şirin bir dinlenme noktası.',
+     halal:'Türk lokantaları mevcuttur. Döner ve kebap çeşitleri kolayca bulunabilir.',
+     accom:'Merkez meydanlar civarında apart otel veya pension tercih edin. €40-55/gece.',
+     tips:[{t:'Vidin-Calafat Köprüsü geçiş ücreti ~6€',c:'warn'},{t:'RO vinyeti (Rovinieta) zorunlu',c:'warn'},{t:'Bega kanalı kıyısında yürüyüş yapın',c:'good'},{t:'Uzun sürüş günü, sabah erken çıkılması önerilir',c:'info'}]},
+    {c:'Budapeşte',co:'HU',la:47.50,lo:19.04,t:'overnight',day:2,n:2,dk:310,dt:'~3.5 saat',
+     desc:'3-4. GECE. Timișoara\'dan hareket. Nădlac sınır kapısı üzerinden Macaristan\'a geçiş ve Budapeşte\'ye varış. Tuna kenarı, Parlamento, Széchenyi Termal.',
+     halal:'Kerepesi út civarında Türk restoranları ve dönerci. Istanbul Restaurant. Langos helal. HUF para birimi.',
+     accom:'Pest tarafı daha uygun. Airbnb ile 2 odalı daire €65-80/gece.',
+     tips:[{t:'e-Matrica\'yı sınır öncesi online alın!',c:'warn'},{t:'Széchenyi termal çocuklarla harika',c:'good'},{t:'Nădlac sınır kapısında yoğunluk olabilir',c:'info'},{t:'€1 ≈ 400 HUF',c:'info'}]},
+    {c:'Viyana',co:'AT',la:48.21,lo:16.37,t:'transit',day:4,n:0,dk:240,dt:'~2.5 saat',
+     desc:'Budapeşte\'den hareket. Avusturya sınırını geçerek Viyana\'da kısa bir mola. Prater lunapark veya Stephansdom Katedrali ziyareti.',
+     halal:'Naschmarkt\'ta Türk/Arap helal yiyecek tezgahları mevcuttur.',
+     tips:[{t:'AT vinyeti zorunlu (asfinag.at)',c:'warn'},{t:'Prater lunapark çocuklar için harika',c:'good'},{t:'EUR kullanılır',c:'info'}]},
+    {c:'Prag',co:'CZ',la:50.08,lo:14.44,t:'sightseeing',day:4,n:2,dk:330,dt:'~4 saat',
+     desc:'5-6. GECE. Viyana\'dan Çekya\'ya geçiş. Karlov Köprüsü, Prag Kalesi, Astronomik Saat, Petřín teleferik.',
      halal:'Kebapçılar Wenceslas Meydanı ve Můstek civarında yaygın. Trdelník (baca böreği) helal. "Vepřové" domuz demek — dikkat! Balık ve sebze güvenli. CZK para birimi.',
      accom:'Staré Město veya Vinohrady bölgesi. Apart otel €65-80/gece. Batı Avrupa\'nın yarı fiyatına lüks kalabilirsiniz.',
      tips:[{t:'Mavi park bölgelerine park etmek yasaktır (Araç çekilir + yüksek para cezası!)',c:'warn'},{t:'SK e-Známka zorunlu (Budapeşte→Bratislava)',c:'warn'},{t:'CZ e-Známka zorunlu',c:'warn'},{t:'Petřín teleferik + ayna labirenti çocuklara',c:'good'},{t:'€1 ≈ 25 CZK',c:'info'}]},
@@ -475,12 +475,13 @@ const OUTBOUND = [
 },
 {
   id:'adriyatik', name:'Hırvatistan + Alpler', icon:'🏔️',
-  tag:'Sofya · Belgrad · Zagreb · Ljubljana · Münih',
-  km:4050,
+  tag:'Sofya · Timișoara · Budapeşte · Viyana · Zagreb · Ljubljana · Münih',
+  km:4010,
   tolls:[
-    {n:'TR HGS',v:16},{n:'BG e-Vinyeti',v:8},{n:'RS Otoyol',v:15},
-    {n:'HR Vinyeti (10 gün)',v:8},{n:'SI e-Vinyeti (haftalık)',v:16},
-    {n:'AT Vinyeti (10 gün)',v:11}
+    {n:'TR HGS',v:16},{n:'BG e-Vinyeti',v:8},{n:'RO e-Rovinieta (30 gün)',v:7},
+    {n:'Vidin-Calafat Köprüsü',v:6},{n:'HU e-Matrica (10 gün)',v:18},
+    {n:'AT Vinyeti (10 gün)',v:11},{n:'HR Otoyol Gişeleri',v:15},
+    {n:'SI e-Vinyeti (haftalık)',v:16}
   ],
   stops:[
     {c:'Konya',co:'TR',la:37.87,lo:32.49,t:'start',day:0,n:0,dk:970,dt:'~10 saat',
@@ -494,27 +495,36 @@ const OUTBOUND = [
      halal:'Banya Başı Camii civarında Türk restoranları yoğun. Zhenski Pazar çevresinde dönerci ve kebapçılar. Al Safa helal süpermarket.',
      accom:'Şehir merkezinde apart otel €40-55/gece. Vitosha Bulvarı yürüme mesafesinde tercih edin.',
      tips:[{t:'Merkez Cami civarı helal restoran bölgesi',c:'good'},{t:'BGN para birimi',c:'info'}]},
-    {c:'Belgrad',co:'RS',la:44.79,lo:20.45,t:'overnight',day:1,n:1,dk:390,dt:'~4 saat',
-     desc:'2. GECE. Niş üzerinden Belgrad. Kalemegdan, Ada Ciganlija.',
-     halal:'Boşnak ızgara eti helal. Ćevapi güvenli. "Svinjsko" = domuz, kaçının!',
-     accom:'Apart otel €50-65/gece.',
-     tips:[{t:'Ortalama Hız Kontrolü: Gişeler arasındaki seyahat sürenizden ortalama hızınız hesaplanır, sınır aşımında doğrudan ceza kesilir!',c:'warn'},{t:'RS Schengen dışı',c:'info'},{t:'EUR veya RSD nakit',c:'warn'}]},
-    {c:'Zagreb',co:'HR',la:45.81,lo:15.98,t:'overnight',day:2,n:1,dk:140,dt:'~2 saat',
-     desc:'3. GECE. Hırvatistan başkenti. Yukarı Şehir, Dolac Pazarı, Jelačić Meydanı.',
-     halal:'Tkalčićeva caddesinde birkaç Türk/Boşnak restoranı. Dolac pazarında taze ürünler. Döner dükkanları merkez civarında. Hırvatistan\'da EUR kullanılır.',
+    {c:'Timișoara',co:'RO',la:45.75,lo:21.23,t:'overnight',day:1,n:1,dk:390,dt:'~6.5 saat',
+     desc:'2. GECE. Sofya\'dan Vidin-Calafat Köprüsü üzerinden Romanya\'ya geçiş ve Timișoara\'ya varış. Tarihi meydanları ve yemyeşil parkları ile dinlendirici bir akşam.',
+     halal:'Türk restoranları mevcuttur. Döner ve kebap çeşitleri kolayca bulunabilir.',
+     accom:'Merkez meydanlar civarında apart otel veya pension tercih edin. €40-55/gece.',
+     tips:[{t:'Calafat Köprüsü geçiş ücreti ~6€',c:'warn'},{t:'RO vinyeti zorunlu',c:'warn'},{t:'Romen leyi (RON) kullanılır',c:'info'}]},
+    {c:'Budapeşte',co:'HU',la:47.50,lo:19.04,t:'overnight',day:2,n:1,dk:310,dt:'~3.5 saat',
+     desc:'3. GECE. Timișoara\'dan hareket. Nădlac sınır kapısından geçerek Macaristan\'ın incisi Budapeşte\'ye varış. Parlamento binası, Buda Kalesi, Tuna nehri.',
+     halal:'Kerepesi út Türk restoranları. Langos helal. HUF para birimi.',
+     accom:'Pest tarafı €65-80/gece.',
+     tips:[{t:'e-Matrica sınır öncesi ZORUNLU',c:'warn'},{t:'HUF para birimi, €1≈400 HUF',c:'info'}]},
+    {c:'Viyana',co:'AT',la:48.21,lo:16.37,t:'transit',day:3,n:0,dk:240,dt:'~2.5 saat',
+     desc:'Budapeşte\'den hareket. Viyana\'da kısa bir mola, yemek ve dinlenme. Prater lunapark veya Stephansdom katedrali ziyareti.',
+     halal:'Naschmarkt\'ta Türk/Arap helal yiyecek tezgahları mevcuttur.',
+     tips:[{t:'AT vinyeti zorunlu (asfinag.at)',c:'warn'},{t:'EUR kullanılır',c:'info'}]},
+    {c:'Zagreb',co:'HR',la:45.81,lo:15.98,t:'overnight',day:3,n:1,dk:370,dt:'~4 saat',
+     desc:'4. GECE. Viyana\'dan güneye geçerek Hırvatistan başkenti Zagreb\'e varış. Yukarı Şehir, Jelačić Meydanı.',
+     halal:'Tkalčićeva caddesinde birkaç Türk/Boşnak restoranı. Dolac pazarında taze ürünler.',
      accom:'Donji Grad (aşağı şehir) bölgesi. €60-75/gece.',
-     tips:[{t:'HR 2023\'ten beri EUR kullanıyor',c:'info'},{t:'Dolac pazarı taze meyve/sebze',c:'good'}]},
-    {c:'Ljubljana',co:'SI',la:46.06,lo:14.51,t:'overnight',day:3,n:1,dk:370,dt:'~4 saat',
-     desc:'4. GECE. Masal gibi küçük başkent. Üçlü Köprü, Ljubljana Kalesi (teleferik), Preseren Meydanı.',
+     tips:[{t:'Hırvatistan otoyolları gişelidir ve EUR kullanılır',c:'info'}]},
+    {c:'Ljubljana',co:'SI',la:46.06,lo:14.51,t:'overnight',day:4,n:1,dk:140,dt:'~2 saat',
+     desc:'5. GECE. Masal gibi küçük başkent. Üçlü Köprü, Ljubljana Kalesi (teleferik), Preseren Meydanı.',
      halal:'Kebap dükkanları Prešeren Meydanı civarında. Balkan mutfağı restoranları helal seçenekler sunar. Helal et sınırlı, balık ve sebze tercih edin.',
      accom:'Merkez çok küçük, her yer yürüme mesafesinde. €65-80/gece.',
      tips:[{t:'SI e-Vinyeti zorunlu',c:'warn'},{t:'Kale teleferik çocuklara harika',c:'good'},{t:'EUR kullanılır',c:'info'}]},
-    {c:'Münih',co:'DE',la:48.14,lo:11.58,t:'sightseeing',day:4,n:2,dk:830,dt:'~8.5 saat',
-     desc:'5-6. GECE. Salzburg üzerinden. Marienplatz, Englischer Garten (sörf dalgası!), BMW Welt (ücretsiz).',
+    {c:'Münih',co:'DE',la:48.14,lo:11.58,t:'overnight',day:5,n:2,dk:370,dt:'~4 saat',
+     desc:'6-7. GECE. Karavanke tüneli ve Salzburg üzerinden Münih\'e varış. Englischer Garten, Marienplatz, BMW Welt.',
      halal:'Hauptbahnhof civarında döner ve kebap. Schillerstraße Türk lokantaları. Adan Market helal kasap. Viktualienmarkt\'ta meyve/sebze.',
      accom:'Hauptbahnhof civarı pratik. €100-120/gece. Motel One uygun.',
-     tips:[{t:'Otobanda Yakıt Bitmesi Yasağı: Otoyolda yakıtın bitmesi önlenebilir bir durma sebebi sayılır ve para cezası vardır (30-70€ ceza)',c:'warn'},{t:'Umweltplakette (Yeşil Çevre Pulu) zorunludur: Bulundurmamak 100€ ceza!',c:'warn'},{t:'AT vinyeti Salzburg geçişi için gerekli',c:'warn'},{t:'Englischer Garten çocuklarla muhteşem',c:'good'},{t:'BMW Welt ücretsiz giriş',c:'good'}]},
-    {c:'Rotterdam',co:'NL',la:51.92,lo:4.48,t:'destination',day:6,n:10,dk:0,dt:'~8 saat',
+     tips:[{t:'Otobanda Yakıt Bitmesi Yasağı: Otoyolda yakıtın bitmesi önlenebilir bir durma sebebi sayılır ve para cezası vardır (30-70€ ceza)',c:'warn'},{t:'Umweltplakette (Yeşil Çevre Pulu) zorunludur: Bulundurmamak 100€ ceza!',c:'warn'},{t:'Englischer Garten çocuklarla muhteşem',c:'good'},{t:'BMW Welt ücretsiz giriş',c:'good'}]},
+    {c:'Rotterdam',co:'NL',la:51.92,lo:4.48,t:'destination',day:7,n:10,dk:830,dt:'~8.5 saat',
      desc:'🎯 VARIŞ! Stuttgart → Frankfurt → Köln üzerinden Rotterdam. 10 gece.',
      halal:'West-Kruiskade helal cennet. Tanger Markt, Istanbul Market. Endonezya mutfağı helal.',
      accom:'Airbnb 2 oda €90-130/gece.',
@@ -742,7 +752,7 @@ const RDAM_INFO = {
 /* ═══════ İPUÇLARI ═══════ */
 const TIPS = [
   {icon:'fas fa-sim-card', bg:'var(--teal)', title:'SIM Kart & İnternet',
-   text:'Türkiye\'den çıkmadan Vodafone/Turkcell roaming paketlerini kontrol edin (pahalı olabilir). En ekonomik: AB\'ye girince eSIM kullanın — Airalo veya Holafly uygulamaları €10-15 arası 30 gün AB geneli data. Sırbistan Schengen dışı, ayrı data paketi gerekebilir.'},
+   text:'Türkiye\'den çıkmadan Vodafone/Turkcell roaming paketlerini kontrol edin (pahalı olabilir). En ekonomik: AB\'ye girince eSIM kullanın — Airalo veya Holafly uygulamaları €10-15 arası 30 gün AB geneli data.'},
   {icon:'fas fa-road', bg:'var(--accent)', title:'Vinyetler & Otoyol Geçişleri',
    text:'TÜM vinyetleri ÖNCEDEN online alın: Bulgaristan (bgtoll.bg), Macaristan (ematrica.nemzetiutdij.hu), Slovakya (eznamka.sk), Çekya (edalnice.cz), Avusturya (asfinag.at — 18 gün bekleme süresi var!), Romanya (rovinieta.ro). Almanya/Hollanda ücretsiz. İtalya/Fransa/Yunanistan gişeli.'},
   {icon:'fas fa-passport', bg:'var(--red)', title:'Vize & Belgeler (6 Kişi)',
@@ -750,7 +760,7 @@ const TIPS = [
   {icon:'fas fa-ship', bg:'#5B86E5', title:'İtalya → Yunanistan Feribotu',
    text:'Ancona→İgoumenitsa: ~16-20 saat gece feribotu. Bari→İgoumenitsa: ~12 saat. directferries.com veya anek.gr\'den bilet. Araç + 6 kişi + 2 kabin: ~€500-700. YAZ SEZONU erken ayırtın! Minoan Lines, Anek Lines, Superfast tercih edin.'},
   {icon:'fas fa-utensils', bg:'var(--green)', title:'Helal Yemek Stratejisi',
-   text:'Almanya, Hollanda, Fransa = helal cennet (Türk/Arap nüfusu yoğun). Balkanlar = Boşnak ızgara eti genelde helal. İtalya = pizza + deniz ürünleri güvenli. Yunanistan = gyros\'ta DOMUZ var, tavuk isteyin! Her yerde: market + soğutucu çanta = en ucuz. Vito\'ya soğutucu çanta koyun.'},
+   text:'Almanya, Hollanda, Fransa = helal cennet (Türk/Arap nüfusu yoğun). Bulgaristan/Romanya = helal et bulmak biraz zor olabilir, Türk restoranlarını tercih edin. İtalya = pizza + deniz ürünleri güvenli. Yunanistan = gyros\'ta DOMUZ var, tavuk isteyin! Her yerde: market + soğutucu çanta = en ucuz. Vito\'ya soğutucu çanta koyun.'},
   {icon:'fas fa-gas-pump', bg:'var(--amber)', title:'Yakıt Stratejisi',
    text:'En ucuz: Türkiye (€1.25), Çekya (€1.55), Lüksemburg (€1.55). En pahalı: Hollanda (€2.30), İsviçre (€2.10). Sınır geçmeden MUTLAKA doldurun! Vito deposu ~75L, full depoyla ~900 km. Almanya\'dan Hollanda\'ya geçmeden son istasyonda durun.'},
   {icon:'fas fa-child', bg:'var(--accent)', title:'Çocuklu Seyahat',
@@ -758,13 +768,13 @@ const TIPS = [
   {icon:'fas fa-car', bg:'var(--muted)', title:'Araç Hazırlığı (Vito)',
    text:'Kontrol: motor yağı, antifriz, lastik basıncı, fren, farlar. Yanınızda: stepne, kriko, 6 reflektör yelek (AB ZORUNLU), yangın söndürücü, ilk yardım çantası, çekme halatı, yedek ampul seti. Avusturya\'da floresan yelek zorunlu.'},
   {icon:'fas fa-coins', bg:'var(--teal)', title:'Para Birimleri',
-   text:'EUR: Almanya, Hollanda, Avusturya, İtalya, Fransa, Yunanistan, Hırvatistan, Slovenya, Lüksemburg. Diğer: BGN (€1≈2), RSD (€1≈117 nakit!), HUF (€1≈400), CZK (€1≈25), RON (€1≈5), CHF (€1≈0.95). Sırbistan\'da EUR nakit de kabul edilir.'},
+   text:'EUR: Almanya, Hollanda, Avusturya, İtalya, Fransa, Yunanistan, Hırvatistan, Slovenya, Lüksemburg. Diğer: BGN (€1≈2), HUF (€1≈400), CZK (€1≈25), RON (€1≈5), CHF (€1≈0.95).'},
   {icon:'fas fa-tachometer-alt', bg:'var(--red)', title:'Hız Sınırları (Otoyol)',
-   text:'TR:120 · BG:140 · RS:130 · HR:130 · SI:130 · HU:130 · AT:130 · CZ:130 · DE:sınırsız (önerilen 130) · NL:100(!) · IT:130 · FR:130 · CH:120 · RO:130 · GR:130. Hollanda\'da 100 km/h aşımı ciddi ceza!'},
+   text:'TR:120 · BG:140 · HR:130 · SI:130 · HU:130 · AT:130 · CZ:130 · DE:sınırsız (önerilen 130) · NL:100(!) · IT:130 · FR:130 · CH:120 · RO:130 · GR:130. Hollanda\'da 100 km/h aşımı ciddi ceza!'},
   {icon:'fas fa-mosque', bg:'var(--accent)', title:'Namaz & Camiler',
-   text:'Muslim Pro veya HalalTrip uygulaması indirin — kıble, namaz vakitleri, yakın cami gösterir. Önemli camiler: Sofya Banya Başı, Belgrad Bayraklı, Budapeşte, Frankfurt Merkez, Rotterdam Mevlana, Paris Büyük Camii, Roma Büyük Camii, Viyana İslam Merkezi.'},
+   text:'Muslim Pro veya HalalTrip uygulaması indirin — kıble, namaz vakitleri, yakın cami gösterir. Önemli camiler: Sofya Banya Başı, Budapeşte, Frankfurt Merkez, Rotterdam Mevlana, Paris Büyük Camii, Roma Büyük Camii, Viyana İslam Merkezi.'},
   {icon:'fas fa-phone', bg:'var(--green)', title:'Acil Durumlar',
-   text:'AB geneli acil numara: 112 (polis, ambulans, itfaiye). Sırbistan: 112/192/194. TC Dışişleri: +90 312 292 1000. En yakın konsolosluk numaralarını telefonunuza kaydedin. Seyahat sigortası poliçe numarasını yanınızda taşıyın.'}
+   text:'AB geneli acil numara: 112 (polis, ambulans, itfaiye). TC Dışişleri: +90 312 292 1000. En yakın konsolosluk numaralarını telefonunuza kaydedin. Seyahat sigortası poliçe numarasını yanınızda taşıyın.'}
 ];
 
 /* ═══════ VİNYET BİLGİLERİ ═══════ */
@@ -849,6 +859,234 @@ const VIGNETTE_INFO = {
     officialLabel: 'CNAIR Resmi Sitesine Git',
     costDesc: '30 Günlük: ~7 € (35 RON)',
     warning: 'Romanya sınırını geçmeden önce online olarak veya sınırdaki yetkili noktalardan alınabilir.'
+  }
+};
+
+/* ═══════ KONAKLAMA BİLGİLERİ ═══════ */
+const ACCOMMODATION_DATA = {
+  'Sofya': {
+    country: 'Bulgaristan', flag: '🇧🇬', area: 'Vitosha Bulvarı veya Şehir Merkezi',
+    hotels: [
+      { name: 'Sofia Place Hotel by Homing Group', type: 'Üç Yıldızlı Otel', rating: '8.8', price: '60 - 80 €', desc: 'Şehir merkezinde, aile odaları ve park yeri imkanı sunan şık butik otel.' },
+      { name: 'Central Point Apart-Hotel', type: 'Apart Otel', rating: '8.9', price: '50 - 70 €', desc: 'Mutfaklı ve geniş aile odaları sunan, Vitosha Bulvarı\'na yürüme mesafesinde apartlar.' },
+      { name: 'Grand Hotel Sofia', type: 'Lüks Otel', rating: '9.1', price: '120 - 150 €', desc: 'Büyük suit odalara sahip, 5 yıldızlı konfor ve özel güvenli otopark sunan lüks alternatif.' }
+    ]
+  },
+  'Timișoara': {
+    country: 'Romanya', flag: '🇷🇴', area: 'Eski Şehir (Unirii Meydanı) ve Bega Nehri Kıyısı',
+    hotels: [
+      { name: 'Old Town Hotel', type: 'Butik Otel', rating: '9.0', price: '55 - 75 €', desc: 'Tarihi meydanlara yürüme mesafesinde, geniş yataklı konforlu aile odaları.' },
+      { name: 'Mercure Timisoara', type: 'Modern Otel', rating: '9.2', price: '70 - 90 €', desc: 'Çevre dostu konsepti, harika kahvaltısı ve aile odaları ile yeni ve temiz bir otel.' },
+      { name: 'Central Park Apartment Timisoara', type: 'Geniş Apart', rating: '8.8', price: '45 - 65 €', desc: '6 kişilik grupların rahatlıkla sığabileceği, tam donanımlı mutfağa sahip modern daire.' }
+    ]
+  },
+  'Budapeşte': {
+    country: 'Macaristan', flag: '🇭🇺', area: 'Pest Tarafı (Yahudi Mahallesi / Merkez)',
+    hotels: [
+      { name: 'Roombach Hotel Budapest Center', type: 'Tasarım Oteli', rating: '8.9', price: '80 - 110 €', desc: 'Yahudi Mahallesi\'nin kalbinde, renkli ve modern dekora sahip aile dostu tesis.' },
+      { name: 'D50 Hotel & Apartments', type: 'Apart Otel', rating: '9.1', price: '75 - 105 €', desc: 'Sakin konumda, geniş bahçeli ve geniş 6 kişilik aile odaları olan popüler tesis.' },
+      { name: '7Seasons Apartments Budapest', type: 'Lüks Apart', rating: '9.2', price: '120 - 160 €', desc: '6 kişilik aileler için ideal, tam mutfaklı, 2-3 odalı konforlu şehir içi daireleri.' }
+    ]
+  },
+  'Viyana': {
+    country: 'Avusturya', flag: '🇦🇹', area: 'Favoriten veya Hauptbahnhof (Merkez İstasyon) Kıyısı',
+    hotels: [
+      { name: 'Motel One Wien-Hauptbahnhof', type: 'Tasarım Oteli', rating: '8.8', price: '110 - 140 €', desc: 'Tren istasyonunun hemen yanında, toplu taşıma ile merkeze 5 dk mesafede pratik otel.' },
+      { name: 'Adina Apartment Hotel Vienna Belvedere', type: 'Apart Otel', rating: '8.9', price: '130 - 170 €', desc: 'Kapalı havuz imkanı, mutfağı ve 6 kişilik geniş aile suitleri ile mükemmel seçim.' },
+      { name: 'JO&JOE Vienna', type: 'Modern/Gençlik Oteli', rating: '8.7', price: '90 - 120 €', desc: 'Eğlenceli iç tasarımı ve büyük gruplara uygun bütçe dostu oda seçenekleri sunan otel.' }
+    ]
+  },
+  'Prag': {
+    country: 'Çek Cumhuriyeti', flag: '🇨🇿', area: 'Staré Město (Eski Şehir) veya Vinohrady',
+    hotels: [
+      { name: 'Appia Hotel Residence', type: 'Tarihi Rezidans', rating: '9.3', price: '90 - 130 €', desc: 'Prag Kalesi altında, sessiz avlulu ve harika kahvaltılı geniş daire/suit otel.' },
+      { name: 'EA Apartments Mozart', type: 'Mutfaklı Apart', rating: '8.9', price: '80 - 110 €', desc: 'Karl Köprüsü\'ne 5 dakika yürüme mesafesinde, 6 kişilik geniş mutfaklı daireler.' },
+      { name: 'Charles Bridge Palace', type: 'Klasik Otel', rating: '8.6', price: '100 - 140 €', desc: 'Klasik tarzda dekore edilmiş, nehir manzaralı geniş aile odaları sunan tarihi otel.' }
+    ]
+  },
+  'Berlin': {
+    country: 'Almanya', flag: '🇩🇪', area: 'Mitte (Merkez) veya Kreuzberg Semti',
+    hotels: [
+      { name: 'Select Hotel Berlin Gendarmenmarkt', type: 'Modern Otel', rating: '8.6', price: '100 - 130 €', desc: 'Berlin\'in en güzel meydanlarından Gendarmenmarkt\'a yakın, sessiz ve konforlu.' },
+      { name: 'Adina Apartment Hotel Checkpoint Charlie', type: 'Apart Otel', rating: '8.9', price: '130 - 180 €', desc: 'Mutfak, çamaşır makinesi ve kapalı havuzuyla 6 kişilik aileler için eksiksiz konfor.' },
+      { name: 'A&O Berlin Mitte', type: 'Bütçe Dostu Aile Oteli', rating: '8.0', price: '60 - 90 €', desc: 'Büyük aile odaları, çocuk oyun alanları ve bütçeyi yormayan fiyatlarıyla öne çıkan otel.' }
+    ]
+  },
+  'Hamburg': {
+    country: 'Almanya', flag: '🇩🇪', area: 'Hauptbahnhof veya Hamburg-Mitte',
+    hotels: [
+      { name: 'Adina Apartment Hotel Hamburg Michel', type: 'Lüks Apart Otel', rating: '9.0', price: '130 - 180 €', desc: 'Liman ve Speicherstadt\'a yakın, tam donanımlı mutfak ve spa alanına sahip daireler.' },
+      { name: 'Motel One Hamburg-Alster', type: 'Tasarım Oteli', rating: '8.7', price: '100 - 130 €', desc: 'Alster gölüne yakın, modern tasarımlı ve güvenilir konfor sunan şık tesis.' },
+      { name: 'Super 8 by Wyndham Hamburg Mitte', type: 'Bütçe Dostu Otel', rating: '8.3', price: '80 - 110 €', desc: 'Metro istasyonuna yakın, temiz ve yeni, bütçe dostu aile odaları sunan otel.' }
+    ]
+  },
+  'Brüksel': {
+    country: 'Belçika', flag: '🇧🇪', area: 'Grand-Place (Merkez) veya Gare du Midi',
+    hotels: [
+      { name: 'Aparthotel Adagio Brussels Grand Place', type: 'Apart Otel', rating: '8.6', price: '110 - 150 €', desc: 'Tarihi merkeze 2 dakika mesafede, 6 kişilik mutfaklı geniş daire seçenekleri sunar.' },
+      { name: 'Motel One Brussels', type: 'Tasarım Oteli', rating: '8.8', price: '95 - 125 €', desc: 'Merkez parka yakın, modern tasarımlı ve sessiz arka bahçesi bulunan şık otel.' },
+      { name: 'Bedford Hotel & Congress Centre', type: 'Klasik Otel', rating: '8.1', price: '90 - 120 €', desc: 'Grand-Place\'a yürüme mesafesinde, geniş aile odaları sunan köklü ve güvenilir otel.' }
+    ]
+  },
+  'Paris': {
+    country: 'Fransa', flag: '🇫🇷', area: '10. / 11. Bölge veya Eyfel Kulesi Çevresi',
+    hotels: [
+      { name: 'Aparthotel Adagio Paris Centre Tour Eiffel', type: 'Apart Otel', rating: '8.2', price: '160 - 220 €', desc: 'Eyfel Kulesi manzaralı, 6 kişilik aileler için mutfaklı ve geniş salonlu lüks apartlar.' },
+      { name: 'Generator Paris', type: 'Tasarım/Bütçe Oteli', rating: '8.3', price: '90 - 130 €', desc: 'Canal Saint-Martin yakınında, 6 kişilik özel banyolu grup/aile odaları bulunan popüler tesis.' },
+      { name: 'Hotel Muguet', type: 'Butik Otel', rating: '8.9', price: '140 - 190 €', desc: 'Sakin bir sokakta, Eyfel kulesine adımlık mesafede, yüksek hizmet kalitesi sunan şirin otel.' }
+    ]
+  },
+  'Lyon': {
+    country: 'Fransa', flag: '🇫🇷', area: 'Presqu\'île (Yarımada) veya Part-Dieu',
+    hotels: [
+      { name: 'Aparthotel Adagio Lyon Patio Confluence', type: 'Apart Otel', rating: '8.5', price: '90 - 120 €', desc: 'Tramvay hattına yakın, mutfaklı ve çocuk oyun alanı sunan konforlu aile apartları.' },
+      { name: 'Hotel Carlton Lyon - MGallery', type: 'Tasarım Oteli', rating: '9.0', price: '140 - 180 €', desc: 'Yarımada merkezinde, tarihi dokuyu modernlikle harmanlayan lüks butik otel.' },
+      { name: 'B&B HOTEL Lyon Centre Gambetta', type: 'Bütçe Dostu Otel', rating: '8.3', price: '70 - 95 €', desc: 'Metro durağına yakın, temiz ve uygun fiyatlı aile odaları ile ideal transit durak.' }
+    ]
+  },
+  'Zürih': {
+    country: 'İsviçre', flag: '🇨🇭', area: 'Merkez İstasyon (Hauptbahnhof) veya Zürih West',
+    hotels: [
+      { name: 'Aparthotel Adagio Zurich City Center', type: 'Apart Otel', rating: '8.7', price: '180 - 240 €', desc: 'İsviçre standartlarında mutfaklı, temiz ve konforlu 6 kişilik aile daireleri.' },
+      { name: 'Motel One Zürich', type: 'Tasarım Oteli', rating: '8.9', price: '150 - 190 €', desc: 'Göl kenarı ve merkeze yakın, yüksek kaliteli hizmet ve şık çikolata temalı lobi bar.' },
+      { name: 'ibis Styles Zurich City Center', type: 'Modern Otel', rating: '8.2', price: '130 - 170 €', desc: 'İstasyona yürüme mesafesinde, özgün tasarımlı ve bütçe dostu aile odaları sunan tesis.' }
+    ]
+  },
+  'Milano': {
+    country: 'İtalya', flag: '🇮🇹', area: 'Merkez İstasyon (Stazione Centrale) veya Porta Venezia',
+    hotels: [
+      { name: 'Glam Hotel Milano', type: 'Tasarım Oteli', rating: '8.8', price: '110 - 150 €', desc: 'Merkez İstasyonun hemen karşısında, metro hatları ve havaalanı servislerinin dibinde mükemmel konum.' },
+      { name: 'Starhotels Anderson', type: 'Lüks Otel', rating: '8.9', price: '130 - 170 €', desc: 'Şık İtalyan tasarımı, çok geniş aile odaları ve kaliteli açık büfe kahvaltı.' },
+      { name: 'Mokinba Hotels King', type: 'Klasik Otel', rating: '8.4', price: '100 - 130 €', desc: 'Duomo Katedrali\'ne yürüme mesafesinde, sessiz ve güvenli bir sokakta yer alan otel.' }
+    ]
+  },
+  'Venedik': {
+    country: 'İtalya', flag: '🇮🇹', area: 'Mestre (Karadaki Ana İstasyon Çevresi) - Pratik ve Uygun',
+    hotels: [
+      { name: 'Hotel Plaza Venice', type: 'Merkez Otel', rating: '8.7', price: '90 - 120 €', desc: 'Mestre istasyonunun tam karşısında. Venedik adasına giden tren/otobüsler kapı önünden kalkar.' },
+      { name: 'Anda Venice Hostel', type: 'Tasarım Hostel', rating: '9.0', price: '70 - 100 €', desc: '6 kişilik özel banyolu odaları, mutfağı ve çok eğlenceli sosyal alanları olan modern tesis.' },
+      { name: 'Hotel Bisanzio', type: 'Tarihi Venedik Oteli', rating: '8.9', price: '150 - 200 €', desc: 'San Marco Meydanı\'na 5 dk mesafede, gerçek Venedik adasında kalmak isteyenler için tarihi otel.' }
+    ]
+  },
+  'Floransa': {
+    country: 'İtalya', flag: '🇮🇹', area: 'Santa Maria Novella veya San Lorenzo',
+    hotels: [
+      { name: 'c-hotels Ambasciatori', type: 'Modern Otel', rating: '8.8', price: '120 - 160 €', desc: 'İstasyonun hemen yanında, tarihi merkeze adımlık mesafede modern ve konforlu aile odaları.' },
+      { name: 'Palazzo Ricasoli Apartments', type: 'Tarihi Apart', rating: '8.3', price: '100 - 140 €', desc: 'Eski bir Floransa sarayında, yüksek tavanlı ve mutfaklı 6 kişilik geniş aile daireleri.' },
+      { name: 'Hotel Spadai', type: 'Butik Lüks Otel', rating: '9.5', price: '180 - 240 €', desc: 'Duomo\'ya 100m, üst düzey karşılama ikramları ve spa olanakları ile olağanüstü puanlı lüks otel.' }
+    ]
+  },
+  'Roma': {
+    country: 'İtalya', flag: '🇮🇹', area: 'Termini İstasyonu Çevresi veya Esquilino',
+    hotels: [
+      { name: 'Starhotels Metropole', type: 'Klasik Otel', rating: '8.8', price: '130 - 180 €', desc: 'Roma Opera Binası yakınında, mükemmel konfor ve geniş 6 kişilik aile odaları sunan lüks tesis.' },
+      { name: 'IQ Hotel Roma', type: 'Yenilikçi Otel', rating: '9.3', price: '140 - 190 €', desc: 'Self-servis çamaşırhanesi, child oyun alanı ve modern dizaynı ile aileler için 1 numara.' },
+      { name: 'Generator Rome', type: 'Tasarım Oteli', rating: '8.4', price: '85 - 120 €', desc: 'Termini\'ye yakın, 6 kişilik özel banyolu şık grup odaları sunan bütçe dostu otel.' }
+    ]
+  },
+  'Plovdiv': {
+    country: 'Bulgaristan', flag: '🇧🇬', area: 'Eski Şehir (Filibe) veya Merkez',
+    hotels: [
+      { name: 'Hotel Imperial Plovdiv, a member of Radisson Individuals', type: 'Zincir Otel', rating: '8.9', price: '60 - 80 €', desc: 'Büyük yeşil bahçesi, spa merkezi ve güvenli otoparkı ile çok rahat bir konaklama.' },
+      { name: 'Villa Flavia Heritage Hotel', type: 'Tarihi Butik', rating: '9.5', price: '70 - 95 €', desc: 'Roma hamamı kalıntılarının üzerinde yer alan, harika kahvaltılı ve yüksek puanlı butik otel.' },
+      { name: 'Alliance Hotel', type: 'Geniş Otel', rating: '8.5', price: '50 - 65 €', desc: 'Şehir merkezine yakın, geniş aile odaları ve ücretsiz otoparkı bulunan bütçe dostu seçenek.' }
+    ]
+  },
+  'Frankfurt': {
+    country: 'Almanya', flag: '🇩🇪', area: 'Main Nehri Kıyısı (Neue Oper) veya Innenstadt',
+    hotels: [
+      { name: 'Adina Apartment Hotel Frankfurt Neue Oper', type: 'Apart Otel', rating: '8.8', price: '110 - 150 €', desc: 'Nehir kıyısında, 6 kişilik geniş mutfaklı ve balkonlu aile daireleri.' },
+      { name: 'Motel One Frankfurt-Römer', type: 'Tasarım Oteli', rating: '8.9', price: '90 - 120 €', desc: 'Tarihi Römer meydanının hemen yanında, şık tasarımlı ve merkezi konumda sessiz otel.' },
+      { name: 'Premier Inn Frankfurt Messe', type: 'Bütçe Dostu Otel', rating: '8.4', price: '70 - 95 €', desc: 'Fuar alanına yakın, sessiz, temiz ve aile odaları oldukça geniş olan bütçe dostu otel.' }
+    ]
+  },
+  'Zagreb': {
+    country: 'Hırvatistan', flag: '🇭🇷', area: 'Lower Town (Aşağı Şehir) veya Şehir Merkezi',
+    hotels: [
+      { name: 'Sheraton Zagreb Hotel', type: 'Lüks Otel', rating: '8.8', price: '110 - 150 €', desc: 'Kapalı yüzme havuzu, çocuk dostu aktiviteleri ve geniş odaları ile merkezde lüks seçim.' },
+      { name: 'Metropolitan Apartments Zagreb', type: 'Modern Apart', rating: '9.1', price: '60 - 85 €', desc: 'Geniş mutfak ve salona sahip, 6 kişinin çok rahat konaklayabileceği modern yeni daireler.' },
+      { name: 'Hotel Jägerhorn', type: 'Tarihi Butik', rating: '9.4', price: '80 - 110 €', desc: 'Zagreb\'in en eski oteli. Şirin bir avlu içinde, sessiz, merkezi ve masalsı bir atmosfer.' }
+    ]
+  },
+  'Ljubljana': {
+    country: 'Slovenya', flag: '🇸🇮', area: 'Tromostovje (Üçlü Köprü) ve Ljubljana Nehri Çevresi',
+    hotels: [
+      { name: 'City Hotel Ljubljana', type: 'Merkez Otel', rating: '8.8', price: '90 - 125 €', desc: 'Tarihi merkeze 3 dk yürüme mesafesinde, bisiklet kiralama ve harika teras barı sunan otel.' },
+      { name: 'Boutique Hotel Astoria', type: 'Eko Butik', rating: '8.9', price: '100 - 130 €', desc: 'Sürdürülebilir turizm sertifikalı, sessiz konumda ve geniş aile odaları sunan modern tesis.' },
+      { name: 'Turn Hostel', type: 'Bütçe Dostu Tesis', rating: '8.7', price: '60 - 80 €', desc: 'Tam merkezde, 6 kişilik özel banyolu ve ranzalı temiz aile/grup odası seçenekleri.' }
+    ]
+  },
+  'Münih': {
+    country: 'Almanya', flag: '🇩🇪', area: 'Munich East (Ostbahnhof) veya Sendlinger Tor',
+    hotels: [
+      { name: 'Adina Apartment Hotel Munich', type: 'Modern Apart Otel', rating: '8.9', price: '130 - 180 €', desc: '14. katta Alpler manzaralı kapalı havuz, tam donanımlı mutfaklı 6 kişilik aile suitleri.' },
+      { name: 'Motel One München-Sendlinger Tor', type: 'Tasarım Oteli', rating: '8.7', price: '100 - 130 €', desc: 'Tarihi şehir kapısının yanında, Marienplatz\'a yürüyerek 10 dakika mesafede şık otel.' },
+      { name: 'Hampton by Hilton Munich City Center East', type: 'Konforlu Otel', rating: '8.6', price: '90 - 120 €', desc: 'Zengin sıcak kahvaltı dahil, temiz, geniş aile odaları sunan otoparklı modern otel.' }
+    ]
+  },
+  'Bükreş': {
+    country: 'Romanya', flag: '🇷🇴', area: 'Eski Şehir (Lipscani) veya Universitate',
+    hotels: [
+      { name: 'K+K Hotel Elisabeta', type: 'Butik Otel', rating: '8.8', price: '70 - 95 €', desc: 'Eski şehir merkezine yürüme mesafesinde, sessiz, temiz ve konforlu aile odaları.' },
+      { name: 'Filitti Boutique Hotel', type: 'Butik Otel', rating: '9.1', price: '65 - 85 €', desc: 'Eski şehre bakan çatı terası, zarif tasarımı ve üst düzey konukseverliğiyle ünlü butik otel.' },
+      { name: 'Novotel Bucharest City Centre', type: 'Modern Otel', rating: '8.6', price: '85 - 110 €', desc: 'Kapalı havuz, çocuk oyun alanları ve geniş aile odalarıyla bulvar üzerinde harika otel.' }
+    ]
+  },
+  'Sibiu': {
+    country: 'Romanya', flag: '🇷🇴', area: 'Büyük Meydan (Piata Mare) Çevresi',
+    hotels: [
+      { name: 'Art Hotel Sibiu', type: 'Tarihi Butik', rating: '9.3', price: '60 - 80 €', desc: 'Tarihi binada, meydanın hemen yanında, modern sanatla harmanlanmış şık dekorasyon.' },
+      { name: 'Hotel Continental Forum Sibiu', type: 'Klasik Otel', rating: '8.5', price: '50 - 70 €', desc: 'Merkezi caddede, geniş ve yüksek tavanlı aile odaları sunan klasik tesis.' },
+      { name: 'Boutique Hotel am Ring', type: 'Tarihi Otel', rating: '9.2', price: '55 - 75 €', desc: '14. yüzyıldan kalma binada, pencereleri Büyük Meydan\'a bakan otantik butik otel.' }
+    ]
+  },
+  'Köln': {
+    country: 'Almanya', flag: '🇩🇪', area: 'Köln Katedrali veya Altstadt (Eski Şehir)',
+    hotels: [
+      { name: 'Aparthotel Adagio Köln City', type: 'Apart Otel', rating: '8.6', price: '100 - 140 €', desc: 'Katedral ve alışveriş caddelerine yürüme mesafesinde, 6 kişilik mutfaklı geniş daireler.' },
+      { name: 'Motel One Köln-Waidmarkt', type: 'Tasarım Oteli', rating: '8.7', price: '90 - 120 €', desc: 'Şık tasarımı ve nehir kıyısı ile eski şehre yürüme mesafesindeki konumuyla harika seçim.' },
+      { name: 'Classic Hotel Harmonie', type: 'Tarihi Butik', rating: '8.5', price: '85 - 115 €', desc: 'Eski bir manastırdan dönüştürülmüş, şık tasarımlı ve katedral manzaralı sessiz butik otel.' }
+    ]
+  },
+  'Verona': {
+    country: 'İtalya', flag: '🇮🇹', area: 'Verona Arenası ve Centro Storico',
+    hotels: [
+      { name: 'Hotel Giulietta e Romeo', type: 'Merkez Otel', rating: '9.1', price: '110 - 150 €', desc: 'Tarihi arenaya sadece 50 metre mesafede, mükemmel konumda aile dostu butik otel.' },
+      { name: 'Relais Empire', type: 'Klasik Butik', rating: '8.8', price: '90 - 120 €', desc: 'Klasik İtalyan mobilyalarıyla döşenmiş, spa imkanı da sunan konforlu ve şık konaklama.' },
+      { name: 'B&B Hotel Verona Sud', type: 'Arabalı Gezgin Oteli', rating: '8.1', price: '60 - 80 €', desc: 'Otoyol çıkışında yer alan, arabası olanlar için ücretsiz park yeri sunan bütçe dostu pratik otel.' }
+    ]
+  },
+  'Selanik': {
+    country: 'Yunanistan', flag: '🇬🇷', area: 'Aristotelous Meydanı veya Ladadika Kıyısı',
+    hotels: [
+      { name: 'Electra Palace Thessaloniki', type: 'Lüks Otel', rating: '9.0', price: '120 - 170 €', desc: 'Aristotelous Meydanı\'nda, çatı katı restoran ve havuzundan körfez manzarası sunan ikonik otel.' },
+      { name: 'Plaza Hotel', type: 'Butik Otel', rating: '8.8', price: '75 - 100 €', desc: 'Ladadika semtinde, limana adımlık mesafede, geniş aile odaları sunan sıcak ve samimi tesis.' },
+      { name: 'No 15 Ermou Hotel', type: 'Modern Otel', rating: '9.1', price: '80 - 110 €', desc: 'Şehir merkezinde, spa ve fitness olanakları sunan, sessiz ve oldukça yeni şık otel.' }
+    ]
+  },
+  'Lüksemburg': {
+    country: 'Lüksemburg', flag: '🇱🇺', area: 'Luxembourg City Centre veya Belair',
+    hotels: [
+      { name: 'Novotel Luxembourg Centre', type: 'Zincir Otel', rating: '8.5', price: '120 - 160 €', desc: 'Tarihi vadilere yakın, çocuk alanı bulunan, otoparklı ve çok konforlu aile odaları.' },
+      { name: 'Key Inn Appart Hotel Belair', type: 'Apart Otel', rating: '8.4', price: '110 - 140 €', desc: 'Sakin ve elit bir semtte, mutfaklı ve geniş yaşam alanına sahip aile daireleri.' },
+      { name: 'Youth Hostel Luxembourg City', type: 'Bütçe Dostu Tesis', rating: '8.6', price: '70 - 95 €', desc: 'Vadinin kalbinde (Grund), tarihi kalıntılar arasında, 6 kişilik büyük aile odaları sunan modern hostel.' }
+    ]
+  },
+  'Luzern': {
+    country: 'İsviçre', flag: '🇨🇭', area: 'Göl Kıyısı ve Kapel Köprüsü Çevresi',
+    hotels: [
+      { name: 'Hotel Monopol Luzern', type: 'Tarihi Otel', rating: '8.6', price: '150 - 200 €', desc: 'İstasyon ve gölün hemen yanında, Barok cephesi ve kule odalarıyla muhteşem bir Alp klasiği.' },
+      { name: 'Aparthotel Adler Luzern', type: 'Apart Otel', rating: '8.5', price: '140 - 190 €', desc: 'Eski şehir merkezinde, mutfaklı ve kendi yemeğini hazırlamaya elverişli uygun fiyatlı daireler.' },
+      { name: 'ibis Styles Luzern City', type: 'Renkli Otel', rating: '8.1', price: '120 - 160 €', desc: 'Göl kıyısına yürüme mesafesinde, modern tasarımlı, sade ve temiz aile odaları.' }
+    ]
+  },
+  'Nice': {
+    country: 'Fransa', flag: '🇫🇷', area: 'Promenade des Anglais (Sahil Şeridi) veya Eski Şehir',
+    hotels: [
+      { name: 'Aparthotel Adagio Nice Promenade des Anglais', type: 'Apart Otel', rating: '8.2', price: '120 - 170 €', desc: 'Deniz kıyısında, 6 kişilik mutfaklı, balkonlu ve plaja sıfır harika aile daireleri.' },
+      { name: 'Hotel Windsor', type: 'Sanat/Butik Oteli', rating: '8.7', price: '100 - 140 €', desc: 'Egzotik bahçesi, havuzu ve her biri bir sanatçı tarafından boyanmış odaları olan butik otel.' },
+      { name: 'Albert 1er', type: 'Tarihi Otel', rating: '8.9', price: '110 - 150 €', desc: 'Sahile ve eski şehre bakan, 19. yüzyıldan kalma binada eşsiz konuma sahip konforlu otel.' }
+    ]
   }
 };
 
@@ -1218,6 +1456,7 @@ function renderTimeline(){
       ${s.desc ? `<div class="tl-desc">${s.desc}</div>` : ''}
       ${s.halal && !isTR ? `<div class="tl-halal">${s.halal}</div>` : ''}
       ${s.accom && !isTR ? `<div class="tl-accom">${s.accom}</div>` : ''}
+      ${s.n > 0 && !isTR ? getTimelineAccomHtml(s.c, isTR) : ''}
       ${tipsH ? `<div class="tl-tips">${tipsH}</div>` : ''}
     </div>${connector}`;
   }).join('');
@@ -1531,6 +1770,46 @@ function renderVignettes() {
   html += `</div>`;
   container.innerHTML = html;
 }
+
+/* ═══════ ACCOMMODATIONS HELPERS ═══════ */
+function getTimelineAccomHtml(cityName, isTR) {
+  if (isTR || !ACCOMMODATION_DATA[cityName]) return '';
+  const cityInfo = ACCOMMODATION_DATA[cityName];
+  const bookingUrl = `https://www.booking.com/searchresults.tr.html?ss=${encodeURIComponent(cityName)}&group_adults=6&no_rooms=1`;
+  const airbnbUrl = `https://www.airbnb.com.tr/s/${encodeURIComponent(cityName)}/homes?adults=6`;
+
+  return `
+    <div class="tl-hotel-container">
+      <div class="tl-hotel-header">
+        <i class="fas fa-bed"></i> 6 Kişilik Konaklama Önerileri (Önerilen Bölge: ${cityInfo.area})
+      </div>
+      <div class="tl-hotel-list">
+        ${cityInfo.hotels.map(h => `
+          <div class="tl-hotel-item">
+            <div class="tl-hotel-name-wrap">
+              <span class="tl-hotel-name">${h.name}</span>
+              <span class="tl-hotel-badge">${h.type}</span>
+            </div>
+            <div class="tl-hotel-sub">
+              <span class="tl-hotel-rating">★ ${h.rating}</span>
+              <span class="tl-hotel-price">${h.price} / gece</span>
+            </div>
+            <p class="tl-hotel-desc">${h.desc}</p>
+          </div>
+        `).join('')}
+      </div>
+      <div class="tl-hotel-search-links">
+        <a href="${bookingUrl}" target="_blank" class="btn-tl-hotel booking">
+          <i class="fas fa-search"></i> Booking'de Ara (6 Kişi)
+        </a>
+        <a href="${airbnbUrl}" target="_blank" class="btn-tl-hotel airbnb">
+          <i class="fab fa-airbnb"></i> Airbnb'de Ara (6 Kişi)
+        </a>
+      </div>
+    </div>
+  `;
+}
+
 
 /* ═══════ RENDER ALL ═══════ */
 function renderAll(){
