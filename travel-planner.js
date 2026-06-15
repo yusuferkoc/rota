@@ -867,185 +867,231 @@ const ACCOMMODATION_DATA = {
   'Sofya': {
     country: 'Bulgaristan', flag: '🇧🇬', area: 'Vitosha Bulvarı veya Şehir Merkezi',
     hotels: [
-      { name: 'Sofia Place Hotel by Homing Group', type: 'Üç Yıldızlı Otel', rating: '8.8', price: '60 - 80 €', desc: 'Şehir merkezinde, aile odaları ve park yeri imkanı sunan şık butik otel.' },
-      { name: 'Central Point Apart-Hotel', type: 'Apart Otel', rating: '8.9', price: '50 - 70 €', desc: 'Mutfaklı ve geniş aile odaları sunan, Vitosha Bulvarı\'na yürüme mesafesinde apartlar.' },
-      { name: 'Grand Hotel Sofia', type: 'Lüks Otel', rating: '9.1', price: '120 - 150 €', desc: 'Büyük suit odalara sahip, 5 yıldızlı konfor ve özel güvenli otopark sunan lüks alternatif.' }
+      { name: 'Hostel Mostel Sofia', type: 'Sırt Çantalı / Bütçe', rating: '8.6', price: '35 €', desc: 'Tarihi bir konakta yer alan, geniş gruplar için bütçe dostu odalar sunan popüler hostel.' },
+      { name: 'Central Point Apart-Hotel', type: 'Apart Otel', rating: '8.9', price: '55 €', desc: 'Mutfaklı ve geniş aile odaları sunan, Vitosha Bulvarı\'na yürüme mesafesinde apartlar.' },
+      { name: 'Sofia Place Hotel by Homing Group', type: 'Üç Yıldızlı Otel', rating: '8.8', price: '68 €', desc: 'Şehir merkezinde, aile odaları ve park yeri imkanı sunan şık butik otel.' },
+      { name: 'Rosslyn Thracia Hotel Sofia', type: 'Modern Otel', rating: '9.0', price: '95 €', desc: 'Sessiz bir sokakta, şık ve modern aile odalarına sahip 4 yıldızlı yüksek konfor.' },
+      { name: 'Grand Hotel Sofia', type: 'Lüks Otel', rating: '9.1', price: '135 €', desc: 'Büyük suit odalara sahip, 5 yıldızlı konfor ve özel güvenli otopark sunan lüks alternatif.' }
     ]
   },
   'Timișoara': {
     country: 'Romanya', flag: '🇷🇴', area: 'Eski Şehir (Unirii Meydanı) ve Bega Nehri Kıyısı',
     hotels: [
-      { name: 'Old Town Hotel', type: 'Butik Otel', rating: '9.0', price: '55 - 75 €', desc: 'Tarihi meydanlara yürüme mesafesinde, geniş yataklı konforlu aile odaları.' },
-      { name: 'Mercure Timisoara', type: 'Modern Otel', rating: '9.2', price: '70 - 90 €', desc: 'Çevre dostu konsepti, harika kahvaltısı ve aile odaları ile yeni ve temiz bir otel.' },
-      { name: 'Central Park Apartment Timisoara', type: 'Geniş Apart', rating: '8.8', price: '45 - 65 €', desc: '6 kişilik grupların rahatlıkla sığabileceği, tam donanımlı mutfağa sahip modern daire.' }
+      { name: 'Hostel Cornel', type: 'Bütçe Dostu Pansiyon', rating: '8.5', price: '30 €', desc: 'Eski şehre çok yakın, temiz ve bütçeyi yormayacak aile odaları sunan şirin pansiyon.' },
+      { name: 'Central Park Apartment Timisoara', type: 'Geniş Apart', rating: '8.8', price: '50 €', desc: '6 kişilik grupların rahatlıkla sığabileceği, tam donanımlı mutfağa sahip modern daire.' },
+      { name: 'Old Town Hotel', type: 'Butik Otel', rating: '9.0', price: '60 €', desc: 'Tarihi meydanlara yürüme mesafesinde, geniş yataklı konforlu aile odaları.' },
+      { name: 'Mercure Timisoara', type: 'Modern Otel', rating: '9.2', price: '78 €', desc: 'Çevre dostu konsepti, harika kahvaltısı ve aile odaları ile yeni ve temiz bir otel.' },
+      { name: 'Hotel Tresor Le Palais', type: 'Lüks Butik Otel', rating: '9.4', price: '120 €', desc: 'Açık havuzu, lüks tasarımı ve güvenli otoparkıyla üst düzey 5 yıldızlı deneyim.' }
     ]
   },
   'Budapeşte': {
     country: 'Macaristan', flag: '🇭🇺', area: 'Pest Tarafı (Yahudi Mahallesi / Merkez)',
     hotels: [
-      { name: 'Roombach Hotel Budapest Center', type: 'Tasarım Oteli', rating: '8.9', price: '80 - 110 €', desc: 'Yahudi Mahallesi\'nin kalbinde, renkli ve modern dekora sahip aile dostu tesis.' },
-      { name: 'D50 Hotel & Apartments', type: 'Apart Otel', rating: '9.1', price: '75 - 105 €', desc: 'Sakin konumda, geniş bahçeli ve geniş 6 kişilik aile odaları olan popüler tesis.' },
-      { name: '7Seasons Apartments Budapest', type: 'Lüks Apart', rating: '9.2', price: '120 - 160 €', desc: '6 kişilik aileler için ideal, tam mutfaklı, 2-3 odalı konforlu şehir içi daireleri.' }
+      { name: 'Avenue Hostel', type: 'Bütçe Dostu Konaklama', rating: '8.4', price: '45 €', desc: 'Oktogon meydanında yer alan, kalabalık aile/gruplar için özel çok yataklı bütçe odaları.' },
+      { name: 'D50 Hotel & Apartments', type: 'Apart Otel', rating: '9.1', price: '85 €', desc: 'Sakin konumda, geniş bahçeli ve geniş 6 kişilik aile odaları olan popüler tesis.' },
+      { name: 'Roombach Hotel Budapest Center', type: 'Tasarım Oteli', rating: '8.9', price: '95 €', desc: 'Yahudi Mahallesi\'nin kalbinde, renkli ve modern dekora sahip aile dostu tesis.' },
+      { name: '7Seasons Apartments Budapest', type: 'Lüks Apart', rating: '9.2', price: '130 €', desc: '6 kişilik aileler için ideal, tam mutfaklı, 2-3 odalı konforlu şehir içi daireleri.' },
+      { name: 'Corinthia Budapest', type: 'Klasik Lüks Otel', rating: '9.3', price: '190 €', desc: 'Tarihi spa havuzu ve efsanevi saray mimarisiyle 5 yıldızlı eşsiz Macar klasiği.' }
     ]
   },
   'Viyana': {
     country: 'Avusturya', flag: '🇦🇹', area: 'Favoriten veya Hauptbahnhof (Merkez İstasyon) Kıyısı',
     hotels: [
-      { name: 'Motel One Wien-Hauptbahnhof', type: 'Tasarım Oteli', rating: '8.8', price: '110 - 140 €', desc: 'Tren istasyonunun hemen yanında, toplu taşıma ile merkeze 5 dk mesafede pratik otel.' },
-      { name: 'Adina Apartment Hotel Vienna Belvedere', type: 'Apart Otel', rating: '8.9', price: '130 - 170 €', desc: 'Kapalı havuz imkanı, mutfağı ve 6 kişilik geniş aile suitleri ile mükemmel seçim.' },
-      { name: 'JO&JOE Vienna', type: 'Modern/Gençlik Oteli', rating: '8.7', price: '90 - 120 €', desc: 'Eğlenceli iç tasarımı ve büyük gruplara uygun bütçe dostu oda seçenekleri sunan otel.' }
+      { name: 'JO&JOE Vienna', type: 'Modern/Gençlik Oteli', rating: '8.7', price: '65 €', desc: 'Eğlenceli iç tasarımı ve büyük gruplara uygun bütçe dostu oda seçenekleri sunan otel.' },
+      { name: 'Motel One Wien-Hauptbahnhof', type: 'Tasarım Oteli', rating: '8.8', price: '115 €', desc: 'Tren istasyonunun hemen yanında, toplu taşıma ile merkeze 5 dk mesafede pratik otel.' },
+      { name: 'Adina Apartment Hotel Vienna Belvedere', type: 'Apart Otel', rating: '8.9', price: '145 €', desc: 'Kapalı havuz imkanı, mutfağı ve 6 kişilik geniş aile suitleri ile mükemmel seçim.' },
+      { name: 'Hilton Vienna Park', type: 'Lüks Zincir Otel', rating: '8.8', price: '185 €', desc: 'Stadtpark yakınında, şehir merkezine adımlık mesafede, geniş ve konforlu aile odaları.' },
+      { name: 'Hotel Sacher Wien', type: 'Tarihi Lüks Otel', rating: '9.5', price: '450 €', desc: 'Opera binası yanında yer alan, ünlü Sacher turtasının evi, 5 yıldızlı aristokratik Viyana klasiği.' }
     ]
   },
   'Prag': {
     country: 'Çek Cumhuriyeti', flag: '🇨🇿', area: 'Staré Město (Eski Şehir) veya Vinohrady',
     hotels: [
-      { name: 'Appia Hotel Residence', type: 'Tarihi Rezidans', rating: '9.3', price: '90 - 130 €', desc: 'Prag Kalesi altında, sessiz avlulu ve harika kahvaltılı geniş daire/suit otel.' },
-      { name: 'EA Apartments Mozart', type: 'Mutfaklı Apart', rating: '8.9', price: '80 - 110 €', desc: 'Karl Köprüsü\'ne 5 dakika yürüme mesafesinde, 6 kişilik geniş mutfaklı daireler.' },
-      { name: 'Charles Bridge Palace', type: 'Klasik Otel', rating: '8.6', price: '100 - 140 €', desc: 'Klasik tarzda dekore edilmiş, nehir manzaralı geniş aile odaları sunan tarihi otel.' }
+      { name: 'Dora Hostel Prague', type: 'Bütçe Dostu Pansiyon', rating: '8.3', price: '40 €', desc: 'Şehir merkezine kolay metro bağlantısı sunan, temiz ve sessiz bütçe odaları.' },
+      { name: 'EA Apartments Mozart', type: 'Mutfaklı Apart', rating: '8.9', price: '85 €', desc: 'Karl Köprüsü\'ne 5 dakika yürüme mesafesinde, 6 kişilik geniş mutfaklı daireler.' },
+      { name: 'Charles Bridge Palace', type: 'Klasik Otel', rating: '8.6', price: '110 €', desc: 'Klasik tarzda dekore edilmiş, nehir manzaralı geniş aile odaları sunan tarihi otel.' },
+      { name: 'Appia Hotel Residence', type: 'Tarihi Rezidans', rating: '9.3', price: '115 €', desc: 'Prag Kalesi altında, sessiz avlulu ve harika kahvaltılı geniş daire/suit otel.' },
+      { name: 'The Grand Mark Prague', type: 'Lüks Saray Oteli', rating: '9.4', price: '240 €', desc: 'Eski bir barok sarayda yer alan, muhteşem avlu bahçesine sahip ultra lüks konaklama.' }
     ]
   },
   'Berlin': {
     country: 'Almanya', flag: '🇩🇪', area: 'Mitte (Merkez) veya Kreuzberg Semti',
     hotels: [
-      { name: 'Select Hotel Berlin Gendarmenmarkt', type: 'Modern Otel', rating: '8.6', price: '100 - 130 €', desc: 'Berlin\'in en güzel meydanlarından Gendarmenmarkt\'a yakın, sessiz ve konforlu.' },
-      { name: 'Adina Apartment Hotel Checkpoint Charlie', type: 'Apart Otel', rating: '8.9', price: '130 - 180 €', desc: 'Mutfak, çamaşır makinesi ve kapalı havuzuyla 6 kişilik aileler için eksiksiz konfor.' },
-      { name: 'A&O Berlin Mitte', type: 'Bütçe Dostu Aile Oteli', rating: '8.0', price: '60 - 90 €', desc: 'Büyük aile odaları, çocuk oyun alanları ve bütçeyi yormayan fiyatlarıyla öne çıkan otel.' }
+      { name: 'A&O Berlin Mitte', type: 'Bütçe Dostu Aile Oteli', rating: '8.0', price: '55 €', desc: 'Büyük aile odaları, çocuk oyun alanları ve bütçeyi yormayan fiyatlarıyla öne çıkan otel.' },
+      { name: 'Select Hotel Berlin Gendarmenmarkt', type: 'Modern Otel', rating: '8.6', price: '110 €', desc: 'Berlin\'in en güzel meydanlarından Gendarmenmarkt\'a yakın, sessiz ve konforlu.' },
+      { name: 'Adina Apartment Hotel Checkpoint Charlie', type: 'Apart Otel', rating: '8.9', price: '145 €', desc: 'Mutfak, çamaşır makinesi ve kapalı havuzuyla 6 kişilik aileler için eksiksiz konfor.' },
+      { name: 'NH Collection Berlin Mitte Friedrichstrasse', type: 'Lüks Zincir', rating: '8.8', price: '175 €', desc: 'Ünlü Friedrichstraße caddesinde, geniş odalara ve metro istasyonuna doğrudan erişime sahip.' },
+      { name: 'Hotel Adlon Kempinski Berlin', type: 'İkonik Saray Oteli', rating: '9.4', price: '320 €', desc: 'Brandenburg Kapısı\'nın hemen yanında yer alan, kralların ve devlet adamlarının kaldığı efsanevi otel.' }
     ]
   },
   'Hamburg': {
     country: 'Almanya', flag: '🇩🇪', area: 'Hauptbahnhof veya Hamburg-Mitte',
     hotels: [
-      { name: 'Adina Apartment Hotel Hamburg Michel', type: 'Lüks Apart Otel', rating: '9.0', price: '130 - 180 €', desc: 'Liman ve Speicherstadt\'a yakın, tam donanımlı mutfak ve spa alanına sahip daireler.' },
-      { name: 'Motel One Hamburg-Alster', type: 'Tasarım Oteli', rating: '8.7', price: '100 - 130 €', desc: 'Alster gölüne yakın, modern tasarımlı ve güvenilir konfor sunan şık tesis.' },
-      { name: 'Super 8 by Wyndham Hamburg Mitte', type: 'Bütçe Dostu Otel', rating: '8.3', price: '80 - 110 €', desc: 'Metro istasyonuna yakın, temiz ve yeni, bütçe dostu aile odaları sunan otel.' }
+      { name: 'Generator Hamburg', type: 'Bütçe Dostu Tesis', rating: '8.1', price: '60 €', desc: 'Merkez istasyonun hemen yanında, genç gruplar için ekonomik ve hareketli konaklama.' },
+      { name: 'Super 8 by Wyndham Hamburg Mitte', type: 'Bütçe Dostu Otel', rating: '8.3', price: '85 €', desc: 'Metro istasyonuna yakın, temiz ve yeni, bütçe dostu aile odaları sunan otel.' },
+      { name: 'Motel One Hamburg-Alster', type: 'Tasarım Oteli', rating: '8.7', price: '115 €', desc: 'Alster gölüne yakın, modern tasarımlı ve güvenilir konfor sunan şık tesis.' },
+      { name: 'Adina Apartment Hotel Hamburg Michel', type: 'Lüks Apart Otel', rating: '9.0', price: '155 €', desc: 'Liman ve Speicherstadt\'a yakın, tam donanımlı mutfak ve spa alanına sahip daireler.' },
+      { name: 'The Fontenay', type: '5 Yıldızlı Gölyanı Lüks', rating: '9.3', price: '350 €', desc: 'Alster Gölü kıyısında, dairesel mimarisi ve sonsuzluk havuzuyla modern lüksün zirvesi.' }
     ]
   },
   'Brüksel': {
     country: 'Belçika', flag: '🇧🇪', area: 'Grand-Place (Merkez) veya Gare du Midi',
     hotels: [
-      { name: 'Aparthotel Adagio Brussels Grand Place', type: 'Apart Otel', rating: '8.6', price: '110 - 150 €', desc: 'Tarihi merkeze 2 dakika mesafede, 6 kişilik mutfaklı geniş daire seçenekleri sunar.' },
-      { name: 'Motel One Brussels', type: 'Tasarım Oteli', rating: '8.8', price: '95 - 125 €', desc: 'Merkez parka yakın, modern tasarımlı ve sessiz arka bahçesi bulunan şık otel.' },
-      { name: 'Bedford Hotel & Congress Centre', type: 'Klasik Otel', rating: '8.1', price: '90 - 120 €', desc: 'Grand-Place\'a yürüme mesafesinde, geniş aile odaları sunan köklü ve güvenilir otel.' }
+      { name: 'Sleep Well Youth Hostel', type: 'Ekonomik Aile Hosteli', rating: '8.3', price: '55 €', desc: 'Çevre dostu, temiz aile odaları sunan ve şehir merkezine yürüyerek 10 dk mesafede hostel.' },
+      { name: 'Bedford Hotel & Congress Centre', type: 'Klasik Otel', rating: '8.1', price: '95 €', desc: 'Grand-Place\'a yürüme mesafesinde, geniş aile odaları sunan köklü ve güvenilir otel.' },
+      { name: 'Motel One Brussels', type: 'Tasarım Oteli', rating: '8.8', price: '105 €', desc: 'Merkez parka yakın, modern tasarımlı ve sessiz arka bahçesi bulunan şık otel.' },
+      { name: 'Aparthotel Adagio Brussels Grand Place', type: 'Apart Otel', rating: '8.6', price: '135 €', desc: 'Tarihi merkeze 2 dakika mesafede, 6 kişilik mutfaklı geniş daire seçenekleri sunar.' },
+      { name: 'Hotel Amigo, a Rocco Forte Hotel', type: 'Tarihi Lüks Otel', rating: '9.2', price: '280 €', desc: 'Grand-Place köşesinde, antika eşyalar ve ünlü Belçika çizgi roman temalarıyla süslü 5 yıldızlı otel.' }
     ]
   },
   'Paris': {
     country: 'Fransa', flag: '🇫🇷', area: '10. / 11. Bölge veya Eyfel Kulesi Çevresi',
     hotels: [
-      { name: 'Aparthotel Adagio Paris Centre Tour Eiffel', type: 'Apart Otel', rating: '8.2', price: '160 - 220 €', desc: 'Eyfel Kulesi manzaralı, 6 kişilik aileler için mutfaklı ve geniş salonlu lüks apartlar.' },
-      { name: 'Generator Paris', type: 'Tasarım/Bütçe Oteli', rating: '8.3', price: '90 - 130 €', desc: 'Canal Saint-Martin yakınında, 6 kişilik özel banyolu grup/aile odaları bulunan popüler tesis.' },
-      { name: 'Hotel Muguet', type: 'Butik Otel', rating: '8.9', price: '140 - 190 €', desc: 'Sakin bir sokakta, Eyfel kulesine adımlık mesafede, yüksek hizmet kalitesi sunan şirin otel.' }
+      { name: 'Generator Paris', type: 'Tasarım/Bütçe Oteli', rating: '8.3', price: '75 €', desc: 'Canal Saint-Martin yakınında, 6 kişilik özel banyolu grup/aile odaları bulunan popüler tesis.' },
+      { name: 'Aparthotel Adagio Paris Centre Tour Eiffel', type: 'Apart Otel', rating: '8.2', price: '170 €', desc: 'Eyfel Kulesi manzaralı, 6 kişilik aileler için mutfaklı ve geniş salonlu lüks apartlar.' },
+      { name: 'Hotel Muguet', type: 'Butik Otel', rating: '8.9', price: '180 €', desc: 'Sakin bir sokakta, Eyfel kulesine adımlık mesafede, yüksek hizmet kalitesi sunan şirin otel.' },
+      { name: 'Pullman Paris Tour Eiffel', type: 'Manzaralı Lüks Otel', rating: '9.0', price: '260 €', desc: 'Eyfel Kulesi\'nin hemen dibinde, balkonundan efsanevi kule ışıklandırması izlenebilen odalar.' },
+      { name: 'The Peninsula Paris', type: 'Ultra Lüks Saray', rating: '9.6', price: '850 €', desc: 'Arc de Triomphe yakınında, çatısında gurme restoranı ve kapalı havuzuyla saray statüsünde otel.' }
     ]
   },
   'Lyon': {
     country: 'Fransa', flag: '🇫🇷', area: 'Presqu\'île (Yarımada) veya Part-Dieu',
     hotels: [
-      { name: 'Aparthotel Adagio Lyon Patio Confluence', type: 'Apart Otel', rating: '8.5', price: '90 - 120 €', desc: 'Tramvay hattına yakın, mutfaklı ve çocuk oyun alanı sunan konforlu aile apartları.' },
-      { name: 'Hotel Carlton Lyon - MGallery', type: 'Tasarım Oteli', rating: '9.0', price: '140 - 180 €', desc: 'Yarımada merkezinde, tarihi dokuyu modernlikle harmanlayan lüks butik otel.' },
-      { name: 'B&B HOTEL Lyon Centre Gambetta', type: 'Bütçe Dostu Otel', rating: '8.3', price: '70 - 95 €', desc: 'Metro durağına yakın, temiz ve uygun fiyatlı aile odaları ile ideal transit durak.' }
+      { name: 'Slo Living Hostel', type: 'Tasarım Butik Hostel', rating: '8.8', price: '45 €', desc: 'İskandinav tarzı dekorasyonu, sessiz avlusu ve geniş aile odalarıyla ekonomik durak.' },
+      { name: 'B&B HOTEL Lyon Centre Gambetta', type: 'Bütçe Dostu Otel', rating: '8.3', price: '75 €', desc: 'Metro durağına yakın, temiz ve uygun fiyatlı aile odaları ile ideal transit durak.' },
+      { name: 'Aparthotel Adagio Lyon Patio Confluence', type: 'Apart Otel', rating: '8.5', price: '98 €', desc: 'Tramvay hattına yakın, mutfaklı ve çocuk oyun alanı sunan konforlu aile apartları.' },
+      { name: 'Hotel Carlton Lyon - MGallery', type: 'Tasarım Oteli', rating: '9.0', price: '155 €', desc: 'Yarımada merkezinde, tarihi dokuyu modernlikle harmanlayan lüks butik otel.' },
+      { name: 'Villa Florentine', type: 'Tarihi Lüks Otel', rating: '9.1', price: '260 €', desc: 'Eski Lyon tepelerinde eski bir manastırda yer alan, havuzlu ve nehir manzaralı lüks rüya.' }
     ]
   },
   'Zürih': {
     country: 'İsviçre', flag: '🇨🇭', area: 'Merkez İstasyon (Hauptbahnhof) veya Zürih West',
     hotels: [
-      { name: 'Aparthotel Adagio Zurich City Center', type: 'Apart Otel', rating: '8.7', price: '180 - 240 €', desc: 'İsviçre standartlarında mutfaklı, temiz ve konforlu 6 kişilik aile daireleri.' },
-      { name: 'Motel One Zürich', type: 'Tasarım Oteli', rating: '8.9', price: '150 - 190 €', desc: 'Göl kenarı ve merkeze yakın, yüksek kaliteli hizmet ve şık çikolata temalı lobi bar.' },
-      { name: 'ibis Styles Zurich City Center', type: 'Modern Otel', rating: '8.2', price: '130 - 170 €', desc: 'İstasyona yürüme mesafesinde, özgün tasarımlı ve bütçe dostu aile odaları sunan tesis.' }
+      { name: 'Zurich Youth Hostel', type: 'Bütçe Dostu Tesis', rating: '8.5', price: '80 €', desc: 'Zürih Gölü yakınında, bütçe dostu, temiz ve modern aile odaları sunan yüksek puanlı hostel.' },
+      { name: 'ibis Styles Zurich City Center', type: 'Modern Otel', rating: '8.2', price: '145 €', desc: 'İstasyona yürüme mesafesinde, özgün tasarımlı ve bütçe dostu aile odaları sunan tesis.' },
+      { name: 'Motel One Zürich', type: 'Tasarım Oteli', rating: '8.9', price: '175 €', desc: 'Göl kenarı ve merkeze yakın, yüksek kaliteli hizmet ve şık çikolata temalı lobi bar.' },
+      { name: 'Aparthotel Adagio Zurich City Center', type: 'Apart Otel', rating: '8.7', price: '195 €', desc: 'İsviçre standartlarında mutfaklı, temiz ve konforlu 6 kişilik aile daireleri.' },
+      { name: 'The Dolder Grand', type: 'İkonik Lüks Otel', rating: '9.4', price: '580 €', desc: 'Zürih manzaralı tepede, devasa spa alanı, ünlü sanat koleksiyonu ve 2 Michelin yıldızlı restoranı.' }
     ]
   },
   'Milano': {
     country: 'İtalya', flag: '🇮🇹', area: 'Merkez İstasyon (Stazione Centrale) veya Porta Venezia',
     hotels: [
-      { name: 'Glam Hotel Milano', type: 'Tasarım Oteli', rating: '8.8', price: '110 - 150 €', desc: 'Merkez İstasyonun hemen karşısında, metro hatları ve havaalanı servislerinin dibinde mükemmel konum.' },
-      { name: 'Starhotels Anderson', type: 'Lüks Otel', rating: '8.9', price: '130 - 170 €', desc: 'Şık İtalyan tasarımı, çok geniş aile odaları ve kaliteli açık büfe kahvaltı.' },
-      { name: 'Mokinba Hotels King', type: 'Klasik Otel', rating: '8.4', price: '100 - 130 €', desc: 'Duomo Katedrali\'ne yürüme mesafesinde, sessiz ve güvenli bir sokakta yer alan otel.' }
+      { name: 'Ostello Bello Milano Centrale', type: 'Bütçe Dostu Popüler', rating: '9.1', price: '50 €', desc: 'Tren istasyonu yakınında, 6 kişilik geniş özel odaları ve teras barı olan popüler konaklama.' },
+      { name: 'Mokinba Hotels King', type: 'Klasik Otel', rating: '8.4', price: '110 €', desc: 'Duomo Katedrali\'ne yürüme mesafesinde, sessiz ve güvenli bir sokakta yer alan otel.' },
+      { name: 'Glam Hotel Milano', type: 'Tasarım Oteli', rating: '8.8', price: '125 €', desc: 'Merkez İstasyonun hemen karşısında, metro hatları ve havaalanı servislerinin dibinde mükemmel konum.' },
+      { name: 'Starhotels Anderson', type: 'Lüks Otel', rating: '8.9', price: '145 €', desc: 'Şık İtalyan tasarımı, çok geniş aile odaları ve kaliteli açık büfe kahvaltı.' },
+      { name: 'Armani Hotel Milano', type: '5 Yıldızlı Moda Oteli', rating: '9.2', price: '480 €', desc: 'Giorgio Armani tarafından tasarlanan, minimalist şıklıktaki lüks moda bölgesi oteli.' }
     ]
   },
   'Venedik': {
     country: 'İtalya', flag: '🇮🇹', area: 'Mestre (Karadaki Ana İstasyon Çevresi) - Pratik ve Uygun',
     hotels: [
-      { name: 'Hotel Plaza Venice', type: 'Merkez Otel', rating: '8.7', price: '90 - 120 €', desc: 'Mestre istasyonunun tam karşısında. Venedik adasına giden tren/otobüsler kapı önünden kalkar.' },
-      { name: 'Anda Venice Hostel', type: 'Tasarım Hostel', rating: '9.0', price: '70 - 100 €', desc: '6 kişilik özel banyolu odaları, mutfağı ve çok eğlenceli sosyal alanları olan modern tesis.' },
-      { name: 'Hotel Bisanzio', type: 'Tarihi Venedik Oteli', rating: '8.9', price: '150 - 200 €', desc: 'San Marco Meydanı\'na 5 dk mesafede, gerçek Venedik adasında kalmak isteyenler için tarihi otel.' }
+      { name: 'Anda Venice Hostel', type: 'Tasarım Hostel', rating: '9.0', price: '45 €', desc: '6 kişilik özel banyolu odaları, mutfağı ve çok eğlenceli sosyal alanları olan modern tesis.' },
+      { name: 'Hotel Plaza Venice', type: 'Merkez Otel', rating: '8.7', price: '98 €', desc: 'Mestre istasyonunun tam karşısında. Venedik adasına giden tren/otobüsler kapı önünden kalkar.' },
+      { name: 'Hotel Bisanzio', type: 'Tarihi Venedik Oteli', rating: '8.9', price: '160 €', desc: 'San Marco Meydanı\'na 5 dk mesafede, gerçek Venedik adasında kalmak isteyenler için tarihi otel.' },
+      { name: 'Hotel Danieli, Venice', type: 'Efsanevi Saray Oteli', rating: '9.3', price: '450 €', desc: '14. yüzyıldan kalma Dandolo Sarayı\'nda, Büyük Kanal manzaralı çatı restoranına sahip efsane otel.' },
+      { name: 'The Gritti Palace, a Luxury Collection Hotel', type: 'Tarihi Lüks', rating: '9.6', price: '650 €', desc: 'Venedik\'in en ünlü saray oteli, Büyük Kanal kıyısında eşsiz tarihi atmosfer ve asil tasarım.' }
     ]
   },
   'Floransa': {
     country: 'İtalya', flag: '🇮🇹', area: 'Santa Maria Novella veya San Lorenzo',
     hotels: [
-      { name: 'c-hotels Ambasciatori', type: 'Modern Otel', rating: '8.8', price: '120 - 160 €', desc: 'İstasyonun hemen yanında, tarihi merkeze adımlık mesafede modern ve konforlu aile odaları.' },
-      { name: 'Palazzo Ricasoli Apartments', type: 'Tarihi Apart', rating: '8.3', price: '100 - 140 €', desc: 'Eski bir Floransa sarayında, yüksek tavanlı ve mutfaklı 6 kişilik geniş aile daireleri.' },
-      { name: 'Hotel Spadai', type: 'Butik Lüks Otel', rating: '9.5', price: '180 - 240 €', desc: 'Duomo\'ya 100m, üst düzey karşılama ikramları ve spa olanakları ile olağanüstü puanlı lüks otel.' }
+      { name: 'Plus Florence Hostel', type: 'Havuzlu Bütçe Oteli', rating: '8.5', price: '48 €', desc: 'Kapalı/açık havuzlu, sauna imkanlı, 6 kişilik özel banyolu oda seçenekleri sunan şık tesis.' },
+      { name: 'Palazzo Ricasoli Apartments', type: 'Tarihi Apart', rating: '8.3', price: '110 €', desc: 'Eski bir Floransa sarayında, yüksek tavanlı ve mutfaklı 6 kişilik geniş aile daireleri.' },
+      { name: 'c-hotels Ambasciatori', type: 'Modern Otel', rating: '8.8', price: '135 €', desc: 'İstasyonun hemen yanında, tarihi merkeze adımlık mesafede modern ve konforlu aile odaları.' },
+      { name: 'Hotel Spadai', type: 'Butik Lüks Otel', rating: '9.5', price: '195 €', desc: 'Duomo\'ya 100m, üst düzey karşılama ikramları ve spa olanakları ile olağanüstü puanlı lüks otel.' },
+      { name: 'Villa Cora', type: 'Tarihi Malikane Oteli', rating: '9.4', price: '360 €', desc: 'Boboli Bahçeleri yakınında, 19. yüzyıldan kalma aristokratik saray ve ısıtmalı havuzlu park.' }
     ]
   },
   'Roma': {
     country: 'İtalya', flag: '🇮🇹', area: 'Termini İstasyonu Çevresi veya Esquilino',
     hotels: [
-      { name: 'Starhotels Metropole', type: 'Klasik Otel', rating: '8.8', price: '130 - 180 €', desc: 'Roma Opera Binası yakınında, mükemmel konfor ve geniş 6 kişilik aile odaları sunan lüks tesis.' },
-      { name: 'IQ Hotel Roma', type: 'Yenilikçi Otel', rating: '9.3', price: '140 - 190 €', desc: 'Self-servis çamaşırhanesi, child oyun alanı ve modern dizaynı ile aileler için 1 numara.' },
-      { name: 'Generator Rome', type: 'Tasarım Oteli', rating: '8.4', price: '85 - 120 €', desc: 'Termini\'ye yakın, 6 kişilik özel banyolu şık grup odaları sunan bütçe dostu otel.' }
+      { name: 'Generator Rome', type: 'Tasarım Oteli', rating: '8.4', price: '50 €', desc: 'Termini\'ye yakın, 6 kişilik özel banyolu şık grup odaları sunan bütçe dostu otel.' },
+      { name: 'Starhotels Metropole', type: 'Klasik Otel', rating: '8.8', price: '145 €', desc: 'Roma Opera Binası yakınında, mükemmel konfor ve geniş 6 kişilik aile odaları sunan lüks tesis.' },
+      { name: 'IQ Hotel Roma', type: 'Yenilikçi Otel', rating: '9.3', price: '155 €', desc: 'Self-servis çamaşırhanesi, child oyun alanı ve modern dizaynı ile aileler için 1 numara.' },
+      { name: 'Hotel Quirinale', type: 'Tarihi Klasik Otel', rating: '8.3', price: '165 €', desc: 'Klasik İtalyan mimarisine sahip, opera salonuna gizli geçidi olan tarihi ve yeşil bahçeli tesis.' },
+      { name: 'Hotel de Russie, a Rocco Forte Hotel', type: '5 Yıldızlı Cennet', rating: '9.5', price: '520 €', desc: 'Piazza del Popolo yakınında, ünlü gizli Akdeniz bahçesiyle Roma\'nın en elit ve sakin oteli.' }
     ]
   },
   'Plovdiv': {
     country: 'Bulgaristan', flag: '🇧🇬', area: 'Eski Şehir (Filibe) veya Merkez',
     hotels: [
-      { name: 'Hotel Imperial Plovdiv, a member of Radisson Individuals', type: 'Zincir Otel', rating: '8.9', price: '60 - 80 €', desc: 'Büyük yeşil bahçesi, spa merkezi ve güvenli otoparkı ile çok rahat bir konaklama.' },
-      { name: 'Villa Flavia Heritage Hotel', type: 'Tarihi Butik', rating: '9.5', price: '70 - 95 €', desc: 'Roma hamamı kalıntılarının üzerinde yer alan, harika kahvaltılı ve yüksek puanlı butik otel.' },
-      { name: 'Alliance Hotel', type: 'Geniş Otel', rating: '8.5', price: '50 - 65 €', desc: 'Şehir merkezine yakın, geniş aile odaları ve ücretsiz otoparkı bulunan bütçe dostu seçenek.' }
+      { name: 'Funky Fresh Hostel', type: 'Renkli Butik Hostel', rating: '9.2', price: '25 €', desc: 'Eski şehrin kalbinde, çok tatlı bir bahçesi ve ekonomik çok yataklı aile odaları olan hostel.' },
+      { name: 'Alliance Hotel', type: 'Geniş Otel', rating: '8.5', price: '55 €', desc: 'Şehir merkezine yakın, geniş aile odaları ve ücretsiz otoparkı bulunan bütçe dostu seçenek.' },
+      { name: 'Hotel Imperial Plovdiv', type: 'Zincir Otel', rating: '8.9', price: '68 €', desc: 'Büyük yeşil bahçesi, spa merkezi ve güvenli otoparkı ile çok rahat bir konaklama.' },
+      { name: 'Villa Flavia Heritage Hotel', type: 'Tarihi Butik', rating: '9.5', price: '80 €', desc: 'Roma hamamı kalıntılarının üzerinde yer alan, harika kahvaltılı ve yüksek puanlı butik otel.' },
+      { name: 'The Emporium Plovdiv - MGallery', type: 'Akıllı Tasarım Lüks', rating: '9.3', price: '110 €', desc: 'Bulgaristan\'ın en teknolojik oteli, harika kokulandırılmış odaları ve ödüllü restoranı.' }
     ]
   },
   'Frankfurt': {
     country: 'Almanya', flag: '🇩🇪', area: 'Main Nehri Kıyısı (Neue Oper) veya Innenstadt',
     hotels: [
-      { name: 'Adina Apartment Hotel Frankfurt Neue Oper', type: 'Apart Otel', rating: '8.8', price: '110 - 150 €', desc: 'Nehir kıyısında, 6 kişilik geniş mutfaklı ve balkonlu aile daireleri.' },
-      { name: 'Motel One Frankfurt-Römer', type: 'Tasarım Oteli', rating: '8.9', price: '90 - 120 €', desc: 'Tarihi Römer meydanının hemen yanında, şık tasarımlı ve merkezi konumda sessiz otel.' },
-      { name: 'Premier Inn Frankfurt Messe', type: 'Bütçe Dostu Otel', rating: '8.4', price: '70 - 95 €', desc: 'Fuar alanına yakın, sessiz, temiz ve aile odaları oldukça geniş olan bütçe dostu otel.' }
+      { name: 'Five Elements Hostel Frankfurt', type: 'Bütçe Dostu Tesis', rating: '8.2', price: '40 €', desc: 'Tren istasyonuna çok yakın, ücretsiz sosyal aktiviteler ve geniş grup odaları sunan hostel.' },
+      { name: 'Premier Inn Frankfurt Messe', type: 'Bütçe Dostu Otel', rating: '8.4', price: '78 €', desc: 'Fuar alanına yakın, sessiz, temiz ve aile odaları oldukça geniş olan bütçe dostu otel.' },
+      { name: 'Motel One Frankfurt-Römer', type: 'Tasarım Oteli', rating: '8.9', price: '98 €', desc: 'Tarihi Römer meydanının hemen yanında, şık tasarımlı ve merkezi konumda sessiz otel.' },
+      { name: 'Adina Apartment Hotel Frankfurt Neue Oper', type: 'Apart Otel', rating: '8.8', price: '125 €', desc: 'Nehir kıyısında, 6 kişilik geniş mutfaklı ve balkonlu aile daireleri.' },
+      { name: 'Sofitel Frankfurt Opera', type: 'Fransız Lüks Oteli', rating: '9.1', price: '220 €', desc: 'Opera meydanında, şık Paris tarzı tasarıma ve muhteşem bir spa alanına sahip 5 yıldız.' }
     ]
   },
   'Zagreb': {
     country: 'Hırvatistan', flag: '🇭🇷', area: 'Lower Town (Aşağı Şehir) veya Şehir Merkezi',
     hotels: [
-      { name: 'Sheraton Zagreb Hotel', type: 'Lüks Otel', rating: '8.8', price: '110 - 150 €', desc: 'Kapalı yüzme havuzu, çocuk dostu aktiviteleri ve geniş odaları ile merkezde lüks seçim.' },
-      { name: 'Metropolitan Apartments Zagreb', type: 'Modern Apart', rating: '9.1', price: '60 - 85 €', desc: 'Geniş mutfak ve salona sahip, 6 kişinin çok rahat konaklayabileceği modern yeni daireler.' },
-      { name: 'Hotel Jägerhorn', type: 'Tarihi Butik', rating: '9.4', price: '80 - 110 €', desc: 'Zagreb\'in en eski oteli. Şirin bir avlu içinde, sessiz, merkezi ve masalsı bir atmosfer.' }
+      { name: 'Swanky Mint Hostel', type: 'Tasarım Havuzlu Hostel', rating: '9.2', price: '35 €', desc: 'Eski bir tekstil fabrikasından dönüştürülmüş, çatısında havuz barı olan ödüllü şık hostel.' },
+      { name: 'Metropolitan Apartments Zagreb', type: 'Modern Apart', rating: '9.1', price: '68 €', desc: 'Geniş mutfak ve salona sahip, 6 kişinin çok rahat konaklayabileceği modern yeni daireler.' },
+      { name: 'Hotel Jägerhorn', type: 'Tarihi Butik', rating: '9.4', price: '90 €', desc: 'Zagreb\'in en eski oteli. Şirin bir avlu içinde, sessiz, merkezi ve masalsı bir atmosfer.' },
+      { name: 'Sheraton Zagreb Hotel', type: 'Lüks Otel', rating: '8.8', price: '120 €', desc: 'Kapalı yüzme havuzu, çocuk dostu aktiviteleri ve geniş odaları ile merkezde lüks seçim.' },
+      { name: 'Esplanade Zagreb Hotel', type: 'İkonik Saray Oteli', rating: '9.3', price: '145 €', desc: '1925 yılında Orient Express yolcuları için yapılmış, art-deco tarzında efsanevi saray.' }
     ]
   },
   'Ljubljana': {
     country: 'Slovenya', flag: '🇸🇮', area: 'Tromostovje (Üçlü Köprü) ve Ljubljana Nehri Çevresi',
     hotels: [
-      { name: 'City Hotel Ljubljana', type: 'Merkez Otel', rating: '8.8', price: '90 - 125 €', desc: 'Tarihi merkeze 3 dk yürüme mesafesinde, bisiklet kiralama ve harika teras barı sunan otel.' },
-      { name: 'Boutique Hotel Astoria', type: 'Eko Butik', rating: '8.9', price: '100 - 130 €', desc: 'Sürdürülebilir turizm sertifikalı, sessiz konumda ve geniş aile odaları sunan modern tesis.' },
-      { name: 'Turn Hostel', type: 'Bütçe Dostu Tesis', rating: '8.7', price: '60 - 80 €', desc: 'Tam merkezde, 6 kişilik özel banyolu ve ranzalı temiz aile/grup odası seçenekleri.' }
+      { name: 'Turn Hostel', type: 'Bütçe Dostu Tesis', rating: '8.7', price: '35 €', desc: 'Tam merkezde, 6 kişilik özel banyolu ve ranzalı temiz aile/grup odası seçenekleri.' },
+      { name: 'City Hotel Ljubljana', type: 'Merkez Otel', rating: '8.8', price: '98 €', desc: 'Tarihi merkeze 3 dk yürüme mesafesinde, bisiklet kiralama ve harika teras barı sunan otel.' },
+      { name: 'Boutique Hotel Astoria', type: 'Eko Butik', rating: '8.9', price: '115 €', desc: 'Sürdürülebilir turizm sertifikalı, sessiz konumda ve geniş aile odaları sunan modern tesis.' },
+      { name: 'Grand Hotel Union Eurostars', type: 'Art Nouveau Klasik', rating: '8.9', price: '135 €', desc: 'Ljubljana\'nın simgesi olan tarihi Art Nouveau otel, kapalı havuz ve geniş kahvaltı sunar.' },
+      { name: 'InterContinental Ljubljana', type: 'Modern Lüks Otel', rating: '9.1', price: '195 €', desc: 'Kentin en yüksek oteli, 20. kattaki nehir manzaralı panoramik havuzu ve gurme restoranı.' }
     ]
   },
   'Münih': {
     country: 'Almanya', flag: '🇩🇪', area: 'Munich East (Ostbahnhof) veya Sendlinger Tor',
     hotels: [
-      { name: 'Adina Apartment Hotel Munich', type: 'Modern Apart Otel', rating: '8.9', price: '130 - 180 €', desc: '14. katta Alpler manzaralı kapalı havuz, tam donanımlı mutfaklı 6 kişilik aile suitleri.' },
-      { name: 'Motel One München-Sendlinger Tor', type: 'Tasarım Oteli', rating: '8.7', price: '100 - 130 €', desc: 'Tarihi şehir kapısının yanında, Marienplatz\'a yürüyerek 10 dakika mesafede şık otel.' },
-      { name: 'Hampton by Hilton Munich City Center East', type: 'Konforlu Otel', rating: '8.6', price: '90 - 120 €', desc: 'Zengin sıcak kahvaltı dahil, temiz, geniş aile odaları sunan otoparklı modern otel.' }
+      { name: 'Wombat\'s City Hostel Munich', type: 'Tasarım Aile Hosteli', rating: '8.8', price: '48 €', desc: 'İstasyon yakınında, devasa cam çatılı kış bahçesi ve geniş aile odaları bulunan hostel.' },
+      { name: 'Hampton by Hilton Munich City Center East', type: 'Konforlu Otel', rating: '8.6', price: '98 €', desc: 'Zengin sıcak kahvaltı dahil, temiz, geniş aile odaları sunan otoparklı modern otel.' },
+      { name: 'Motel One München-Sendlinger Tor', type: 'Tasarım Oteli', rating: '8.7', price: '115 €', desc: 'Tarihi şehir kapısının yanında, Marienplatz\'a yürüyerek 10 dakika mesafede şık otel.' },
+      { name: 'Adina Apartment Hotel Munich', type: 'Modern Apart Otel', rating: '8.9', price: '148 €', desc: '14. katta Alpler manzaralı kapalı havuz, tam donanımlı mutfaklı 6 kişilik aile suitleri.' },
+      { name: 'The Charles Hotel - Rocco Forte', type: '5 Yıldızlı Tasarım', rating: '9.3', price: '380 €', desc: 'Botaniki Bahçesi yanında yer alan, Münih\'in en büyük otel odalarını sunan şık vaha.' }
     ]
   },
   'Bükreş': {
     country: 'Romanya', flag: '🇷🇴', area: 'Eski Şehir (Lipscani) veya Universitate',
     hotels: [
-      { name: 'K+K Hotel Elisabeta', type: 'Butik Otel', rating: '8.8', price: '70 - 95 €', desc: 'Eski şehir merkezine yürüme mesafesinde, sessiz, temiz ve konforlu aile odaları.' },
-      { name: 'Filitti Boutique Hotel', type: 'Butik Otel', rating: '9.1', price: '65 - 85 €', desc: 'Eski şehre bakan çatı terası, zarif tasarımı ve üst düzey konukseverliğiyle ünlü butik otel.' },
-      { name: 'Novotel Bucharest City Centre', type: 'Modern Otel', rating: '8.6', price: '85 - 110 €', desc: 'Kapalı havuz, çocuk oyun alanları ve geniş aile odalarıyla bulvar üzerinde harika otel.' }
+      { name: 'T5 Social Hostel', type: 'Bütçe Dostu Bahçeli', rating: '8.9', price: '22 €', desc: 'Çok sıcak bir sosyal atmosfere ve geniş arkadaş grupları için uygun ranza/odalara sahip.' },
+      { name: 'Filitti Boutique Hotel', type: 'Butik Otel', rating: '9.1', price: '68 €', desc: 'Eski şehre bakan çatı terası, zarif tasarımı ve üst düzey konukseverliğiyle ünlü butik otel.' },
+      { name: 'K+K Hotel Elisabeta', type: 'Butik Otel', rating: '8.8', price: '78 €', desc: 'Eski şehir merkezine yürüme mesafesinde, sessiz, temiz ve konforlu aile odaları.' },
+      { name: 'Novotel Bucharest City Centre', type: 'Modern Otel', rating: '8.6', price: '92 €', desc: 'Kapalı havuz, çocuk oyun alanları ve geniş aile odalarıyla bulvar üzerinde harika otel.' },
+      { name: 'The Marmorosch Bucharest, Autograph Collection', type: 'Tarihi Lüks', rating: '9.3', price: '145 €', desc: 'Eski bir saray bankasında kurulu, orijinal kasa dairesi barı olan muhteşem 5 yıldız.' }
     ]
   },
   'Sibiu': {
     country: 'Romanya', flag: '🇷🇴', area: 'Büyük Meydan (Piata Mare) Çevresi',
     hotels: [
-      { name: 'Art Hotel Sibiu', type: 'Tarihi Butik', rating: '9.3', price: '60 - 80 €', desc: 'Tarihi binada, meydanın hemen yanında, modern sanatla harmanlanmış şık dekorasyon.' },
-      { name: 'Hotel Continental Forum Sibiu', type: 'Klasik Otel', rating: '8.5', price: '50 - 70 €', desc: 'Merkezi caddede, geniş ve yüksek tavanlı aile odaları sunan klasik tesis.' },
-      { name: 'Boutique Hotel am Ring', type: 'Tarihi Otel', rating: '9.2', price: '55 - 75 €', desc: '14. yüzyıldan kalma binada, pencereleri Büyük Meydan\'a bakan otantik butik otel.' }
+      { name: 'B13 Hostel', type: 'Ekonomik Konaklama', rating: '8.8', price: '25 €', desc: 'Büyük meydana 50 metre mesafede, modern ranzalı ve temiz grup odaları sunan hostel.' },
+      { name: 'Hotel Continental Forum Sibiu', type: 'Klasik Otel', rating: '8.5', price: '55 €', desc: 'Merkezi caddede, geniş ve yüksek tavanlı aile odaları sunan köklü ve güvenilir tesis.' },
+      { name: 'Boutique Hotel am Ring', type: 'Tarihi Otel', rating: '9.2', price: '65 €', desc: '14. yüzyıldan kalma binada, pencereleri Büyük Meydan\'a bakan otantik butik otel.' },
+      { name: 'Art Hotel Sibiu', type: 'Tarihi Butik', rating: '9.3', price: '70 €', desc: 'Tarihi binada, meydanın hemen yanında, modern sanatla harmanlanmış şık dekorasyon.' },
+      { name: 'Noblesse Boutique Resort', type: '5 Yıldızlı Butik Lüks', rating: '9.6', price: '95 €', desc: 'Sibiu merkezinde üst düzey hizmet, ödüllü şef restoranı ve kusursuz süitler.' }
     ]
   },
   'Köln': {
     country: 'Almanya', flag: '🇩🇪', area: 'Köln Katedrali veya Altstadt (Eski Şehir)',
     hotels: [
-      { name: 'Aparthotel Adagio Köln City', type: 'Apart Otel', rating: '8.6', price: '100 - 140 €', desc: 'Katedral ve alışveriş caddelerine yürüme mesafesinde, 6 kişilik mutfaklı geniş daireler.' },
-      { name: 'Motel One Köln-Waidmarkt', type: 'Tasarım Oteli', rating: '8.7', price: '90 - 120 €', desc: 'Şık tasarımı ve nehir kıyısı ile eski şehre yürüme mesafesindeki konumuyla harika seçim.' },
-      { name: 'Classic Hotel Harmonie', type: 'Tarihi Butik', rating: '8.5', price: '85 - 115 €', desc: 'Eski bir manastırdan dönüştürülmüş, şık tasarımlı ve katedral manzaralı sessiz butik otel.' }
+      { name: 'Youth Hostel Cologne-Deutz', type: 'Ekonomik Konaklama', rating: '8.4', price: '55 €', desc: 'Nehrin karşı kıyısında, katedral manzaralı ve büyük gruplar için uygun bütçe dostu odalar.' },
+      { name: 'Classic Hotel Harmonie', type: 'Tarihi Butik', rating: '8.5', price: '85 €', desc: 'Eski bir manastırdan dönüştürülmüş, şık tasarımlı ve katedral manzaralı sessiz butik otel.' },
+      { name: 'Motel One Köln-Waidmarkt', type: 'Tasarım Oteli', rating: '8.7', price: '95 €', desc: 'Şık tasarımı ve nehir kıyısı ile eski şehre yürüme mesafesindeki konumuyla harika seçim.' },
+      { name: 'Aparthotel Adagio Köln City', type: 'Apart Otel', rating: '8.6', price: '110 €', desc: 'Katedral ve alışveriş caddelerine yürüme mesafesinde, 6 kişilik mutfaklı geniş daireler.' },
+      { name: 'Excelsior Hotel Ernst am Dom', type: 'Lüks Klasik Otel', rating: '9.3', price: '250 €', desc: 'Katedralin hemen yanında yer alan, Michelin yıldızlı restoranı ve tarihi lüksüyle Kölnün en iyisi.' }
     ]
   },
   'Verona': {
@@ -1094,6 +1140,7 @@ const ACCOMMODATION_DATA = {
 let routeMode = 'complete'; // 'complete' veya 'split'
 let selComp = 0, selOut = 0, selRet = 0, curTab = 'out';
 let map, markersG=[], linesG=[];
+let hotelLayerGroup = null;
 let watchId = null;
 let userMarker = null;
 let isTrackingActive = false;
@@ -1175,6 +1222,7 @@ function pickRet(i){ routeMode='split'; selRet=i; renderRouteCards(); renderAll(
 function initMap(){
   map = L.map('map',{center:[46,14],zoom:5,scrollWheelZoom:true});
   setTiles();
+  hotelLayerGroup = L.layerGroup().addTo(map);
   drawMap();
 }
 function setTiles(){
@@ -1258,7 +1306,15 @@ async function drawMap(){
   allS.forEach(s => {
     const m = L.marker([s.la,s.lo],{icon:mIcon(s.t)}).addTo(map);
     const cn = C[s.co];
-    m.bindPopup(`<div style="font-family:'DM Sans',sans-serif;min-width:160px;"><strong>${cn.f} ${s.c}</strong><br><small>${cn.n}</small></div>`,{maxWidth:250});
+    let popupHtml = `<div style="font-family:'DM Sans',sans-serif;min-width:160px;"><strong>${cn.f} ${s.c}</strong><br><small>${cn.n}</small>`;
+    if (s.t === 'overnight' && s.co !== 'TR') {
+      popupHtml += `<br><button onclick="showMapHotels('${s.c}')" style="margin-top:6px;padding:4px 8px;font-size:0.7rem;background:var(--accent);color:white;border:none;border-radius:10px;cursor:pointer;font-family:inherit;">🛏️ Otelleri Göster</button>`;
+      m.on('click', () => {
+        showMapHotels(s.c);
+      });
+    }
+    popupHtml += `</div>`;
+    m.bindPopup(popupHtml, {maxWidth:250});
     markersG.push(m);
   });
   
@@ -1456,7 +1512,11 @@ function renderTimeline(){
       ${s.desc ? `<div class="tl-desc">${s.desc}</div>` : ''}
       ${s.halal && !isTR ? `<div class="tl-halal">${s.halal}</div>` : ''}
       ${s.accom && !isTR ? `<div class="tl-accom">${s.accom}</div>` : ''}
-      ${s.n > 0 && !isTR ? getTimelineAccomHtml(s.c, isTR) : ''}
+      ${s.n > 0 && !isTR ? `
+        <div class="tl-hotel-container" id="accom-box-${s.c.replace(/\s+/g, '-')}">
+          ${getTimelineAccomHtml(s.c)}
+        </div>
+      ` : ''}
       ${tipsH ? `<div class="tl-tips">${tipsH}</div>` : ''}
     </div>${connector}`;
   }).join('');
@@ -1772,31 +1832,107 @@ function renderVignettes() {
 }
 
 /* ═══════ ACCOMMODATIONS HELPERS ═══════ */
-function getTimelineAccomHtml(cityName, isTR) {
-  if (isTR || !ACCOMMODATION_DATA[cityName]) return '';
+function getCityCoords(cityName) {
+  for (let r of COMPLETE) {
+    const stop = r.stops.find(s => s.c === cityName);
+    if (stop) return { la: stop.la, lo: stop.lo };
+  }
+  for (let r of OUTBOUND) {
+    const stop = r.stops.find(s => s.c === cityName);
+    if (stop) return { la: stop.la, lo: stop.lo };
+  }
+  for (let r of RETURN) {
+    const stop = r.stops.find(s => s.c === cityName);
+    if (stop) return { la: stop.la, lo: stop.lo };
+  }
+  return null;
+}
+
+function hotelMarkerIcon(index) {
+  return L.divIcon({
+    className: 'custom-marker',
+    html: `<div class="m-pin overnight" style="background: var(--teal);"><span style="transform: rotate(45deg); color: white; font-size: 11px; font-weight: bold;">${index + 1}</span></div>`,
+    iconSize: [28, 28],
+    iconAnchor: [14, 28],
+    popupAnchor: [0, -28]
+  });
+}
+
+function showMapHotels(cityName) {
+  if (hotelLayerGroup) {
+    hotelLayerGroup.clearLayers();
+  }
+
+  const coords = getCityCoords(cityName);
+  if (coords && map) {
+    map.flyTo([coords.la, coords.lo], 13, { animate: true, duration: 1.5 });
+
+    const cityInfo = ACCOMMODATION_DATA[cityName];
+    if (cityInfo && cityInfo.hotels) {
+      const angles = [0, 72, 144, 216, 288];
+      const radius = 0.008; // degrees (~900m)
+
+      cityInfo.hotels.forEach((hotel, idx) => {
+        const angleRad = (angles[idx] * Math.PI) / 180;
+        const lat = coords.la + radius * Math.cos(angleRad);
+        const lng = coords.lo + radius * Math.sin(angleRad);
+
+        const bookingUrl = `https://www.booking.com/searchresults.tr.html?ss=${encodeURIComponent(hotel.name + ', ' + cityName)}&group_adults=6&no_rooms=1`;
+
+        const popupContent = `
+          <div class="map-hotel-popup">
+            <strong class="map-hotel-title">${hotel.name}</strong>
+            <div class="map-hotel-meta">
+              <span class="map-hotel-badge">${hotel.type}</span>
+              <span class="map-hotel-rating">★ ${hotel.rating}</span>
+            </div>
+            <div class="map-hotel-price">${hotel.price} / gece</div>
+            <a href="${bookingUrl}" target="_blank" class="map-hotel-btn">Booking'de Rezerve Et</a>
+          </div>
+        `;
+
+        L.marker([lat, lng], { icon: hotelMarkerIcon(idx) })
+          .bindPopup(popupContent)
+          .addTo(hotelLayerGroup);
+      });
+    }
+  }
+}
+
+function getTimelineAccomHtml(cityName) {
+  if (!ACCOMMODATION_DATA[cityName]) return '';
   const cityInfo = ACCOMMODATION_DATA[cityName];
   const bookingUrl = `https://www.booking.com/searchresults.tr.html?ss=${encodeURIComponent(cityName)}&group_adults=6&no_rooms=1`;
   const airbnbUrl = `https://www.airbnb.com.tr/s/${encodeURIComponent(cityName)}/homes?adults=6`;
 
   return `
-    <div class="tl-hotel-container">
-      <div class="tl-hotel-header">
-        <i class="fas fa-bed"></i> 6 Kişilik Konaklama Önerileri (Önerilen Bölge: ${cityInfo.area})
+    <div class="tl-hotel-inner">
+      <div class="tl-hotel-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+        <span><i class="fas fa-bed"></i> 6 Kişilik Konaklama Önerileri (Önerilen Bölge: ${cityInfo.area})</span>
+        <button onclick="showMapHotels('${cityName}')" class="btn-toggle-accom" style="margin: 0; padding: 4px 10px; font-size: 0.68rem;">
+          <i class="fas fa-map-marker-alt"></i> Haritada Göster
+        </button>
       </div>
       <div class="tl-hotel-list">
-        ${cityInfo.hotels.map(h => `
-          <div class="tl-hotel-item">
-            <div class="tl-hotel-name-wrap">
-              <span class="tl-hotel-name">${h.name}</span>
-              <span class="tl-hotel-badge">${h.type}</span>
+        ${cityInfo.hotels.map((h, idx) => {
+          const hotelSearchUrl = `https://www.booking.com/searchresults.tr.html?ss=${encodeURIComponent(h.name + ', ' + cityName)}&group_adults=6&no_rooms=1`;
+          return `
+            <div class="tl-hotel-item">
+              <div class="tl-hotel-name-wrap">
+                <a href="${hotelSearchUrl}" target="_blank" class="tl-hotel-link" title="Booking'de doğrudan rezervasyon sayfası">
+                  <span class="tl-hotel-num">${idx + 1}</span>
+                  <span class="tl-hotel-name">${h.name}</span>
+                </a>
+                <span class="tl-hotel-badge">${h.type}</span>
+              </div>
+              <div class="tl-hotel-sub">
+                <span class="tl-hotel-rating">★ ${h.rating}</span>
+                <span class="tl-hotel-price">${h.price} / gece</span>
+              </div>
+              <p class="tl-hotel-desc">${h.desc}</p>
             </div>
-            <div class="tl-hotel-sub">
-              <span class="tl-hotel-rating">★ ${h.rating}</span>
-              <span class="tl-hotel-price">${h.price} / gece</span>
-            </div>
-            <p class="tl-hotel-desc">${h.desc}</p>
-          </div>
-        `).join('')}
+          `;
+        }).join('')}
       </div>
       <div class="tl-hotel-search-links">
         <a href="${bookingUrl}" target="_blank" class="btn-tl-hotel booking">
@@ -1809,7 +1945,6 @@ function getTimelineAccomHtml(cityName, isTR) {
     </div>
   `;
 }
-
 
 /* ═══════ RENDER ALL ═══════ */
 function renderAll(){
@@ -1895,3 +2030,4 @@ function bindEvents(){
 window.pickComp = pickComp;
 window.pickOut = pickOut;
 window.pickRet = pickRet;
+window.showMapHotels = showMapHotels;
